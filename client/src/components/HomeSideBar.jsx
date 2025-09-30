@@ -1,7 +1,7 @@
 import "../public/HomeSideBar.css";
 import "../public/navbar.css";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { isUserLoggedIn, logout } from "../services/AuthService.js";
 import { useState } from "react";
 
@@ -32,11 +32,14 @@ const HomeSideBar = ({ onSubjectChange }) => {
   // functionality for log in button on sidebar
 
   // check if user is logged in
-  const isAuth = isUserLoggedIn();
+    const isAuth = isUserLoggedIn();
+    const navigate = useNavigate();
 
-  function handleLogout() {
-    logout();
-  }
+    function handleLogout(e) {
+        e.preventDefault();
+        logout();                       // clear token & session keys
+        navigate("/login", { replace: true });
+    }
 
   return (
       <div
@@ -125,17 +128,14 @@ const HomeSideBar = ({ onSubjectChange }) => {
               )}
 
               {isAuth && (
-                  <Link
-                      to="/login"
+                  <button
+                      onClick={handleLogout}
                       className="d-flex align-items-center my-3 py-3 text-decoration-none btn gradient-button"
                       style={{width: "100%"}}
                   >
-                      <i
-                          className="bi bi-box-arrow-in-right px-3"
-                          style={{fontSize: "30px"}}
-                      />
+                      <i className="bi bi-box-arrow-right px-3" style={{fontSize: "30px"}}/>
                       Log Out
-                  </Link>
+                  </button>
               )}
           </div>
       </div>
