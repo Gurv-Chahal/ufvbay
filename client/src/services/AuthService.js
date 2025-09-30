@@ -134,6 +134,19 @@ export const getUserInfo = async () => {
   }
 };
 
+// fetch any user's public profile by id (expects { email, username, ... })
+export const getUserById = async (userId) => {
+  if (!userId) return null;
+  try {
+    const res = await apiAxios.get(`api/users/${userId}`);
+    return res.data;
+  } catch (e) {
+    console.error("getUserById failed:", e);
+    return null;
+  }
+};
+
+
 // function to save logged in user username in session storage
 export const saveLoggedInUser = (username) => {
   // save username with key authenticatedUser

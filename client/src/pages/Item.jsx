@@ -6,6 +6,8 @@ import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import Map from "../components/Map.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "Axios";
+import { getUserById } from "../services/AuthService.js"; // adjust path if needed
+
 
 const Item = ({ asModal = false }) => {
 
@@ -17,6 +19,11 @@ const Item = ({ asModal = false }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isOwner, setIsOwner] = useState(false);
+  const [showMap, setShowMap] = useState(true);
+  const [posterEmail, setPosterEmail] = useState("");
+
+
+
 
   // state for Update Listing functionality
   const [isUpdating, setIsUpdating] = useState(false);
@@ -67,6 +74,12 @@ const Item = ({ asModal = false }) => {
         // store data retrieved from backend into listingData variable
         const listingData = response.data;
         setListing(listingData);
+
+        // fetch poster email by userId
+        if (listingData.userId) {
+          const user = await getUserById(listingData.userId);
+          setPosterEmail(user?.email ?? "");
+        }
 
         // set the initial slider image
         if (listingData.imageUrls && listingData.imageUrls.length > 0) {
@@ -289,259 +302,279 @@ const Item = ({ asModal = false }) => {
   if (!listing) {
     return <div>No listing found.</div>;
   }
-
   return (
       <ModalWrapper>
         <div
             className="container-fluid row"
             style={{ height: asModal ? "100%" : "100vh", position: "relative" }}
         >
-      {/* image Slider Section */}
-      <div
-        className="col-9 d-flex justify-content-center align-items-center position-relative border"
-        style={{
-          backgroundImage: `url(${slider})`,
-          backgroundPosition: "center",
-          height: "100%",
-          overflow: "hidden",
-        }}
-      >
-        {/* Overlay for darkening the background */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            zIndex: 1,
-          }}
-        ></div>
-
-        {/* Previous Image Button */}
-        <ArrowBackIosIcon
-          style={{
-            zIndex: 3,
-            color: "white",
-            fontSize: "2rem",
-            cursor: "pointer",
-            position: "absolute",
-            left: "10px",
-          }}
-          onClick={DecSlider}
-        />
-
-        {/* Next Image Button */}
-        <ArrowForwardIosIcon
-          onClick={IncSlider}
-          style={{
-            zIndex: 3,
-            color: "white",
-            fontSize: "2rem",
-            cursor: "pointer",
-            position: "absolute",
-            right: "10px",
-          }}
-        />
-
-        {/* Display the current image */}
-        {slider ? (
-          <img
-            src={slider}
-            alt="Listing Image"
-            className="w-50 position-relative mx-auto"
-            style={{ zIndex: 2, boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)" }}
-          />
-        ) : (
+          {/* -------- LEFT: image slider -------- */}
           <div
-            className="w-50 position-relative mx-auto"
-            style={{
-              zIndex: 2,
-              height: "300px",
-              backgroundColor: "#ccc",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+              className="col-9 d-flex justify-content-center align-items-center position-relative border"
+              style={{
+                backgroundImage: `url(${slider})`,
+                backgroundPosition: "center",
+                height: "100%",
+                overflow: "hidden",
+              }}
           >
-            <p>No image available</p>
-          </div>
-        )}
-      </div>
+            {/* darken bg behind the main image */}
+            <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                  zIndex: 1,
+                }}
+            />
 
-      {/* Listing Details Section */}
-          <div className="col-3" style={{height: asModal ? "100%" : "100vh", overflowY: "auto"}}>
-            <div className="my-2 mx-3">
-              {/* Listing Title */}
-          <h1 className="listtitle">{listing.title || "No Title"}</h1>
+            {/* prev / next */}
+            <ArrowBackIosIcon
+                onClick={DecSlider}
+                style={{
+                  zIndex: 3,
+                  color: "white",
+                  fontSize: "2rem",
+                  cursor: "pointer",
+                  position: "absolute",
+                  left: "10px",
+                }}
+            />
+            <ArrowForwardIosIcon
+                onClick={IncSlider}
+                style={{
+                  zIndex: 3,
+                  color: "white",
+                  fontSize: "2rem",
+                  cursor: "pointer",
+                  position: "absolute",
+                  right: "10px",
+                }}
+            />
 
-          <strong>Subject:</strong> {listing.subject || "Unknown"}
-
-          {/*Owner username*/}
-          <p className="listowner">
-            <strong>Posted By:</strong> {listing.username || "Unknown"}
-          </p>
-
-          {/* Listing Price */}
-          <div className="price-container">
-            <h5 className="listprice">Listing Price:</h5>
-            <h5 className="listamount">${listing.amount || "N/A"}</h5>
-          </div>
-          <div className="my-5">
-            <h5 className="b5">Meeting Spot 📍 </h5>
-            {/*Map Component */}
-            {listing.latitude && listing.longitude ? (
-                <Map
-                    position={{lat: listing.latitude, lng: listing.longitude}}
+            {/* current image */}
+            {slider ? (
+                <img
+                    src={slider}
+                    alt="Listing"
+                    className="w-50 position-relative mx-auto"
+                    style={{zIndex: 2, boxShadow: "0 4px 8px rgba(0,0,0,0.3)"}}
                 />
             ) : (
-                <p>No meeting spot specified.</p>
+                <div
+                    className="w-50 position-relative mx-auto"
+                    style={{
+                      zIndex: 2,
+                      height: "300px",
+                      backgroundColor: "#ccc",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                >
+                  <p>No image available</p>
+                </div>
             )}
 
-            <div>
-              {/* "X" Button*/}
-              <button
-                  onClick={handleClose}
-                  style={{
-                    position: "absolute",
-                    top: "20px",
-                    left: "2%",
-                    borderRadius: "20%",
-                    background: "transparent",
-                    border: "none",
-                    color: "#fff",
-                    fontSize: "2.5rem",
-                    cursor: "pointer",
-                    zIndex: 5,
-                  }}
-                  aria-label="Close"
-              >
-                <DisabledByDefaultIcon fontSize="inherit"/>
-              </button>
+            <button
+                onClick={handleClose}
+                style={{
+                  position: "absolute",
+                  top: "16px",
+                  left: "16px",
+                  background: "transparent",
+                  border: "none",
+                  color: "#fff",
+                  fontSize: "2.5rem",
+                  cursor: "pointer",
+                  zIndex: 5,
+                }}
+                aria-label="Close"
+                title="Close"
+            >
+              <DisabledByDefaultIcon fontSize="inherit"/>
+            </button>
+
+          </div>
+
+          {/* -------- RIGHT: clean details panel -------- */}
+          <aside
+              className="col-3 details-panel"
+              style={{height: asModal ? "100%" : "100vh"}}
+          >
+            {/* header */}
+            <header className="details-header">
+              <h1 className="details-title">{listing.title || "Untitled"}</h1>
+              <div className="chip-row">
+                <span className="chip">{listing.subject || "Unknown"}</span>
+                <span className="chip chip-muted">
+              email {posterEmail || "Unknown"}
+            </span>
+              </div>
+            </header>
+
+            {/* price + CTA */}
+            <div className="price-cta">
+              <div className="price-tag">${listing.amount || "N/A"}</div>
+
+              {posterEmail ? (
+                  <a
+                      className="cta-button"
+                      href={`mailto:${posterEmail}?subject=${encodeURIComponent(
+                          listing.title || "Listing"
+                      )}`}
+                  >
+                    Contact Seller
+                  </a>
+              ) : (
+                  <button className="cta-button" disabled>Contact Seller</button>
+              )}
             </div>
-          </div>
-          <h5 className="b5">Listing Description: </h5>
-          {/* Listing Description */}
-          <p className="listdescr">
-            {listing.description || "No description provided."}
-          </p>
 
-          {/* update Listing Button */}
-          {isOwner && (
+
+            {/* meeting spot */}
+            <section className="section-card">
               <button
-                  className="btn btn-primary updatelisting"
-                  onClick={handleUpdateClick}
-              >
-                Update Listing
-              </button>
-          )}
-          {/* Delete Listing Button conditionally renders only if the account is the owner of the listing */}
-          {isOwner && (
-              <button
-                  className="my-2 btn btn-danger"
-                  onClick={handleDeleteListing}
-              >
-                Delete Listing
-              </button>
-          )}
-        </div>
-      </div>
-
-      {/* Update Form that opens after clicking button */}
-      {isUpdating && (
-          <div className="update-form-overlay">
-            <div className="update-form-container">
-            <h2 className="updateformlisting">Update Listing</h2>
-            <form onSubmit={handleUpdateSubmit}>
-              <div className="form-group">
-                <label>Title:</label>
-                <input
-                  type="text"
-                  name="title"
-                  value={updatedListing.title}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Subject:</label>
-                <input
-                  type="text"
-                  name="subject"
-                  value={updatedListing.subject}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Amount:</label>
-                <input
-                  type="number"
-                  name="amount"
-                  step="0.01"
-                  value={updatedListing.amount}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Description:</label>
-                <textarea
-                  name="description"
-                  value={updatedListing.description}
-                  onChange={handleInputChange}
-                  required
-                ></textarea>
-              </div>
-
-              <div className="form-group">
-                <label>Longitude:</label>
-                <input
-                  type="number"
-                  name="longitude"
-                  step="0.0001"
-                  value={updatedListing.longitude}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Latitude:</label>
-                <input
-                  type="number"
-                  name="latitude"
-                  step="0.0001"
-                  value={updatedListing.latitude}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-
-              <div className="form-actions">
-                <button type="submit" className="btn btn-primary">
-                  Save Changes
-                </button>
-                <button
                   type="button"
-                  className="btn btn-secondary"
-                  onClick={handleCancelUpdate}
-                >
-                  Cancel
-                </button>
+                  className="section-title"
+                  onClick={() => setShowMap((v) => !v)}
+                  aria-expanded={showMap}
+              >
+                <span>Meeting Spot</span>
+                <span className={`chev ${showMap ? "open" : ""}`}>▾</span>
+              </button>
+
+              {showMap ? (
+                  listing.latitude && listing.longitude ? (
+                      <div className="map-wrap">
+                        <Map
+                            position={{lat: listing.latitude, lng: listing.longitude}}
+                        />
+                      </div>
+                  ) : (
+                      <p className="muted">No meeting spot specified.</p>
+                  )
+              ) : null}
+            </section>
+
+            {/* description */}
+            <section className="section-card">
+              <div className="section-title static">Listing Description</div>
+              <p className="description">
+                {listing.description || "No description provided."}
+              </p>
+            </section>
+
+            {/* owner actions */}
+            {isOwner && (
+                <div className="owner-actions">
+                  <button className="btn btn-primary" onClick={handleUpdateClick}>
+                    Edit Listing
+                  </button>
+                  <button className="btn btn-danger" onClick={handleDeleteListing}>
+                    Delete
+                  </button>
+                </div>
+            )}
+
+            {/* previous close */}
+
+          </aside>
+
+          {/* -------- Update form overlay (unchanged) -------- */}
+          {isUpdating && (
+              <div className="update-form-overlay">
+                <div className="update-form-container">
+                  <h2 className="updateformlisting">Update Listing</h2>
+                  <form onSubmit={handleUpdateSubmit}>
+                    <div className="form-group">
+                    <label>Title:</label>
+                      <input
+                          type="text"
+                          name="title"
+                          value={updatedListing.title}
+                          onChange={handleInputChange}
+                          required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Subject:</label>
+                      <input
+                          type="text"
+                          name="subject"
+                          value={updatedListing.subject}
+                          onChange={handleInputChange}
+                          required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Amount:</label>
+                      <input
+                          type="number"
+                          name="amount"
+                          step="0.01"
+                          value={updatedListing.amount}
+                          onChange={handleInputChange}
+                          required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Description:</label>
+                      <textarea
+                          name="description"
+                          value={updatedListing.description}
+                          onChange={handleInputChange}
+                          required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Longitude:</label>
+                      <input
+                          type="number"
+                          name="longitude"
+                          step="0.0001"
+                          value={updatedListing.longitude}
+                          onChange={handleInputChange}
+                          required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Latitude:</label>
+                      <input
+                          type="number"
+                          name="latitude"
+                          step="0.0001"
+                          value={updatedListing.latitude}
+                          onChange={handleInputChange}
+                          required
+                      />
+                    </div>
+
+                    <div className="form-actions">
+                      <button type="submit" className="btn btn-primary">
+                        Save Changes
+                      </button>
+                      <button
+                          type="button"
+                          className="btn btn-secondary"
+                          onClick={handleCancelUpdate}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
-            </form>
-          </div>
-        </div>
-      )}
+          )}
         </div>
       </ModalWrapper>
   );
+
 
 };
 
