@@ -10,6 +10,8 @@
   color-scheme: light;
 }
 
+
+
 /* dark theme, activated by <html class="dark"> */
 :root.dark {
   --bg: #0b1020;
@@ -74,3 +76,6 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+/* body is a flex container in your globals; ensure #root spans the viewport */
+#root { width: 100vw; }
