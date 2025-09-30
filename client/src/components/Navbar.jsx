@@ -144,13 +144,13 @@ const Navbar = ({ onSearch, results }) => {
 
           <div className="d-flex order-0 order-md-1">
             {/*Message button*/}
-            <button
-                className="btn border-0"
-                style={{ padding: "15px 20px", border: "none" }}
-                onClick={toggleChatRoom} // Toggle chat room on click
-            >
-              <i className="bi bi-chat-left" style={{ fontSize: "32px" }}></i>
-            </button>
+            {/*<button*/}
+            {/*    className="btn border-0"*/}
+            {/*    style={{ padding: "15px 20px", border: "none" }}*/}
+            {/*    onClick={toggleChatRoom} // Toggle chat room on click*/}
+            {/*>*/}
+            {/*  <i className="bi bi-chat-left" style={{ fontSize: "32px" }}></i>*/}
+            {/*</button>*/}
             {/*Account Button*/}
             <button
                 className="btn border-0"
@@ -167,47 +167,47 @@ const Navbar = ({ onSearch, results }) => {
         </div>
 
         {/* Chat Room Modal */}
-        {showChatRoom && (
-            <div
-                className="chat-room-modal"
-                style={{
-                  position: "fixed",
-                  top: "0",
-                  left: "0",
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "rgba(50, 50, 50, 0.9)", // Dark overlay
-                  zIndex: "1050",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-            >
-              <div
-                  style={{
-                    width: "80%",
-                    height: "80%",
-                    padding: "0",
-                    backgroundColor: "transparent",
-                    overflow: "auto",
-                  }}
-              >
-                <ChatRoom />
-                <button
-                    className="btn btn-danger"
-                    style={{
-                      position: "absolute",
-                      top: "3%",
-                      right: "1%",
-                      borderRadius: "100%",
-                    }}
-                    onClick={toggleChatRoom}
-                >
-                  X
-                </button>
-              </div>
-            </div>
-        )}
+        {/*{showChatRoom && (*/}
+        {/*    <div*/}
+        {/*        className="chat-room-modal"*/}
+        {/*        style={{*/}
+        {/*          position: "fixed",*/}
+        {/*          top: "0",*/}
+        {/*          left: "0",*/}
+        {/*          width: "100%",*/}
+        {/*          height: "100%",*/}
+        {/*          backgroundColor: "rgba(50, 50, 50, 0.9)", // Dark overlay*/}
+        {/*          zIndex: "1050",*/}
+        {/*          display: "flex",*/}
+        {/*          alignItems: "center",*/}
+        {/*          justifyContent: "center",*/}
+        {/*        }}*/}
+        {/*    >*/}
+        {/*      <div*/}
+        {/*          style={{*/}
+        {/*            width: "80%",*/}
+        {/*            height: "80%",*/}
+        {/*            padding: "0",*/}
+        {/*            backgroundColor: "transparent",*/}
+        {/*            overflow: "auto",*/}
+        {/*          }}*/}
+        {/*      >*/}
+        {/*        <ChatRoom />*/}
+        {/*        <button*/}
+        {/*            className="btn btn-danger"*/}
+        {/*            style={{*/}
+        {/*              position: "absolute",*/}
+        {/*              top: "3%",*/}
+        {/*              right: "1%",*/}
+        {/*              borderRadius: "100%",*/}
+        {/*            }}*/}
+        {/*            onClick={toggleChatRoom}*/}
+        {/*        >*/}
+        {/*          X*/}
+        {/*        </button>*/}
+        {/*      </div>*/}
+        {/*    </div>*/}
+        {/*)}*/}
 
       </nav>
   );

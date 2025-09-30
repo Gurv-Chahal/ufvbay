@@ -127,37 +127,49 @@ const Auth = () => {
             </Link>
           </div>
         </div>
-        <div className="col-6  d-flex flex-column justify-content-center bg-signup">
-          <div className="d-flex align-items-center justify-content-center">
-            <img
-              src={ufvbaylogo}
-              alt="logo for UFVBay"
-              style={{ width: "120px", height: "auto", marginRight: "10px" }}
-            />
-            <h1
-              className="text-center"
-              style={{ color: "#fff", fontSize: "5rem", margin: 0 }}
-            >
-              UFVBay
-            </h1>
+          <div className="col-6  d-flex flex-column justify-content-center bg-signup">
+              <div className="d-flex align-items-center justify-content-center">
+                  <img
+                      src={ufvbaylogo}
+                      alt="logo for UFVBay"
+                      style={{width: "120px", height: "auto", marginRight: "10px"}}
+                  />
+                  <h1
+                      className="text-center"
+                      style={{color: "#fff", fontSize: "5rem", margin: 0}}
+                  >
+                      UFVBay
+                  </h1>
+              </div>
+              <div className="my-5">
+                  <div className="d-flex justify-content-center">
+                      <h3
+                          className="text-center "
+                          style={{
+                              color: "#fff",
+                              fontSize: "2rem",
+                              width: "800px",
+                          }}
+                      >
+                          Welcome back! Checkout the newest listings while you were gone!
+                      </h3>
+                  </div>
+              </div>
+              {/* image row */}
+              <div className="w-100">
+                  <div className="ms-auto pe-4" style={{ width: "78%", maxWidth: 920 }}>
+                      <img
+                          src={signupimg}
+                          alt="UFVBay preview"
+                          className="img-fluid d-block"
+                          style={{ width: "120%", height: "auto" }}
+                      />
+                  </div>
+              </div>
+
+
+              {/*Button redirects to signup page*/}
           </div>
-          <div className="my-5">
-            <div className="d-flex justify-content-center">
-              <h3
-                className="text-center "
-                style={{
-                  color: "#fff",
-                  fontSize: "2rem",
-                  width: "800px",
-                }}
-              >
-                Welcome back! Checkout the newest listings while you were gone!
-              </h3>
-            </div>
-          </div>
-          <img src={signupimg} />
-          {/*Button redirects to signup page*/}
-        </div>
       </div>
     </div>
   );
