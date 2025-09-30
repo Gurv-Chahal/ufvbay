@@ -312,8 +312,9 @@ const Item = ({ asModal = false }) => {
           <div
               className="col-9 d-flex justify-content-center align-items-center position-relative border"
               style={{
-                backgroundImage: `url(${slider})`,
+                backgroundImage: "none",
                 backgroundPosition: "center",
+                backgroundSize: "cover",      // or "contain" if you prefer
                 height: "100%",
                 overflow: "hidden",
               }}
@@ -407,9 +408,7 @@ const Item = ({ asModal = false }) => {
               <h1 className="details-title">{listing.title || "Untitled"}</h1>
               <div className="chip-row">
                 <span className="chip">{listing.subject || "Unknown"}</span>
-                <span className="chip chip-muted">
-              email {posterEmail || "Unknown"}
-            </span>
+                <span className="chip"> Email: {posterEmail || "Unknown"} </span>
               </div>
             </header>
 
@@ -471,7 +470,7 @@ const Item = ({ asModal = false }) => {
                   <button className="btn btn-primary" onClick={handleUpdateClick}>
                     Edit Listing
                   </button>
-                  <button className="btn btn-danger" onClick={handleDeleteListing}>
+                  <button className="btn btn-primary" onClick={handleDeleteListing}>
                     Delete
                   </button>
                 </div>
