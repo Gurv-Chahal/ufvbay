@@ -3,15 +3,31 @@
     max-height: 500px;
     margin: 50px auto;
     padding: 20px;
-    background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
     font-family: Arial, sans-serif;
+
+    background: #ffffff !important;
+    color: #0f172a !important;          /* dark text on white */
+    color-scheme: only light;           /* form controls render light */
+    isolation: isolate;                 /* keep ancestor effects out */
+}
+
+.account-container h1,
+.account-container p,
+.account-container label,
+.account-container strong {
+    color: #0f172a !important;
 }
 
 .account-header {
     margin-bottom: 20px;
     text-align: center;
+
+    background: transparent !important;
+    color: #0f172a !important;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
 }
 
 .account-details .form-group {

@@ -128,6 +128,7 @@ const HomeSideBar = ({ onSubjectChange }) => {
                   <Link
                       to="/login"
                       className="d-flex align-items-center my-3 py-3 text-decoration-none btn gradient-button"
+                      style={{width: "100%"}}
                   >
                       <i
                           className="bi bi-box-arrow-in-right px-3"
