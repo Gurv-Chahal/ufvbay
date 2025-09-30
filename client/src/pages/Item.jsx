@@ -7,7 +7,7 @@ import Map from "../components/Map.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "Axios";
 
-const Item = () => {
+const Item = ({ asModal = false }) => {
 
   // state
   const { productId } = useParams();
@@ -30,6 +30,17 @@ const Item = () => {
   });
 
   const navigate = useNavigate();
+
+  // Wraps content in a centered 80% panel when shown as a modal
+  const ModalWrapper = ({ children }) =>
+      asModal ? (
+          <div className="item-overlay">
+            <div className="item-panel">{children}</div>
+          </div>
+      ) : (
+          <>{children}</>
+      );
+
 
   useEffect(() => {
     // fetch the listing data from the backend
@@ -262,8 +273,10 @@ const Item = () => {
 
   // handle the X button click to navigate back to home
   const handleClose = () => {
-    navigate("/");
+    if (asModal) navigate(-1);
+    else navigate("/");
   };
+
 
   if (loading) {
     return <div>Loading listing...</div>;
@@ -278,10 +291,11 @@ const Item = () => {
   }
 
   return (
-    <div
-      className="container-fluid row"
-      style={{ height: "100vh", position: "relative" }}
-    >
+      <ModalWrapper>
+        <div
+            className="container-fluid row"
+            style={{ height: asModal ? "100%" : "100vh", position: "relative" }}
+        >
       {/* image Slider Section */}
       <div
         className="col-9 d-flex justify-content-center align-items-center position-relative border"
@@ -357,9 +371,9 @@ const Item = () => {
       </div>
 
       {/* Listing Details Section */}
-      <div className="col-3" style={{ height: "100vh", overflowY: "auto" }}>
-        <div className="my-2 mx-3">
-          {/* Listing Title */}
+          <div className="col-3" style={{height: asModal ? "100%" : "100vh", overflowY: "auto"}}>
+            <div className="my-2 mx-3">
+              {/* Listing Title */}
           <h1 className="listtitle">{listing.title || "No Title"}</h1>
 
           <strong>Subject:</strong> {listing.subject || "Unknown"}
@@ -525,8 +539,10 @@ const Item = () => {
           </div>
         </div>
       )}
-    </div>
+        </div>
+      </ModalWrapper>
   );
+
 };
 
 export default Item;

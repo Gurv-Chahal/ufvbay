@@ -1,6 +1,6 @@
 // Home.jsx
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import HomeSideBar from "../components/HomeSideBar.jsx";
 import ProductCards from "../components/ProductCards.jsx";
@@ -41,6 +41,8 @@ const Home = () => {
   };
 
 
+
+
   // function to fetch all listings from backend
   const fetchListings = () => {
 
@@ -67,6 +69,9 @@ const Home = () => {
       // if no subject is selected show all listings
     : listings;
 
+  const location = useLocation();
+
+
   return (
     <div>
       <Navbar onSearch={handleSearch} results={filteredItems} />
@@ -84,6 +89,7 @@ const Home = () => {
                 <div key={product.id} className="m-4">
                   <Link
                     to={`/item/${product.id}`}
+                    state={{backgroundLocation: location}}
                     className="prodcards"
                     style={{ textDecoration: "none" }}
                   >
