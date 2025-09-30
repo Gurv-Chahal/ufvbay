@@ -24,9 +24,22 @@
   box-shadow: 0 24px 64px rgba(0,0,0,.35);
 }
 
-.col-3 {
-  background: whitesmoke;
+/* --- Light mode: force white surfaces on the right panel --- */
+html:not(.dark) .details-panel {
+  --panel-bg: #ffffff;
+  background: #ffffff !important;
+  border-left-color: #e5e7eb;
 }
+
+html:not(.dark) .details-header,
+html:not(.dark) .price-cta,
+html:not(.dark) .section-card {
+  background: #ffffff;
+  border-color: #e5e7eb;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+}
+
+
 
 .user-list{
   border-radius: 10%;
