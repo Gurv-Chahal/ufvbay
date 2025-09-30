@@ -165,7 +165,7 @@ const AccountInfo = () => {
                         <button className="btn btn-primary" onClick={handleSaveClick}>
                             Save
                         </button>
-                        <button className="btn btn-secondary" onClick={handleCancelClick}>
+                        <button className="btn btn-primary" onClick={handleCancelClick}>
                             Cancel
                         </button>
                     </div>
