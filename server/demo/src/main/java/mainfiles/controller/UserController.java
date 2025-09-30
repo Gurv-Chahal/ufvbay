@@ -162,4 +162,20 @@ public class UserController {
                 // collect user dtos in a list
                 .collect(Collectors.toList());
     }
+
+
+    // Get a single user by id (returns id, name, username, email)
+    @GetMapping("/users/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
+                        org.springframework.http.HttpStatus.NOT_FOUND, "User not found: " + id));
+
+        // If you have a mapper, use it; otherwise construct the DTO directly
+        UserDTO dto = UserMapper.mapToUserDTO(user);
+        // or: new UserDTO(user.getId(), user.getName(), user.getUsername(), user.getEmail());
+
+        return ResponseEntity.ok(dto);
+    }
+
 }

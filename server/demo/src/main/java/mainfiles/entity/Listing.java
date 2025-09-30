@@ -49,7 +49,7 @@ public class Listing {
 
     // element collection specifies image urls to be stored in a different table
     @ElementCollection
-    // new table is called listing_images and it joins columns with listing_id which is a foreign key
+    // new table is called listing_images and it joins columns with listing_id which is a foreign key`
     @CollectionTable(name = "listing_images", joinColumns = @JoinColumn(name = "listing_id"))
     @Column(name = "image_url")
     // stores image urls from Cloudinary as Strings in database
