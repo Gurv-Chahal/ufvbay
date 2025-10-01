@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getUserInfo, updateUserInfo } from "../services/AuthService.js";
-import "../styles/account.css";
+import "../styles/Account.css";
 
 const AccountInfo = () => {
 
