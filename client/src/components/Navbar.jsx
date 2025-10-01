@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import ufvbaylogo from "../images/ufvbaylogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import ChatRoom from "../components/ChatRoom";
-import "../styles/navbar.css";
+import "../styles/Navbar.css";
 
 //Navbar component
 const Navbar = ({ onSearch, results }) => {

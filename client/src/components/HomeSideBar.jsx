@@ -1,5 +1,5 @@
 import "../styles/HomeSideBar.css";
-import "../styles/navbar.css";
+import "../styles/Navbar.css";
 
 import { Link, useNavigate } from "react-router-dom";
 import { isUserLoggedIn, logout } from "../services/AuthService.js";
