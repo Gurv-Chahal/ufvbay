@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 // this way it associates the jwt token for an account to a listing
 
 @RestController
-@RequestMapping("/api/listings")
+@RequestMapping("/bay/api/listings")
 @CrossOrigin("*")
 @AllArgsConstructor
 public class ListingController {

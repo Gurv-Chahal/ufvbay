@@ -27,7 +27,7 @@ allowing rest apis to function
 @RestController
 @CrossOrigin("*")
 @AllArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/bay/auth")
 public class AuthController {
 
   // fields are injected into spring context using contructor injection
