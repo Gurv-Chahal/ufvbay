@@ -3,7 +3,9 @@ import react from '@vitejs/plugin-react'
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({
+    jsxRuntime: 'classic' // ⬅️ add this
+  })],
   server: {
     port: 3000,
     strictPort: true, // keep
