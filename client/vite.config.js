@@ -6,17 +6,19 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-    strictPort: true,           // fail if 3000 is taken (helps avoid silent port changes)
+    strictPort: true, // keep
     proxy: {
-      // If your frontend calls `/api/...`, this forwards to Spring Boot :8080
-      '/api': {
+      // Your frontend calls `/bay/...` → forward to Spring Boot :8080
+      '/bay': {
         target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false,
-        // If your Spring endpoints DON'T include the /api prefix, uncomment rewrite:
-        // rewrite: (path) => path.replace(/^\/api/, ''),
+        // IMPORTANT: no rewrite here, because your backend expects `/bay/...`
+        // If you later REMOVE `/bay` from your Spring mappings, then:
+        // rewrite: (path) => path.replace(/^\/bay/, ''),
       },
-      // (Optional) if you use Spring WebSocket/STOMP at /ws or similar:
+
+      // (Optional) WebSocket example if you use it later:
       // '/ws': {
       //   target: 'http://localhost:8080',
       //   ws: true,
@@ -26,19 +28,13 @@ export default defineConfig({
   },
   optimizeDeps: {
     esbuildOptions: {
-      define: {
-        global: 'globalThis',
-      },
+      define: { global: 'globalThis' },
       plugins: [
-        NodeGlobalsPolyfillPlugin({
-          buffer: true,
-        }),
+        NodeGlobalsPolyfillPlugin({ buffer: true }),
       ],
     },
   },
   resolve: {
-    alias: {
-      global: 'globalThis',
-    },
+    alias: { global: 'globalThis' },
   },
 })

@@ -7,7 +7,7 @@ import axios from "axios";
 // use authAxios to call authentication related calls like loginAPIcall() or registerAPIcall()
 const authAxios = axios.create({
   // base url for authentication endpoints
-  baseURL: "http://localhost:8080/auth/",
+  baseURL: "/bay/auth/",
   // set default content-type to json so that the server can parse it correctly
   headers: {
     "Content-Type": "application/json",
@@ -17,7 +17,7 @@ const authAxios = axios.create({
 // use apiAxios as a general backend endpoint not related to authentication such as fetching data or listings
 const apiAxios = axios.create({
   // base url for backend endpoints
-  baseURL: "http://localhost:8080/",
+  baseURL: "/bay",
   // set default context type to json so that server can parse correctly
   headers: {
     "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export const updateUserInfo = async (updatedUser) => {
   const response = await axios.put(
 
       // url
-      "http://localhost:8080/api/users/update",
+      "/bay/api/users/update",
       // data sent to rest api
       updatedUser,
       {
@@ -123,7 +123,7 @@ export const getUserInfo = async () => {
   try {
 
     //call backend api tp get the User info
-    const response = await apiAxios.get(`api/listings/userinfo`);
+    const response = await apiAxios.get(`/bay/api/listings/userinfo`);
     // return the data in response.data
     return response.data;
 
@@ -138,7 +138,7 @@ export const getUserInfo = async () => {
 export const getUserById = async (userId) => {
   if (!userId) return null;
   try {
-    const res = await apiAxios.get(`api/users/${userId}`);
+    const res = await apiAxios.get(`/bay/api/users/${userId}`);
     return res.data;
   } catch (e) {
     console.error("getUserById failed:", e);

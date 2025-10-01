@@ -62,7 +62,7 @@ const Item = ({ asModal = false }) => {
 
         // Call getListingById endpoint in backend
         const response = await axios.get(
-          `http://localhost:8080/api/listings/${productId}`,
+          `/bay/api/listings/${productId}`,
             // include jwt authorization header so backend can authenitcate
           {
             headers: {
@@ -131,7 +131,7 @@ const Item = ({ asModal = false }) => {
         const token = localStorage.getItem("token");
 
         // send API delete request to backend to delete specific listing
-        await axios.delete(`http://localhost:8080/api/listings/${productId}`, {
+        await axios.delete(`/bay/api/listings/${productId}`, {
           // include jwt token for authentication
           headers: {
             Authorization: `Bearer ${token}`,
@@ -232,7 +232,7 @@ const Item = ({ asModal = false }) => {
       // send PUT request in listingcontroller to update the listing
       const response = await axios.put(
           // send api request to listings/listingid
-        `http://localhost:8080/api/listings/${listing.id}`,
+        `/bay/api/listings/${listing.id}`,
           // give the api call the payload data to change the new fields
         payload,
         {

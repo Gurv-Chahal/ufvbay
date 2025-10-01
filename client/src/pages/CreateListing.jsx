@@ -72,7 +72,7 @@ const CreateListing = () => {
 
       // send axios api request to CreateListing endpoint in backend
       const response = await axios.post(
-        "http://localhost:8080/api/listings",
+        "/bay/api/listings",
         // give backend the data from the form so it can create the listing
         formData,
         {
@@ -85,7 +85,7 @@ const CreateListing = () => {
       );
 
       // redirect to the listing page when submission is complete
-      navigate(`/item/${response.data.id}`);
+      navigate(`/bay/item/${response.data.id}`);
 
     } catch (error) {
       console.error("Error adding listing:", error);
