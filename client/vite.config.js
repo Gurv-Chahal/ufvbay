@@ -1,27 +1,29 @@
-// vite.config.js / vite.config.ts
+// vite.config.js
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 
 export default defineConfig({
-  plugins: [react()],               // ← no jsxRuntime override
+  plugins: [react()],               // automatic JSX runtime
+  resolve: {
+    dedupe: ['react', 'react-dom'], // guarantee single React across chunks
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react/jsx-runtime'], // ensure correct prebundle
+    force: true,                  // rebuild the dep bundle
+  },
+  build: {
+    sourcemap: true,
+
+    // TEMP: disable code-splitting to prove it's a chunk/caching issue
+    rollupOptions: {
+      output: {
+        inlineDynamicImports: true, // packs lazy chunks into one file
+      },
+    },
+  },
   server: {
     port: 3000,
     strictPort: true,
-    proxy: {
-      '/bay': { target: 'http://localhost:8080', changeOrigin: true, secure: false },
-    },
+    proxy: { '/bay': { target: 'http://localhost:8080', changeOrigin: true, secure: false } },
   },
-  optimizeDeps: {
-    esbuildOptions: {
-      define: { global: 'globalThis' },
-      plugins: [NodeGlobalsPolyfillPlugin({ buffer: true })],
-    },
-  },
-  resolve: {
-    alias: { global: 'globalThis' },
-    // prevent duplicate React copies sneaking in
-    dedupe: ['react', 'react-dom'],
-  },
-  build: { sourcemap: true },       // optional: nicer prod stacktraces
 })

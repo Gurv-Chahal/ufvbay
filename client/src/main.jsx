@@ -2,6 +2,15 @@ import { StrictMode } from "react";
 
 import axios from "axios";
 
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations?.().then((regs) => {
+        regs.forEach((r) => r.unregister());
+    });
+}
+// also recommend a hard reload once in the browser: open DevTools → Network → check “Disable cache” → reload.
+
+
+
 if (import.meta.env.DEV) {
     import('react/jsx-runtime').then(mod => {
         console.log('jsx-runtime:', typeof mod.jsx, typeof mod.jsxs);
