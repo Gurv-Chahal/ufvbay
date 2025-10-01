@@ -75,8 +75,11 @@ public class SpringSecurityConfig {
                         .requestMatchers("/bay/auth/**").permitAll()
 
                         // 🔑 Public browse: listings GET (both with and without /bay)
-                        .requestMatchers(HttpMethod.GET, "/api/listings", "/api/listings/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/bay/api/listings", "/bay/api/listings/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/bay/api/listings",
+                                "/bay/api/listings/",
+                                "/bay/api/listings/**"
+                        ).permitAll()
 
                         // allow CORS preflight
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()

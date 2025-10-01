@@ -38,7 +38,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
 
         // bypass JWT processing for /auth/** endpoints as stated in SpringSecurityConfig class
-        if (path.startsWith("/bay/auth/") || path.startsWith("/auth/")) {
+        if (path.startsWith("/bay/auth") || path.startsWith("/auth")) {
             filterChain.doFilter(request, response);
             return;
         }
