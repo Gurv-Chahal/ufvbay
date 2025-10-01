@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AccountNavBar from "../components/AccountNavBar.jsx";
 import AccountSideBar from "../components/AccountSideBar.jsx";
-import axios from "Axios";
+import axios from "axios";
 import Dropzone from "react-dropzone";
 import Map from "../components/Map.jsx";
 import "../public/CreateListing.css";

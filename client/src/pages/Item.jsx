@@ -5,7 +5,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import Map from "../components/Map.jsx";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "Axios";
+import axios from "axios";
 import { getUserById } from "../services/AuthService.js"; // adjust path if needed
 
 

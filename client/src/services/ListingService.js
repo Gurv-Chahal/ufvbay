@@ -1,7 +1,7 @@
 // Going to use this file to store methods that are going to send api requests to backend for
 // basic operations on the website. For example uploading a book.
 
-import axios from "Axios";
+import axios from "axios";
 import { getToken } from "./AuthService.js";
 
 
