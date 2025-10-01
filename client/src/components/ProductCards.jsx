@@ -1,4 +1,4 @@
-import "../public/ProductCards.css";
+import "../styles/ProductCards.css";
 
 function ProductCards(props) {
   //ProductCards component takes in a  value from the object

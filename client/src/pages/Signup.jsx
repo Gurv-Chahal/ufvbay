@@ -1,4 +1,4 @@
-import "../public/Auth.css";
+import "../styles/Auth.css";
 import ufvbaylogo from "../images/ufvbaylogo.png";
 import signupimg from "../images/signupimg-Photoroom.png";
 import { Link, useNavigate } from "react-router-dom";

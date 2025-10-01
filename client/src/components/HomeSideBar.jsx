@@ -1,5 +1,5 @@
-import "../public/HomeSideBar.css";
-import "../public/navbar.css";
+import "../styles/HomeSideBar.css";
+import "../styles/navbar.css";
 
 import { Link, useNavigate } from "react-router-dom";
 import { isUserLoggedIn, logout } from "../services/AuthService.js";
@@ -135,7 +135,7 @@ const HomeSideBar = ({ onSubjectChange }) => {
                   >
                       <i className="bi bi-box-arrow-right px-3" style={{fontSize: "30px"}}/>
                       Log Out
-                  </button>
+                  </button>``
               )}
           </div>
       </div>

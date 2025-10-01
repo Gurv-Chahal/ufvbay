@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../public/Item.css";
+import "../styles/Item.css";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";

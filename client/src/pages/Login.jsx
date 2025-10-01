@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../public/Auth.css";
+import "../styles/Auth.css";
 import signupimg from "../images/signupimg-Photoroom.png";
 import ufvbaylogo from "../images/ufvbaylogo.png";
 import { Link, useNavigate } from "react-router-dom";

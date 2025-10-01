@@ -1,4 +1,4 @@
-import "../public/HomeSideBar.css";
+import "../styles/HomeSideBar.css";
 import { Link } from "react-router-dom";
 
 

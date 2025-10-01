@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { getToken, getUserInfo } from "../services/AuthService.js";
-import "../public/ChatRoom.css";
+import "../styles/ChatRoom.css";
 
 const ChatRoom = () => {
 

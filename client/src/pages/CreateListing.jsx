@@ -4,7 +4,7 @@ import AccountSideBar from "../components/AccountSideBar.jsx";
 import axios from "axios";
 import Dropzone from "react-dropzone";
 import Map from "../components/Map.jsx";
-import "../public/CreateListing.css";
+import "../styles/CreateListing.css";
 import { useNavigate } from "react-router-dom";
 
 const CreateListing = () => {

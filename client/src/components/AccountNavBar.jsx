@@ -1,6 +1,6 @@
 import ufvbaylogo from "../images/ufvbaylogo.png";
 import { Link } from "react-router-dom";
-import "../public/navbar.css";
+import "../styles/navbar.css";
 
 //Navbar component
 const AccountNavBar = () => {
