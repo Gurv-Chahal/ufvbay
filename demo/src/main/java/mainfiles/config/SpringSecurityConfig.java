@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,27 +63,28 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        // configure http
         http
-                // disable csrf
                 .csrf(csrf -> csrf.disable())
-                // config auth rules for http requests
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // allow all requests to websocket endpoints
+                        // WebSocket (keep if used)
                         .requestMatchers("/ws/**").permitAll()
-                        // allow all requests to authentication endpoints
+
+                        // 🔑 Auth endpoints (both with and without /bay, to be safe)
                         .requestMatchers("/auth/**").permitAll()
-                        // allow all get requests to listing endpoints
-                        .requestMatchers(HttpMethod.GET, "/api/listings/**").permitAll()
-                        // require authentication for all other endpoints
+                        .requestMatchers("/bay/auth/**").permitAll()
+
+                        // 🔑 Public browse: listings GET (both with and without /bay)
+                        .requestMatchers(HttpMethod.GET, "/api/listings", "/api/listings/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/bay/api/listings", "/bay/api/listings/**").permitAll()
+
+                        // allow CORS preflight
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // everything else requires auth
                         .anyRequest().authenticated()
                 )
-
-                // custm filter before default username/password filter
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-
-                // enable CORS
                 .cors(Customizer.withDefaults());
 
         return http.build();
