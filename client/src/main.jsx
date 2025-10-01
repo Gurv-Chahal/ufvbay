@@ -1,9 +1,4 @@
 import { StrictMode } from "react";
-import "./http-logger";                 // ← install BEFORE anything else
-import { createRoot } from "react-dom/client";
-import App from "./App.jsx";
-import "bootstrap/dist/css/bootstrap.min.css";
-
 
 import axios from "axios";
 
@@ -65,6 +60,21 @@ if (!window.__HTTP_LOGGER_INSTALLED__) {
     window.__HTTP_LOGGER_INSTALLED__ = true;
 }
 // ---- end logging ----
+
+
+
+
+
+
+
+
+
+
+
+
+import { createRoot } from "react-dom/client";
+import App from "./App.jsx";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 
 
