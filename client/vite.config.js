@@ -1,42 +1,27 @@
+// vite.config.js / vite.config.ts
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 
 export default defineConfig({
-  plugins: [react({
-    jsxRuntime: 'classic' // ⬅️ add this
-  })],
+  plugins: [react()],               // ← no jsxRuntime override
   server: {
     port: 3000,
-    strictPort: true, // keep
+    strictPort: true,
     proxy: {
-      // Your frontend calls `/bay/...` → forward to Spring Boot :8080
-      '/bay': {
-        target: 'http://localhost:8080',
-        changeOrigin: true,
-        secure: false,
-        // IMPORTANT: no rewrite here, because your backend expects `/bay/...`
-        // If you later REMOVE `/bay` from your Spring mappings, then:
-        // rewrite: (path) => path.replace(/^\/bay/, ''),
-      },
-
-      // (Optional) WebSocket example if you use it later:
-      // '/ws': {
-      //   target: 'http://localhost:8080',
-      //   ws: true,
-      //   changeOrigin: true,
-      // },
+      '/bay': { target: 'http://localhost:8080', changeOrigin: true, secure: false },
     },
   },
   optimizeDeps: {
     esbuildOptions: {
       define: { global: 'globalThis' },
-      plugins: [
-        NodeGlobalsPolyfillPlugin({ buffer: true }),
-      ],
+      plugins: [NodeGlobalsPolyfillPlugin({ buffer: true })],
     },
   },
   resolve: {
     alias: { global: 'globalThis' },
+    // prevent duplicate React copies sneaking in
+    dedupe: ['react', 'react-dom'],
   },
+  build: { sourcemap: true },       // optional: nicer prod stacktraces
 })
