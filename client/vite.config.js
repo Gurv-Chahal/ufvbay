@@ -3,10 +3,15 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  plugins: [react()],                 // automatic JSX runtime
+  plugins: [
+    react({
+      // ⬅️ force classic transform everywhere (no jsx/jsxs in output)
+      jsxRuntime: 'classic'
+    })
+  ],
   resolve: { dedupe: ['react', 'react-dom'] },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react/jsx-runtime'],
+    include: ['react', 'react-dom'],
     force: true,
   },
   build: { sourcemap: true },

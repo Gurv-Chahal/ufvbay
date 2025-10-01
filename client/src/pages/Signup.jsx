@@ -1,3 +1,5 @@
+/* @jsxRuntime classic */
+import React from 'react';
 import "../styles/Auth.css";
 import ufvbaylogo from "../images/ufvbaylogo.png";
 import signupimg from "../images/signupimg-Photoroom.png";

@@ -1,3 +1,5 @@
+/* @jsxRuntime classic */
+import React from 'react';
 import { useState } from "react";
 import "../styles/Auth.css";
 import signupimg from "../images/signupimg-Photoroom.png";

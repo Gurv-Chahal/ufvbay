@@ -1,3 +1,6 @@
+
+/* @jsxRuntime classic */
+import React from 'react';
 import "../styles/HomeSideBar.css";
 import "../styles/Navbar.css";
 

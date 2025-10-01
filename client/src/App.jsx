@@ -1,3 +1,6 @@
+
+/* @jsxRuntime classic */
+import React from 'react';
 import { useEffect, useState } from "react";
 import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
 import Home from "./pages/Home.jsx";

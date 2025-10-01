@@ -1,9 +1,10 @@
+/* @jsxRuntime classic */
+import React from 'react';
 import { useState, useEffect } from "react";
 import { getUserListings } from "../services/ListingService.js";
 import ProductCards from "../components/ProductCards.jsx";
 import { Link } from "react-router-dom";
 /* @jsxRuntime classic */
-import React from 'react';
 
 
 const UserListings = () => {

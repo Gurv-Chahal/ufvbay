@@ -1,3 +1,6 @@
+
+/* @jsxRuntime classic */
+import React from 'react';
 import { useState } from "react";
 import AccountNavBar from "../components/AccountNavBar.jsx";
 import AccountSideBar from "../components/AccountSideBar.jsx";

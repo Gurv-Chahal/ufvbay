@@ -1,3 +1,5 @@
+/* @jsxRuntime classic */
+import React from 'react';
 import { useState, useEffect } from "react";
 import "../styles/Item.css";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";

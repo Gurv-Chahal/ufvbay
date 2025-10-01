@@ -6,7 +6,8 @@ import Dropzone from "react-dropzone";
 import Map from "../components/Map.jsx";
 import "../styles/CreateListing.css";
 import { useNavigate } from "react-router-dom";
-
+/* @jsxRuntime classic */
+import React from 'react';
 const CreateListing = () => {
   const navigate = useNavigate();
 
