@@ -123,7 +123,7 @@ export const getUserInfo = async () => {
   try {
 
     //call backend api tp get the User info
-    const response = await apiAxios.get(`/bay/api/listings/userinfo`);
+    const response = await apiAxios.get(`/api/listings/userinfo`);
     // return the data in response.data
     return response.data;
 
@@ -138,7 +138,7 @@ export const getUserInfo = async () => {
 export const getUserById = async (userId) => {
   if (!userId) return null;
   try {
-    const res = await apiAxios.get(`/bay/api/users/${userId}`);
+    const res = await apiAxios.get(`/api/users/${userId}`);
     return res.data;
   } catch (e) {
     console.error("getUserById failed:", e);

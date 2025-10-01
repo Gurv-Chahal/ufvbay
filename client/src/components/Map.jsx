@@ -16,12 +16,15 @@ const Map = ({ position, setPosition }) => {
     useMapEvents({
       click: (e) => {
         // Set position state to the clicked coordinates on map
-        setPosition([e.latlng.lat, e.latlng.lng]);
-        console.log(position[0]);
+        const next = [e.latlng.lat, e.latlng.lng];
+        setPosition(next);
+        // Avoid reading position[0] while position may still be null or stale
+        console.log(next[0], next[1]);
       },
     });
     return null;
   };
+
 
   return (
     <MapContainer

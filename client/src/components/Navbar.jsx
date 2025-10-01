@@ -46,7 +46,7 @@ const Navbar = ({ onSearch, results }) => {
   // function to handle when user clicks on search result
   const handleResultClick = (item) => {
     setShowDropdown(false);
-    navigate(`/bay/item/${item.id}`);
+    navigate(`/item/${item.id}`); // ✅ frontend route
   };
 
 
