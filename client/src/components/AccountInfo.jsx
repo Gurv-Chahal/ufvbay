@@ -1,3 +1,6 @@
+/* @jsxRuntime classic */
+import React from 'react';
+
 import { useState, useEffect } from "react";
 import { getUserInfo, updateUserInfo } from "../services/AuthService.js";
 import "../styles/Account.css";

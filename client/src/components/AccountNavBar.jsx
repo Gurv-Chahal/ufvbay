@@ -1,3 +1,6 @@
+/* @jsxRuntime classic */
+import React from 'react';
+
 import ufvbaylogo from "../images/ufvbaylogo.png";
 import { Link } from "react-router-dom";
 import "../styles/Navbar.css";

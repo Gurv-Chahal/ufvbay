@@ -1,3 +1,7 @@
+
+/* @jsxRuntime classic */
+import React from 'react';
+
 import {
   MapContainer,
   TileLayer,

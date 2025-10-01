@@ -1,3 +1,6 @@
+/* @jsxRuntime classic */
+import React from 'react';
+
 import "../styles/HomeSideBar.css";
 import { Link } from "react-router-dom";
 

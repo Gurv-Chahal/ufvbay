@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
-
+/* @jsxRuntime classic */
+import React from 'react';
 import axios from "axios";
 
 if ('serviceWorker' in navigator) {

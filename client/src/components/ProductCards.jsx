@@ -1,3 +1,6 @@
+/* @jsxRuntime classic */
+import React from 'react';
+
 import "../styles/ProductCards.css";
 
 function ProductCards(props) {
