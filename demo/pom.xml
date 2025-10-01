@@ -122,15 +122,6 @@
 
 	</dependencies>
 
-	<build>
-		<sourceDirectory>demo/src/main/java</sourceDirectory>
-		<testSourceDirectory>demo/src/test/java</testSourceDirectory>
-		<resources>
-			<resource>
-				<directory>demo/src/main/resources</directory>
-			</resource>
-		</resources>
-	</build>
 
 
 	<build>
