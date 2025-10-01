@@ -6,6 +6,10 @@ import HomeSideBar from "../components/HomeSideBar.jsx";
 import ProductCards from "../components/ProductCards.jsx";
 import { getAllListings } from "../services/ListingService.js";
 
+/* @jsxRuntime classic */
+import React from 'react';
+
+
 const Home = () => {
 
 
