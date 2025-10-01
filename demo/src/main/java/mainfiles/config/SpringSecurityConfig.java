@@ -69,25 +69,15 @@ public class SpringSecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/ws/**").permitAll()
-
-                        // Auth endpoints open
                         .requestMatchers("/bay/auth/**").permitAll()
-                        .requestMatchers("/auth/**").permitAll() // keep for safety during tests
 
-                        // Public browse (GET) — with and without /bay during diagnosis
-                        .requestMatchers(HttpMethod.GET,
-                                "/bay/api/listings", "/bay/api/listings/", "/bay/api/listings/**"
-                        ).permitAll()
-                        .requestMatchers(HttpMethod.GET,
-                                "/api/listings", "/api/listings/", "/api/listings/**"
-                        ).permitAll()
+                        // Make ALL GETs under /bay/api public (includes /bay/api/listings and kids)
+                        .requestMatchers(HttpMethod.GET, "/bay/api/**").permitAll()
 
-                        // CORS preflight
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
                         .anyRequest().authenticated()
                 )
-                .exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPoint))   // <-- add this
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPoint))
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

@@ -31,43 +31,42 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     // Processes each incoming http request and validate JWT
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws ServletException, IOException {
 
-        String path = request.getServletPath();
+        // Use servlet path for matching (cleaner)
+        String path = req.getServletPath();
 
         // Bypass auth endpoints
         if (path.startsWith("/bay/auth") || path.startsWith("/auth")) {
-            chain.doFilter(request, response);
+            chain.doFilter(req, res);
             return;
         }
 
-        String token = getTokenFromRequest(request);
-
-        if (!StringUtils.hasText(token)) {
-            // No token → don't block; security config will decide (public vs protected)
-            chain.doFilter(request, response);
+        // If no token → just continue; public GETs will be permitted by the rules above
+        String token = getTokenFromRequest(req);
+        if (!org.springframework.util.StringUtils.hasText(token)) {
+            chain.doFilter(req, res);
             return;
         }
 
         try {
             if (jwtToken.validateToken(token)) {
                 String username = jwtToken.getUsername(token);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                var ud = userDetailsService.loadUserByUsername(username);
+                var auth = new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+                        ud, null, ud.getAuthorities());
+                auth.setDetails(new org.springframework.security.web.authentication.WebAuthenticationDetailsSource().buildDetails(req));
+                org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(auth);
             } else {
-                SecurityContextHolder.clearContext();
+                org.springframework.security.core.context.SecurityContextHolder.clearContext();
             }
         } catch (Exception e) {
-            SecurityContextHolder.clearContext();
+            org.springframework.security.core.context.SecurityContextHolder.clearContext();
         }
 
-        chain.doFilter(request, response);
+        chain.doFilter(req, res);
     }
-
 
 
 
