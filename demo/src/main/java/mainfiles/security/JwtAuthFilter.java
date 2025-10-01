@@ -31,58 +31,43 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     // Processes each incoming http request and validate JWT
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+            throws ServletException, IOException {
 
-        // get URI
-        String path = request.getRequestURI();
+        String path = request.getServletPath();
 
-        // bypass JWT processing for /auth/** endpoints as stated in SpringSecurityConfig class
+        // Bypass auth endpoints
         if (path.startsWith("/bay/auth") || path.startsWith("/auth")) {
-            filterChain.doFilter(request, response);
+            chain.doFilter(request, response);
             return;
         }
 
-        // extract jwt from authorization header given in api request from frontend
-        String token  = getTokenFromRequest(request);
-        System.out.println("Processing token: " + token);
+        String token = getTokenFromRequest(request);
 
-        // if token is not empty
-        if (StringUtils.hasText(token)) {
-
-            try {
-                // if token is validated
-                if (jwtToken.validateToken(token)) {
-
-                    // get username from token
-                    String username = jwtToken.getUsername(token);
-                    System.out.println("Valid token for user: " + username);
-
-                    // get user details from token
-                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities()
-                    );
-
-                    // create authenitcation token from user details
-                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
-                    // if token is not validated
-                } else {
-                    System.out.println("Invalid token.");
-                }
-            } catch (Exception e) {
-                System.out.println("Token validation error: " + e.getMessage());
-            }
-            // if no token is found and empty
-        } else {
-            System.out.println("No token found in request.");
+        if (!StringUtils.hasText(token)) {
+            // No token → don't block; security config will decide (public vs protected)
+            chain.doFilter(request, response);
+            return;
         }
 
-        // continue filter chain by passing request and response to next filter
-        filterChain.doFilter(request, response);
+        try {
+            if (jwtToken.validateToken(token)) {
+                String username = jwtToken.getUsername(token);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                UsernamePasswordAuthenticationToken auth =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            } else {
+                SecurityContextHolder.clearContext();
+            }
+        } catch (Exception e) {
+            SecurityContextHolder.clearContext();
+        }
+
+        chain.doFilter(request, response);
     }
+
 
 
 

@@ -65,34 +65,33 @@ public class SpringSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // WebSocket (keep if used)
                         .requestMatchers("/ws/**").permitAll()
 
-                        // 🔑 Auth endpoints (both with and without /bay, to be safe)
-                        .requestMatchers("/auth/**").permitAll()
+                        // Auth endpoints open
                         .requestMatchers("/bay/auth/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll() // keep for safety during tests
 
-                        // 🔑 Public browse: listings GET (both with and without /bay)
+                        // Public browse (GET) — with and without /bay during diagnosis
                         .requestMatchers(HttpMethod.GET,
-                                "/bay/api/listings",
-                                "/bay/api/listings/",
-                                "/bay/api/listings/**"
+                                "/bay/api/listings", "/bay/api/listings/", "/bay/api/listings/**"
+                        ).permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/api/listings", "/api/listings/", "/api/listings/**"
                         ).permitAll()
 
-                        // allow CORS preflight
+                        // CORS preflight
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // everything else requires auth
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-                .cors(Customizer.withDefaults());
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPoint))   // <-- add this
+                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
 
 
     @Bean
@@ -110,23 +109,20 @@ public class SpringSecurityConfig {
     // had to create this to stop CORS error in terminal
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
+        CorsConfiguration cfg = new CorsConfiguration();
+        cfg.setAllowedOrigins(Arrays.asList(
+                "http://localhost:3000",
+                "https://ufvbay-busuy.ondigitalocean.app"  // <-- add this
+        ));
+        cfg.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS","PATCH"));
+        cfg.setAllowedHeaders(Arrays.asList("*"));
+        cfg.setAllowCredentials(true);
 
-        // allow access to localhost:3000
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        // allow get, post, put, etc apis through cors
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        // allow any header like Authorization
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true);
-
-
-        // allow every endpoint through CORS
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-
-        return source;
+        UrlBasedCorsConfigurationSource src = new UrlBasedCorsConfigurationSource();
+        src.registerCorsConfiguration("/**", cfg);
+        return src;
     }
+
 
 
 
