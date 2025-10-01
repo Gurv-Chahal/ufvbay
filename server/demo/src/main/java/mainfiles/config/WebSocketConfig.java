@@ -14,6 +14,8 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 // this interface contains methods for customizing websocket endpoints
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+    int randomvariable;
+
     // must intercept websocket handshake request to authenticate JWT tokens
     @Autowired
     private JwtHandshakeHandler jwtHandshakeInterceptor;

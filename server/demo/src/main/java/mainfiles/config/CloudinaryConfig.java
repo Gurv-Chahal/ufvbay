@@ -1,7 +1,7 @@
 package mainfiles.config;
 
 // this class is for Cloudinary api used to upload images on websites
-
+// testing comments
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -38,5 +38,7 @@ public class CloudinaryConfig {
         ));
         return cloudinary;
     }
+
+
 
 }
