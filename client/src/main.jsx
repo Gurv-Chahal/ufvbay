@@ -2,6 +2,14 @@ import { StrictMode } from "react";
 
 import axios from "axios";
 
+if (import.meta.env.DEV) {
+    import('react/jsx-runtime').then(mod => {
+        console.log('jsx-runtime:', typeof mod.jsx, typeof mod.jsxs);
+    });
+}
+
+
+
 // ---- HTTP logging (install once) ----
 if (!window.__HTTP_LOGGER_INSTALLED__) {
     // 1) Log default axios instance requests/responses
