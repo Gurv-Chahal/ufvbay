@@ -138,7 +138,7 @@ const HomeSideBar = ({ onSubjectChange }) => {
                   >
                       <i className="bi bi-box-arrow-right px-3" style={{fontSize: "30px"}}/>
                       Log Out
-                  </button>``
+                  </button>
               )}
           </div>
       </div>
