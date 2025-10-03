@@ -2,6 +2,8 @@ import { StrictMode } from "react";
 /* @jsxRuntime classic */
 import React from 'react';
 import axios from "axios";
+import ErrorBoundary from "./ErrorBoundary.jsx";
+
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations?.().then((regs) => {
@@ -101,6 +103,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 createRoot(document.getElementById("root")).render(
 
-    <App />
-
+    <React.StrictMode>
+        <ErrorBoundary><App /></ErrorBoundary>
+    </React.StrictMode>
 );
