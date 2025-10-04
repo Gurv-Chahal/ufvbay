@@ -1,3 +1,9 @@
+
+:root {
+    --nav-height: 64px;
+}
+
+
 .gradient-button {
   color: black;
   border: none;
