@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ufvbaylogo from "../images/ufvbaylogo.png";
 import { Link, useNavigate } from "react-router-dom";
-import ChatRoom from "../components/ChatRoom";
 import "../styles/Navbar.css";
 
 //Navbar component
@@ -10,7 +9,7 @@ const Navbar = ({ onSearch, results }) => {
   // state
   const [searchQuery, setSearchQuery] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showChatRoom, setShowChatRoom] = useState(false);
+  // const [showChatRoom, setShowChatRoom] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
@@ -50,11 +49,11 @@ const Navbar = ({ onSearch, results }) => {
   };
 
 
-  // function to toggle visibility of chat box
-  const toggleChatRoom = () => {
-    // toggle state
-    setShowChatRoom(!showChatRoom);
-  };
+  // // function to toggle visibility of chat box
+  // const toggleChatRoom = () => {
+  //   // toggle state
+  //   setShowChatRoom(!showChatRoom);
+  // };
 
   return (
       <nav
