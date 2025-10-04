@@ -85,5 +85,32 @@
   color: #0f172a;
 }
 
+.home-sidebar {
+    /* anchor the fixed sidebar directly under the navbar */
+    top: var(--nav-height);
+    left: 0;
+    height: calc(100dvh - var(--nav-height));
+    width: clamp(220px, 16vw, 280px);      /* prevents Bootstrap cols from fighting fixed layout */
+    display: flex;
+    flex-direction: column;
+    padding: 8px 12px;
+    overflow-y: auto;
+    z-index: 1030;                          /* above content, below nav dropdowns */
+}
+
+
+/* kill the large Bootstrap vertical margins inside the rail */
+.home-sidebar .btn { margin: 0 !important; }
+.home-sidebar .btn + .btn,
+.home-sidebar .btn + .dropdown,
+.home-sidebar .dropdown + .btn { margin-top: 8px !important; }
+
+/* dropdown should render cleanly in a fixed aside */
+.home-sidebar .dropdown-menu {
+    position: absolute;
+    inset: auto auto auto 0;
+    z-index: 1040;
+}
+
 
 
