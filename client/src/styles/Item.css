@@ -352,6 +352,27 @@ html:not(.dark) .section-card {
 .muted { color: #6b7280; }
 .dark .muted, .dark-mode .muted { color: #9ca3af; }
 
+
+/* Listing description readability */
+.desc {
+  white-space: pre-wrap;         /* keep \n from DB and wrap */
+  overflow-wrap: anywhere;       /* break long words/URLs */
+  word-break: break-word;
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+/* Option A: line clamp (default collapsed state) */
+.desc--clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;         /* show ~6 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+
+
 /* Responsive tweaks */
 @media (max-width: 1400px) {
   .media-img { max-width: 66%; }
