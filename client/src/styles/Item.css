@@ -369,11 +369,11 @@ html:not(.dark) .section-card {
   padding: 12px 14px 14px;
 }
 
-/* scroll container – height you can tune (e.g., 14–18rem) */
+/* === Listing Description: size-to-content, scroll only if long === */
 .details-panel .section-card .desc.desc--scroll {
-  max-height: 16rem;            /* clamp height */
-  height: 16rem;                /* ensure a scroll box even if parent tries to expand */
-  overflow: auto;               /* show vertical scrollbar when needed */
+  height: auto !important;                /* shrink to content */
+  max-height: min(14rem, 40vh);           /* cap so it never runs off the page */
+  overflow-y: auto;                       /* scrollbar appears only when needed */
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   scrollbar-gutter: stable both-edges;
