@@ -155,3 +155,18 @@
     top: 0;
     border-radius: 10px;
 }
+
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:disabled {
+    color: #0f172a !important;   /* black */
+}
+
+/* If your button is an <a> or contains an <a>/<span>, force those too */
+.btn-primary a,
+.btn-primary span {
+    color: #0f172a !important;
+}
