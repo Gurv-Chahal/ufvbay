@@ -362,14 +362,13 @@ html:not(.dark) .section-card {
   font-size: 0.95rem;
 }
 
-/* Option A: line clamp (default collapsed state) */
-.desc--clamp {
-  display: -webkit-box;
-  -webkit-line-clamp: 6;         /* show ~6 lines */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/* Option B: scroll area (use instead of clamp if you prefer) */
+.desc--scroll {
+  max-height: 16rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: .25rem;         /* room for scrollbar */
 }
-
 
 
 

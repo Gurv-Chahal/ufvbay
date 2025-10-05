@@ -400,8 +400,8 @@ const Item = ({ asModal = false }) => {
 
           {/* -------- RIGHT: clean details panel -------- */}
           <aside
-              className="col-5 col-xl-5 details-panel"
-              style={{height: asModal ? "100%" : "100vh"}}
+          className="col-5 col-xl-5 details-panel"
+          style={{ height: asModal ? "100%" : "100vh" }}
           >
             {/* header */}
             <header className="details-header">
@@ -457,25 +457,12 @@ const Item = ({ asModal = false }) => {
             </section>
 
             {/* description */}
-            <div className="section-card">
-              <div className="section-card__header">Listing Description</div>
-              <div className="section-card__body">
-                <div className={`desc ${descExpanded ? "" : "desc--clamp"}`}>
-                  {listing?.description || "No description provided."}
-                </div>
-
-                {/* Toggle (use this for clamp). Remove this block if you prefer the scroll style. */}
-                {listing?.description && listing.description.length > 180 && (
-                    <button
-                        type="button"
-                        className="btn btn-link p-0 mt-2"
-                        onClick={() => setDescExpanded(v => !v)}
-                    >
-                      {descExpanded ? "Show less" : "Read more"}
-                    </button>
-                )}
+            <section className="section-card">
+              <div className="section-title static">Listing Description</div>
+              <div className="desc desc--scroll">
+                {listing?.description || "No description provided."}
               </div>
-            </div>
+            </section>
 
             {/* owner actions */}
             {isOwner && (
