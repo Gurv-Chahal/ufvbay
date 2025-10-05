@@ -1,0 +1,82 @@
+.dropzone {
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  border: 1px dashed var(--input-border);
+}
+
+.dropzone:hover {
+  background-color: var(--dropzone-hover);
+}
+
+.dropzone p {
+  color: var(--accent);
+  font-family: Lato, sans-serif;
+  font-size: 1.2rem;
+}
+
+:root {
+  --page-bg: #ffffff;        /* was #f0f0f0 */
+  --card-bg: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --input-bg: #ffffff;       /* was #e0e0e0 */
+  --input-border: #e2e8f0;
+  --accent: #166534;
+  --dropzone-bg: #ffffff;    /* was #f9f9f9 */
+  --dropzone-hover: #e6f4ea; /* slight tint on hover */
+}
+
+/* Make native controls switch correctly per mode */
+.listing-page { color-scheme: light; }
+.dark .listing-page,
+.dark-mode .listing-page { color-scheme: dark; }
+
+/* Support either .dark or .dark-mode on <body> */
+.dark, .dark-mode {
+  --page-bg: #0b1220;        /* deep navy */
+  --card-bg: #111827;        /* slate-900 */
+  --text: #e5edf5;           /* near-white */
+  --muted: #94a3b8;          /* slate-400 */
+  --input-bg: #0f172a;       /* slate-900/800 blend */
+  --input-border: #1f2937;   /* slate-800 */
+  --accent: #22c55e;         /* lighter green in dark */
+  --dropzone-bg: #0f172a;
+  --dropzone-hover: #0b1f15;
+}
+
+/* Also respect system theme if no class is toggled */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-bg: #0b1220;
+    --card-bg: #111827;
+    --text: #e5edf5;
+    --muted: #94a3b8;
+    --input-bg: #0f172a;
+    --input-border: #1f2937;
+    --accent: #22c55e;
+    --dropzone-bg: #0f172a;
+    --dropzone-hover: #0b1f15;
+  }
+}
+
+
+
+/* Headings & subtle dividers */
+.listing-page h1 {
+  color: var(--text);
+}
+.listing-divider {
+  border-bottom: 1px solid var(--input-border);
+}
+
+
+/* Preview thumbnails look fine in either mode */
+.preview-img {
+  width: 150px;
+  margin: 0 8px 10px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--input-border);
+}

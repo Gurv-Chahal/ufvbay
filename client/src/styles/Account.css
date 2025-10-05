@@ -1,0 +1,157 @@
+.account-container {
+    max-width: 800px;
+    max-height: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+    font-family: Arial, sans-serif;
+
+    background: #ffffff !important;
+    color: #0f172a !important;          /* dark text on white */
+    color-scheme: only light;           /* form controls render light */
+    isolation: isolate;                 /* keep ancestor effects out */
+}
+
+.account-container h1,
+.account-container p,
+.account-container label,
+.account-container strong {
+    color: #0f172a !important;
+}
+
+.account-header {
+    margin-bottom: 20px;
+    text-align: center;
+
+    background: transparent !important;
+    color: #0f172a !important;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
+}
+
+.account-details .form-group {
+    margin: 10px 0;
+}
+
+.account-details label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.account-details input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.account-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.account-actions .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/*.btn-primary {*/
+/*    background-color: #4caf50;*/
+/*    color: white;*/
+/*}*/
+
+/*.btn-primary:hover {*/
+/*    background-color: #45a049;*/
+/*}*/
+
+/*.btn-secondary {*/
+/*    background-color: #f44336;*/
+/*    color: white;*/
+/*}*/
+
+/*.btn-secondary:hover {*/
+/*    background-color: #d32f2f;*/
+/*}*/
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
+
+                                                       /* CSS */
+.btn-primary {
+    padding: 0.6em 2em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.btn-primary:before {
+    content: "";
+    background: linear-gradient(
+            45deg,
+            #ff0000,
+            #ff7300,
+            #fffb00,
+            #48ff00,
+            #00ffd5,
+            #002bff,
+            #7a00ff,
+            #ff00c8,
+            #ff0000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-button-85 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+}
+
+@keyframes glowing-button-primary {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 400% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.btn-primary:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #222;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}

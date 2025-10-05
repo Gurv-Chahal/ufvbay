@@ -1,0 +1,98 @@
+@media (max-width: 767.98px) {
+  .search-bar {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .search-bar {
+    width: 50%;
+  }
+}
+
+.navbar-fixed {
+  margin-top: 100px;
+}
+
+/* Dark mode for the Bootstrap navbar */
+:root.dark .navbar {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Links, brand, buttons, toggler, form controls */
+:root.dark .navbar .navbar-brand,
+:root.dark .navbar .nav-link,
+:root.dark .navbar .btn,
+:root.dark .navbar .navbar-toggler,
+:root.dark .navbar .form-control {
+  color: var(--text) !important;
+  fill: var(--text) !important; /* for SVG icons */
+}
+
+:root.dark .navbar .nav-link:hover,
+:root.dark .navbar .navbar-brand:hover {
+  color: var(--accent) !important;
+}
+
+:root.dark .navbar .form-control {
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+:root.dark .navbar .form-control::placeholder {
+  color: var(--muted);
+}
+
+/* If you use .navbar-light/.navbar-dark classes, neutralize them in dark mode */
+:root.dark .navbar.navbar-light,
+:root.dark .navbar.navbar-dark {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+}
+
+/* Dark mode: make the search input focus ring/border white */
+:root.dark .navbar .form-control:focus,
+:root.dark .navbar .form-control:focus-visible {
+  border-color: #fff !important;
+  box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .25) !important; /* soft white glow */
+  outline: none;                     /* suppress native blue outline */
+  background: var(--surface);
+  color: var(--text);
+}
+
+:root.dark .navbar .form-control::placeholder {
+  color: var(--muted);
+}
+
+:root.dark .navbar .btn-outline-success {
+  /* Bootstrap 5 buttons are driven by these vars */
+  --bs-btn-color: #fff;
+  --bs-btn-border-color: #fff;
+  --bs-btn-hover-border-color: #fff;
+  --bs-btn-active-bg: #fff;
+  --bs-btn-active-color: #0f172a;
+  --bs-btn-active-border-color: #fff;
+  --bs-btn-focus-shadow-rgb: 255,255,255;
+}
+
+:root.dark .navbar .btn-outline-success i {
+  color: inherit;
+}
+
+
+/* Make the person icon white (wins over the inline black) */
+:root.dark .navbar .btn.border-0 > a .bi-person {
+  color: #fff !important;
+}
+
+/* Nice focus state for keyboard users */
+:root.dark .navbar .btn.border-0 > a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 .2rem rgba(255,255,255,.25);
+}
+
+
+
+
+/* Keep your existing rules (e.g., .navbar-fixed) */

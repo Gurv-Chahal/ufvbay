@@ -1,0 +1,111 @@
+
+:root {
+    --nav-height: 0px;
+}
+
+
+.gradient-button {
+  color: black;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.gradient-button:hover {
+  background-image: linear-gradient(to right, #f2f2f2, #8c8c8c);
+  color: black;
+}
+
+
+/* Sidebar container (update selector to whatever your sidebar root uses) */
+:root.dark .sidebar,
+:root.dark .home-sidebar,
+:root.dark .offcanvas,          /* if you use Bootstrap offcanvas for sidebar */
+:root.dark [data-role="sidebar"] {
+  background: var(--surface);
+  color: var(--text);
+  border-right: none;
+}
+
+/* Links / items */
+:root.dark .sidebar a,
+:root.dark .home-sidebar a,
+:root.dark .sidebar .nav-link {
+  color: var(--text);
+}
+:root.dark .sidebar a:hover,
+:root.dark .home-sidebar a:hover,
+:root.dark .sidebar .nav-link:hover {
+  background: rgba(255,255,255,0.04);
+  color: var(--accent);
+}
+
+
+/* Base look for both anchor + button variants */
+:root.dark .home-sidebar .gradient-button {
+  color: var(--text);
+  background-image: linear-gradient(
+          to right,
+          rgba(255,255,255,0.06),
+          rgba(255,255,255,0.12)
+  );
+  border: 1px solid var(--border);
+}
+
+/* Hover (anchor or button) – unify behavior */
+:root.dark .home-sidebar a.gradient-button:hover,
+:root.dark .home-sidebar button.gradient-button:hover {
+  background-image: linear-gradient(
+          to right,
+          rgba(22,163,74,0.18),
+          rgba(22,163,74,0.28)
+  );
+  color: var(--text);
+}
+
+/* LIGHT MODE — subtle black blend (mirrors dark-mode white levels) */
+.home-sidebar .gradient-button {
+  color: #0f172a; /* readable on light bg */
+  background-color: transparent;
+  background-image: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.02),
+          rgba(0, 0, 0, 0.12)
+  );
+  border: 1px solid var(--border, #e5e7eb);
+}
+
+/* LIGHT MODE — hover intensifies the black slightly (still readable) */
+.home-sidebar a.gradient-button:not(.no-hover):hover,
+.home-sidebar button.gradient-button:not(.no-hover):hover {
+  background-image: linear-gradient(
+          to right,
+          rgba(22,163,74,0.18),
+          rgba(22,163,74,0.28)
+  );
+  color: #0f172a;
+}
+
+.home-sidebar {
+    /* anchor the fixed sidebar directly under the navbar */
+    top: var(--nav-height);
+    left: 0;
+    height: calc(100dvh - var(--nav-height));
+    width: clamp(220px, 16vw, 280px);      /* prevents Bootstrap cols from fighting fixed layout */
+    display: flex;
+    flex-direction: column;
+    padding: 8px 12px;
+    overflow-y: auto;
+    z-index: 1030;                          /* above content, below nav dropdowns */
+}
+
+
+
+/* dropdown should render cleanly in a fixed aside */
+.home-sidebar .dropdown-menu {
+    position: absolute;
+    inset: auto auto auto 0;
+    z-index: 1040;
+}
+
+
+

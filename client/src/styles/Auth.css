@@ -1,0 +1,17 @@
+.btn-light-green {
+  background-color: #34c759;
+  color: #fff;
+}
+
+.bg-signup {
+  background: rgb(52, 199, 89);
+  background: linear-gradient(
+    176deg,
+    rgba(52, 199, 89, 1) 42%,
+    rgba(58, 246, 105, 1) 79%
+  );
+
+
+
+}
+
