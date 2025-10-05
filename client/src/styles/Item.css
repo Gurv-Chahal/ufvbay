@@ -4,6 +4,16 @@
   width: 100%;
 }
 
+
+/* Left media column (darker stage & smaller image) */
+.media-col { background: #0b0f19; }         /* subtle dark canvas */
+.media-img {
+  max-width: 60%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.35);
+}
+
 .item-overlay {
   position: fixed;
   inset: 0;
@@ -22,7 +32,10 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 24px 64px rgba(0,0,0,.35);
+  padding: 0px;
 }
+
+.item-panel > .row { margin: 0; }
 
 /* --- Light mode: force white surfaces on the right panel --- */
 html:not(.dark) .details-panel {
@@ -180,6 +193,7 @@ html:not(.dark) .section-card {
   color: var(--text, #0f172a);
   border-left: 1px solid var(--input-border, #e5e7eb);
   position: relative;
+  align-self: stretch;                      /* fill column height */
 }
 
 /* Title & chips */
@@ -235,7 +249,7 @@ html:not(.dark) .section-card {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   padding: 12px;
   border: 1px solid var(--input-border, #e5e7eb);
   border-radius: 12px;
@@ -256,7 +270,11 @@ html:not(.dark) .section-card {
   color: white;
   box-shadow: 0 8px 18px rgba(11,106,49,.25);
   cursor: pointer;
+  align-self: stretch;
 }
+
+.section-card + .section-card { margin-top: 10px; }
+
 
 /* Cards */
 .section-card {
@@ -334,3 +352,10 @@ html:not(.dark) .section-card {
 .muted { color: #6b7280; }
 .dark .muted, .dark-mode .muted { color: #9ca3af; }
 
+/* Responsive tweaks */
+@media (max-width: 1400px) {
+  .media-img { max-width: 66%; }
+}
+@media (max-width: 1200px) {
+  .media-img { max-width: 72%; }
+}

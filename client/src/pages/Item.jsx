@@ -306,13 +306,9 @@ const Item = ({ asModal = false }) => {
   }
   return (
       <ModalWrapper>
-        <div
-            className="container-fluid row"
-            style={{ height: asModal ? "100%" : "100vh", position: "relative" }}
-        >
+        <div className="row g-0 w-100 h-100" style={{position: "relative"}}>
           {/* -------- LEFT: image slider -------- */}
-          <div
-              className="col-9 d-flex justify-content-center align-items-center position-relative border"
+          <div className="col-7 col-xl-7 d-flex justify-content-center align-items-center position-relative media-col"
               style={{
                 backgroundImage: "none",
                 backgroundPosition: "center",
@@ -357,12 +353,12 @@ const Item = ({ asModal = false }) => {
 
             {/* current image */}
             {slider ? (
-                <img
-                    src={slider}
-                    alt="Listing"
-                    className="w-50 position-relative mx-auto"
-                    style={{zIndex: 2, boxShadow: "0 4px 8px rgba(0,0,0,0.3)"}}
-                />
+              <img
+            src={slider}
+            alt="Listing"
+            className="media-img position-relative mx-auto"
+            style={{ zIndex: 2 }}
+            />
             ) : (
                 <div
                     className="w-50 position-relative mx-auto"
@@ -402,8 +398,8 @@ const Item = ({ asModal = false }) => {
 
           {/* -------- RIGHT: clean details panel -------- */}
           <aside
-              className="col-3 details-panel"
-              style={{height: asModal ? "100%" : "100vh"}}
+          className="col-5 col-xl-5 details-panel"
+          style={{ height: asModal ? "100%" : "100vh" }}
           >
             {/* header */}
             <header className="details-header">
@@ -489,7 +485,7 @@ const Item = ({ asModal = false }) => {
                   <h2 className="updateformlisting">Update Listing</h2>
                   <form onSubmit={handleUpdateSubmit}>
                     <div className="form-group">
-                    <label>Title:</label>
+                      <label>Title:</label>
                       <input
                           type="text"
                           name="title"
