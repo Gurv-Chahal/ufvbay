@@ -194,7 +194,21 @@ html:not(.dark) .section-card {
   border-left: 1px solid var(--input-border, #e5e7eb);
   position: relative;
   align-self: stretch;                      /* fill column height */
+
+  height: 100%;                 /* fill the column */
+  max-height: 100%;             /* cap to the modal height (90vh from .item-panel) */
+  overflow-y: auto;             /* scroll the WHOLE panel */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable both-edges;
+  min-height: 0;                /* critical for flex children to allow scrolling */
 }
+
+.item-panel > .row {
+  height: 100%;                 /* so children can use height:100% */
+}
+
+
 
 /* Title & chips */
 /* Title & chips — make the header its own card */
@@ -370,15 +384,12 @@ html:not(.dark) .section-card {
 }
 
 /* === Listing Description: size-to-content, scroll only if long === */
+/* The description should NOT scroll—let it size to content */
 .details-panel .section-card .desc.desc--scroll {
-  height: auto !important;                /* shrink to content */
-  max-height: min(14rem, 40vh);           /* cap so it never runs off the page */
-  overflow-y: auto;                       /* scrollbar appears only when needed */
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  scrollbar-gutter: stable both-edges;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
-
 /* optional: make the scrollbar visible/nice */
 .details-panel .section-card .desc.desc--scroll::-webkit-scrollbar { width: 10px; }
 .details-panel .section-card .desc.desc--scroll::-webkit-scrollbar-thumb {
