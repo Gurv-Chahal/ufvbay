@@ -98,6 +98,8 @@ export const storeUserId = (userId) => {
 export const storeToken = (token) => {
   // saves jwt with key "token"
   localStorage.setItem("token", token);
+  window.dispatchEvent(new Event("auth-changed"));
+
 };
 
 
@@ -154,11 +156,7 @@ export const saveLoggedInUser = (username) => {
 };
 
 // function to check if a user is logged in by looking for the username in session storage
-export const isUserLoggedIn = () => {
-  // get username in sessionstorage with key authenticatedUser
-  const username = sessionStorage.getItem("authenticatedUser");
-  return username !== null;
-};
+export const isUserLoggedIn = () => !!getToken();  // token in localStorage is the source of truth
 
 
 // logout function clears everything and reloads the page

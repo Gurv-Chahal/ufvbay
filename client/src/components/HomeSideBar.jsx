@@ -35,7 +35,27 @@ const HomeSideBar = ({ onSubjectChange }) => {
   // functionality for log in button on sidebar
 
   // check if user is logged in
-    const isAuth = isUserLoggedIn();
+
+
+    const [isAuth, setIsAuth] = React.useState(isUserLoggedIn());
+    React.useEffect(() => {
+        const refresh = () => setIsAuth(isUserLoggedIn());
+        // when token changes (your code dispatches 'auth-changed')
+        window.addEventListener('auth-changed', refresh);
+        // when you come back to the tab
+        window.addEventListener('focus', refresh);
+        // when another tab logs in/out
+        window.addEventListener('storage', refresh);
+        return () => {
+            window.removeEventListener('auth-changed', refresh);
+            window.removeEventListener('focus', refresh);
+            window.removeEventListener('storage', refresh);
+            };
+        }, []);
+
+
+
+
     const navigate = useNavigate();
 
     function handleLogout(e) {
