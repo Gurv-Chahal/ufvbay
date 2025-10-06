@@ -467,10 +467,10 @@ const Item = ({ asModal = false }) => {
             {/* owner actions */}
             {isOwner && (
                 <div className="owner-actions">
-                  <button className="btn btn-primary" onClick={handleUpdateClick}>
+                  <button className="btn btn-primary btn-spacing" onClick={handleUpdateClick}>
                     Edit Listing
                   </button>
-                  <button className="btn btn-primary" onClick={handleDeleteListing}>
+                  <button className="btn btn-primary btn-spacing" onClick={handleDeleteListing}>
                     Delete
                   </button>
                 </div>

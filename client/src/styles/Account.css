@@ -104,6 +104,10 @@
     touch-action: manipulation;
 }
 
+.btn-spacing {
+    margin-left: 50px;
+}
+
 .btn-primary:before {
     content: "";
     background: linear-gradient(
