@@ -8,7 +8,7 @@
 /* Left media column (darker stage & smaller image) */
 .media-col { background: #0b0f19; }         /* subtle dark canvas */
 .media-img {
-  max-width: 50%;
+  max-width: 60%;
   height: auto;
   border-radius: 10px;
   box-shadow: 0 12px 28px rgba(0,0,0,.35);
@@ -25,7 +25,7 @@
 }
 
 .item-panel {
-  width: 80vw;                    /* <-- 80% width */
+  width: 50vw;                    /* <-- 80% width */
   height: 90vh;
   background: var(--card-bg, #ffffff);
   color: var(--text, #0f172a);
