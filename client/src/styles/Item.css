@@ -45,12 +45,8 @@
 
 .item-panel > .row {
   margin: 0;
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0;
-  height: 100%;
-  overflow: hidden;   /* hide stragglers instead of overflowing */
-
+  gap: 16px;                 /* small space between columns */
+  padding-right: 16px;       /* right-side gutter inside the modal */
 }
 
 /* --- Light mode: force white surfaces on the right panel --- */
@@ -203,7 +199,7 @@ html:not(.dark) .section-card {
 .details-panel {
   display: flex;
   flex-direction: column;
-  flex: 0 1 clamp(320px, 34vw, 520px);  /* << compact target */
+  flex: 0 1 clamp(340px, 30vw, 480px);
   gap: 16px;
   padding: 16px 16px 20px;
   background: var(--panel-bg, var(--card-bg, #ffffff));
@@ -214,12 +210,15 @@ html:not(.dark) .section-card {
 
   height: 100%;                 /* fill the column */
   max-height: 100%;             /* cap to the modal height (90vh from .item-panel) */
+  max-width: clamp(340px, 30vw, 480px);
   overflow-y: auto;             /* scroll the WHOLE panel */
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   scrollbar-gutter: stable both-edges;
   min-height: 0;                /* critical for flex children to allow scrolling */
-  min-width: 0;                          /* critical: allow shrinking */
+  min-width: 0 !important;   /* prevents long lines/elements from forcing overflow */
+  overflow-wrap: anywhere;   /* breaks long emails/URLs if needed */
+
 }
 
 
