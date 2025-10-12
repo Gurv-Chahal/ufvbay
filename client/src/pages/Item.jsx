@@ -471,7 +471,7 @@ const Item = ({ asModal = false }) => {
                     Edit Listing
                   </button>
                   <button className="btn btn-primary btn-spacing" onClick={handleDeleteListing}>
-                    Delete
+                    Delete Listing
                   </button>
                 </div>
             )}
