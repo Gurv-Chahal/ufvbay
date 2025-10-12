@@ -44,9 +44,13 @@
 }
 
 .item-panel > .row {
-  margin: 0;
-  gap: 16px;                 /* small space between columns */
-  padding-right: 16px;       /* right-side gutter inside the modal */
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  height: 100%;
+  overflow: hidden;
+  gap: 0;             /* was 16px – this pushed columns over the edge */
+  padding-right: 0;   /* remove gutter here; use panel padding instead */
 }
 
 /* --- Light mode: force white surfaces on the right panel --- */
