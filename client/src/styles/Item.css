@@ -492,10 +492,21 @@ html:not(.dark) .section-card {
 .details-panel .btn-solid {
   background: linear-gradient(90deg, #66DC6A, #0B6A31);
   color: #fff;
-  border-color: transparent;
+  border: 0;                                  /* don't use transparent border */
   box-shadow: 0 8px 18px rgba(11,106,49,.20);
+  background-clip: padding-box;               /* clip gradient to content box */
+  overflow: hidden;                           /* prevent sub-pixel bleed on edges */
 }
 .details-panel .btn-solid:hover { box-shadow: 0 10px 22px rgba(11,106,49,.25); }
+
+.owner-actions .btn-solid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
+}
 
 /* Destructive action = soft red */
 .details-panel .btn-danger {
