@@ -6,7 +6,13 @@
 
 
 /* Left media column (darker stage & smaller image) */
-.media-col { background: #0b0f19; }         /* subtle dark canvas */
+.media-col {
+  background: #0b0f19;
+  min-width: 0;
+}         /* subtle dark canvas */
+
+
+
 .media-img {
   max-width: 60%;
   height: auto;
@@ -25,7 +31,9 @@
 }
 
 .item-panel {
-  width: 80vw;                    /* <-- 80% width */
+  width: min(80vw, 1100px);
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
   height: 90vh;
   background: var(--card-bg, #ffffff);
   color: var(--text, #0f172a);
@@ -35,7 +43,15 @@
   padding: 0px;
 }
 
-.item-panel > .row { margin: 0; }
+.item-panel > .row {
+  margin: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0;
+  height: 100%;
+  overflow: hidden;   /* hide stragglers instead of overflowing */
+
+}
 
 /* --- Light mode: force white surfaces on the right panel --- */
 html:not(.dark) .details-panel {
@@ -187,6 +203,7 @@ html:not(.dark) .section-card {
 .details-panel {
   display: flex;
   flex-direction: column;
+  flex: 0 1 clamp(320px, 34vw, 520px);  /* << compact target */
   gap: 16px;
   padding: 16px 16px 20px;
   background: var(--panel-bg, var(--card-bg, #ffffff));
@@ -202,11 +219,9 @@ html:not(.dark) .section-card {
   overscroll-behavior: contain;
   scrollbar-gutter: stable both-edges;
   min-height: 0;                /* critical for flex children to allow scrolling */
+  min-width: 0;                          /* critical: allow shrinking */
 }
 
-.item-panel > .row {
-  height: 100%;                 /* so children can use height:100% */
-}
 
 
 
