@@ -32,7 +32,7 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 24px 64px rgba(0,0,0,.35);
-  padding: 60px;
+  padding: 0px;
 }
 
 .item-panel > .row { margin: 0; }
@@ -188,7 +188,7 @@ html:not(.dark) .section-card {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px 16px 20px;
+  padding: 0px;
   background: var(--panel-bg, var(--card-bg, #ffffff));
   color: var(--text, #0f172a);
   border-left: 1px solid var(--input-border, #e5e7eb);
