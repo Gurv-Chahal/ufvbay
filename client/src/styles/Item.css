@@ -14,8 +14,7 @@
 
 
 .item-panel .details-panel {
-  padding-inline-start: clamp(24px, 2.4vw, 32px) !important;  /* LTR/RTL safe */
-  border-left-color: #dfe3ea;
+  padding-inline-start: clamp(12px, 1.2vw, 16px) !important;  /* LTR/RTL safe */
 }
 
 
