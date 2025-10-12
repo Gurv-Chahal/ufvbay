@@ -25,7 +25,7 @@
 }
 
 .item-panel {
-  width: 50vw;                    /* <-- 80% width */
+  width: 95vw;                    /* <-- 80% width */
   height: 90vh;
   background: var(--card-bg, #ffffff);
   color: var(--text, #0f172a);
