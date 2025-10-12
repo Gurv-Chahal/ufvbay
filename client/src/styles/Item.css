@@ -13,6 +13,11 @@
 }         /* subtle dark canvas */
 
 
+.item-panel .details-panel {
+  padding-inline-start: clamp(24px, 2.4vw, 32px) !important;  /* LTR/RTL safe */
+  border-left-color: #dfe3ea;
+}
+
 
 .media-img {
   max-width: 60%;
