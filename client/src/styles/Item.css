@@ -231,6 +231,9 @@ html:not(.dark) .section-card {
   min-width: 0 !important;   /* prevents long lines/elements from forcing overflow */
   overflow-wrap: anywhere;   /* breaks long emails/URLs if needed */
 
+  --action-btn-width: 112px;   /* tweak here if you want wider/narrower */
+  --ease-smooth: cubic-bezier(.2,.8,.2,1);
+
 }
 
 /* Fallback for browsers that ignore scrollbar-gutter (e.g., Safari/macOS overlay) */
@@ -509,3 +512,33 @@ html:not(.dark) .section-card {
 .details-panel .btn-primary:before,
 .details-panel .btn-primary:after { display: none !important; }
 .details-panel .btn-spacing { margin-left: 0 !important; }  /* neutralize the 70px offset */
+
+.owner-actions .btn-ui {
+  box-sizing: border-box;
+  min-inline-size: var(--action-btn-width); /* makes Edit & Delete same width */
+  padding-block: 10px;                       /* consistent height */
+  padding-inline: 14px;
+  transform: translateY(0);
+  transition:
+          background-color .24s ease,
+          color .24s ease,
+          border-color .24s ease,
+          box-shadow .28s var(--ease-smooth),
+          transform .28s var(--ease-smooth);
+  will-change: transform, box-shadow, background-color, border-color, color;
+}
+
+.owner-actions .btn-ui:hover {
+  transform: translateY(-2px);
+}
+
+.owner-actions .btn-solid:hover {
+  box-shadow: 0 12px 22px rgba(11,106,49,.28);
+}
+
+/* soften Delete hover without a jarring jump */
+.owner-actions .btn-danger:hover {
+  background: rgba(239,68,68,.14);
+  border-color: rgba(239,68,68,.45);
+  box-shadow: 0 6px 14px rgba(0,0,0,.10);
+}
