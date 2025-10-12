@@ -451,3 +451,61 @@ html:not(.dark) .section-card {
 @media (max-width: 1200px) {
   .media-img { max-width: 72%; }
 }
+
+
+
+
+
+
+
+/* BUTTONS */
+
+/* Card container for the actions, consistent with the rest */
+.owner-actions-card { padding: 12px 14px; }
+
+/* Align buttons neatly to the right with even spacing */
+.owner-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Panel-scoped button design so we don't touch Account pages */
+.details-panel .btn-ui {
+  appearance: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  background: #f8fafc;
+  color: var(--text, #0f172a);
+  border: 1px solid var(--input-border, #e5e7eb);
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  transition: box-shadow .15s ease, transform .06s ease, background-color .2s, border-color .2s;
+}
+.details-panel .btn-ui:hover { box-shadow: 0 2px 6px rgba(0,0,0,.08); transform: translateY(-1px); }
+.details-panel .btn-ui:active { transform: translateY(0); }
+
+/* Primary action = solid green (matches your CTA button vibe) */
+.details-panel .btn-solid {
+  background: linear-gradient(90deg, #66DC6A, #0B6A31);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 8px 18px rgba(11,106,49,.20);
+}
+.details-panel .btn-solid:hover { box-shadow: 0 10px 22px rgba(11,106,49,.25); }
+
+/* Destructive action = soft red */
+.details-panel .btn-danger {
+  background: rgba(239,68,68,.10);
+  border-color: rgba(239,68,68,.35);
+  color: #991b1b;
+}
+.details-panel .btn-danger:hover {
+  background: rgba(239,68,68,.16);
+  border-color: rgba(239,68,68,.45);
+}
+
+/* Kill the rainbow glow only inside the details panel if any .btn-primary slips through */
+.details-panel .btn-primary:before,
+.details-panel .btn-primary:after { display: none !important; }
+.details-panel .btn-spacing { margin-left: 0 !important; }  /* neutralize the 70px offset */
