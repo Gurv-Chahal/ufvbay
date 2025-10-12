@@ -188,7 +188,7 @@ html:not(.dark) .section-card {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 0px;
+  padding: 30px;
   background: var(--panel-bg, var(--card-bg, #ffffff));
   color: var(--text, #0f172a);
   border-left: 1px solid var(--input-border, #e5e7eb);
