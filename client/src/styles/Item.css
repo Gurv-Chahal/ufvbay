@@ -211,6 +211,7 @@ html:not(.dark) .section-card {
   border-left: 1px solid var(--input-border, #e5e7eb);
   position: relative;
   align-self: stretch;                      /* fill column height */
+  box-sizing: border-box;
 
   height: 100%;                 /* fill the column */
   max-height: 100%;             /* cap to the modal height (90vh from .item-panel) */
@@ -218,11 +219,27 @@ html:not(.dark) .section-card {
   overflow-y: auto;             /* scroll the WHOLE panel */
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  scrollbar-gutter: stable both-edges;
+  scrollbar-gutter: stable; /* <-- not 'both-edges': only reserve on scrollbar side */
+  padding-inline-end: 16px; /* base internal padding */
   min-height: 0;                /* critical for flex children to allow scrolling */
   min-width: 0 !important;   /* prevents long lines/elements from forcing overflow */
   overflow-wrap: anywhere;   /* breaks long emails/URLs if needed */
 
+}
+
+/* Fallback for browsers that ignore scrollbar-gutter (e.g., Safari/macOS overlay) */
+@supports not (scrollbar-gutter: stable) {
+  :root { --sbw: 12px; } /* typical overlay scrollbar width */
+  .details-panel {
+    padding-inline-end: calc(16px + var(--sbw)); /* space for the rail */
+  }
+  /* Force a fixed-width WebKit scrollbar so the lane is actually taken */
+  .details-panel::-webkit-scrollbar { width: var(--sbw); }
+  .details-panel::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-clip: padding-box;
+    border: 3px solid transparent; /* nicer thumb without crowding content */
+  }
 }
 
 
