@@ -9,6 +9,7 @@
 .media-col {
   background: #0b0f19;
   min-width: 0;
+  padding-right: 16px;
 }         /* subtle dark canvas */
 
 
@@ -206,6 +207,7 @@ html:not(.dark) .section-card {
   flex: 0 1 clamp(340px, 30vw, 480px);
   gap: 16px;
   padding: 16px 16px 20px;
+
   background: var(--panel-bg, var(--card-bg, #ffffff));
   color: var(--text, #0f172a);
   border-left: 1px solid var(--input-border, #e5e7eb);
