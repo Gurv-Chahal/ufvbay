@@ -104,9 +104,12 @@
     touch-action: manipulation;
 }
 
+
+
 .btn-spacing {
-    margin-left: 100px;
+    margin-left: 70px;
 }
+
 
 .btn-primary:before {
     content: "";
