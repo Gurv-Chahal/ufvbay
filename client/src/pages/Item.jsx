@@ -295,11 +295,27 @@ const Item = ({ asModal = false }) => {
   };
 
   const handleContactSeller = () => {
-    const w = window.open(mailto);          // try native handler
-    // fallback to Gmail if nothing opened
+    if (!posterEmail) return;
+
+    const to = encodeURIComponent(posterEmail.trim());
+    const subject = encodeURIComponent(listing?.title || "Listing");
+
+    // build URLs here so they're in scope
+    const mailto = `mailto:${to}?subject=${subject}`;
+    const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${subject}`;
+
+    // try native mail handler first
+    const w = window.open(mailto);
+
+    // fallback to Gmail if a handler isn't registered / blocked
     setTimeout(() => {
-      try { if (!w || w.closed) window.open(gmailCompose, "_blank", "noopener,noreferrer"); }
-      catch { window.open(gmailCompose, "_blank", "noopener,noreferrer"); }
+      try {
+        if (!w || w.closed) {
+          window.open(gmailCompose, "_blank", "noopener,noreferrer");
+        }
+      } catch {
+        window.open(gmailCompose, "_blank", "noopener,noreferrer");
+      }
     }, 150);
   };
 
