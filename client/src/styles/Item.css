@@ -226,7 +226,7 @@ html:not(.dark) .section-card {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   scrollbar-gutter: stable; /* <-- not 'both-edges': only reserve on scrollbar side */
-  padding-inline-end: 16px; /* base internal padding */
+  padding-inline-end: calc(clamp(24px, 2.4vw, 32px) + 12px) !important;
   min-height: 0;                /* critical for flex children to allow scrolling */
   min-width: 0 !important;   /* prevents long lines/elements from forcing overflow */
   overflow-wrap: anywhere;   /* breaks long emails/URLs if needed */
