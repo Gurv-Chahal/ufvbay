@@ -225,8 +225,8 @@ html:not(.dark) .section-card {
   overflow-y: auto;             /* scroll the WHOLE panel */
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  scrollbar-gutter: stable; /* <-- not 'both-edges': only reserve on scrollbar side */
-  padding-inline-end: 16px; /* base internal padding */
+  scrollbar-gutter: stable both-edges; /* <-- not 'both-edges': only reserve on scrollbar side */
+  padding-inline-end: clamp(20px, 1.8vw, 28px);  /* pushes content away from the rail */
   min-height: 0;                /* critical for flex children to allow scrolling */
   min-width: 0 !important;   /* prevents long lines/elements from forcing overflow */
   overflow-wrap: anywhere;   /* breaks long emails/URLs if needed */
@@ -240,7 +240,7 @@ html:not(.dark) .section-card {
 @supports not (scrollbar-gutter: stable) {
   :root { --sbw: 12px; } /* typical overlay scrollbar width */
   .details-panel {
-    padding-inline-end: calc(16px + var(--sbw)); /* space for the rail */
+    padding-inline-end: calc(20px + var(--sbw));
   }
   /* Force a fixed-width WebKit scrollbar so the lane is actually taken */
   .details-panel::-webkit-scrollbar { width: var(--sbw); }
