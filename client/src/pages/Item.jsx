@@ -294,30 +294,30 @@ const Item = ({ asModal = false }) => {
     else navigate("/");
   };
 
-  const handleContactSeller = () => {
-    if (!posterEmail) return;
-
-    const to = encodeURIComponent(posterEmail.trim());
-    const subject = encodeURIComponent(listing?.title || "Listing");
-
-    // build URLs here so they're in scope
-    const mailto = `mailto:${to}?subject=${subject}`;
-    const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${subject}`;
-
-    // try native mail handler first
-    const w = window.open(mailto);
-
-    // fallback to Gmail if a handler isn't registered / blocked
-    setTimeout(() => {
-      try {
-        if (!w || w.closed) {
-          window.open(gmailCompose, "_blank", "noopener,noreferrer");
-        }
-      } catch {
-        window.open(gmailCompose, "_blank", "noopener,noreferrer");
-      }
-    }, 150);
-  };
+  // const handleContactSeller = () => {
+  //   if (!posterEmail) return;
+  //
+  //   const to = encodeURIComponent(posterEmail.trim());
+  //   const subject = encodeURIComponent(listing?.title || "Listing");
+  //
+  //   // build URLs here so they're in scope
+  //   const mailto = `mailto:${to}?subject=${subject}`;
+  //   const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${subject}`;
+  //
+  //   // try native mail handler first
+  //   const w = window.open(mailto);
+  //
+  //   // fallback to Gmail if a handler isn't registered / blocked
+  //   setTimeout(() => {
+  //     try {
+  //       if (!w || w.closed) {
+  //         window.open(gmailCompose, "_blank", "noopener,noreferrer");
+  //       }
+  //     } catch {
+  //       window.open(gmailCompose, "_blank", "noopener,noreferrer");
+  //     }
+  //   }, 150);
+  // };
 
 
   if (loading) {
@@ -439,18 +439,18 @@ const Item = ({ asModal = false }) => {
 
             {/* price + CTA */}
             <div className="price-cta">
-              <div className="price-tag">${listing.amount ?? "N/A"}</div>
+              <div className="price-tag">${listing.amount ?? "N/A"} CAD </div>
 
-              <button
-                  type="button"
-                  className="cta-button"
-                  onClick={handleContactSeller}
-                  disabled={!posterEmail}
-                  aria-disabled={!posterEmail}
-                  title={posterEmail ? `Email ${posterEmail}` : "Seller email unavailable"}
-              >
-                Contact Seller
-              </button>
+              {/*<button*/}
+              {/*    type="button"*/}
+              {/*    className="cta-button"*/}
+              {/*    onClick={handleContactSeller}*/}
+              {/*    disabled={!posterEmail}*/}
+              {/*    aria-disabled={!posterEmail}*/}
+              {/*    title={posterEmail ? `Email ${posterEmail}` : "Seller email unavailable"}*/}
+              {/*>*/}
+              {/*  Contact Seller*/}
+              {/*</button>*/}
             </div>
 
 
