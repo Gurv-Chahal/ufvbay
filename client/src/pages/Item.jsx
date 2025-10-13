@@ -294,6 +294,15 @@ const Item = ({ asModal = false }) => {
     else navigate("/");
   };
 
+  const handleContactSeller = () => {
+    const w = window.open(mailto);          // try native handler
+    // fallback to Gmail if nothing opened
+    setTimeout(() => {
+      try { if (!w || w.closed) window.open(gmailCompose, "_blank", "noopener,noreferrer"); }
+      catch { window.open(gmailCompose, "_blank", "noopener,noreferrer"); }
+    }, 150);
+  };
+
 
   if (loading) {
     return <div>Loading listing...</div>;
@@ -414,20 +423,18 @@ const Item = ({ asModal = false }) => {
 
             {/* price + CTA */}
             <div className="price-cta">
-              <div className="price-tag">${listing.amount || "N/A"}</div>
+              <div className="price-tag">${listing.amount ?? "N/A"}</div>
 
-              {posterEmail ? (
-                  <a
-                      className="cta-button"
-                      href={`mailto:${posterEmail}?subject=${encodeURIComponent(
-                          listing.title || "Listing"
-                      )}`}
-                  >
-                    Contact Seller
-                  </a>
-              ) : (
-                  <button className="cta-button" disabled>Contact Seller</button>
-              )}
+              <button
+                  type="button"
+                  className="cta-button"
+                  onClick={handleContactSeller}
+                  disabled={!posterEmail}
+                  aria-disabled={!posterEmail}
+                  title={posterEmail ? `Email ${posterEmail}` : "Seller email unavailable"}
+              >
+                Contact Seller
+              </button>
             </div>
 
 
