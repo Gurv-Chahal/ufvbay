@@ -1,5 +1,6 @@
 
 :root {
+    --sidebar-offset: 50px;
 }
 
 
@@ -89,12 +90,14 @@
     top: var(--nav-height);
     left: 0;
     height: calc(100dvh - var(--nav-height));
-    width: var(--sidebar-w) !important;
+    width: calc(var(--sidebar-w) - var(--sidebar-offset)) !important; /* keep it inside the grid track */
     display: flex;
     flex-direction: column;
     padding: 8px 12px;
     overflow-y: auto;
     z-index: 1030;                          /* above content, below nav dropdowns */
+    margin-left: var(--sidebar-offset);
+
 }
 
 /* Optional: give laptops (MB Air range) a little extra bump */

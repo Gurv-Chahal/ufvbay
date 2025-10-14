@@ -1,6 +1,6 @@
 :root{
     /* your existing values are fine—tune if you want */
-    --sidebar-w: clamp(250px, 22vw, 320px);
+    --sidebar-w: clamp(250px, 25vw, 380px);
     --edge-gap: clamp(16px, 2.5vw, 56px);   /* width of the right gutter */
     --fade-w: clamp(24px, 4vw, 96px);       /* width of the fade into gutter */
     --page-bg: #0b0f19;                     /* page background used for blends */
@@ -15,6 +15,8 @@
     --home-radius: 22px;
 
     --home-lift: -2.5vh;
+
+    --nav-height: 0;
 }
 
 /* full-viewport page with header row + fill row */
