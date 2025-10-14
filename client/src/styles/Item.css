@@ -30,7 +30,7 @@
 .media-img {
   display: block;
   max-width: 80%;                     /* smaller than the column */
-  max-height: 80%;                    /* leave breathing room */
+  max-height: 50%;                    /* leave breathing room */
   width: auto;
   height: auto;
   object-fit: contain;                 /* never overflow */
@@ -69,7 +69,7 @@
   padding: 0;
 
   /* important so children can actually scroll */
-  min-height: 0;
+  min-height: 0 !important;
 }
 
 
@@ -82,10 +82,12 @@
   overflow: hidden; /* was hidden; could clip overlay scrollbars */
   gap: 0;
   padding-right: 0;
-  min-height: 0;       /* <-- CRITICAL for flex children to scroll */
+  min-height: 0 !important;       /* <-- CRITICAL for flex children to scroll */
 
 }
 
+/* Bootstrap cols inside the modal also need this */
+.item-panel > .row > [class*="col"] { min-height: 0 !important; }
 
 
 /* prefer dynamic viewport units when supported (iOS Safari, etc.) */
@@ -259,12 +261,12 @@ html:not(.dark) .section-card {
   height: 100%;                 /* fill the column */
   max-height: 100%;             /* cap to the modal height (90vh from .item-panel) */
   max-width: clamp(340px, 30vw, 480px);
-  overflow-y: auto;             /* scroll the WHOLE panel */
+  overflow-y: auto !important;             /* scroll the WHOLE panel */
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   scrollbar-gutter: stable; /* <-- not 'both-edges': only reserve on scrollbar side */
   padding-inline-end: calc(clamp(12px, 1.2vw, 16px) + 6px) !important;
-  min-height: 0;                /* critical for flex children to allow scrolling */
+  min-height: 0 !important;                /* critical for flex children to allow scrolling */
   min-width: 0 !important;   /* prevents long lines/elements from forcing overflow */
   overflow-wrap: anywhere;   /* breaks long emails/URLs if needed */
 
