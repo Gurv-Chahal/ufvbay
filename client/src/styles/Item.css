@@ -1,6 +1,6 @@
 :root {
   --nav-h: 72px;          /* your navbar height */
-  --modal-vpad: 28px;     /* vertical breathing room inside overlay (raise to make modal shorter) */
+  --modal-vpad: 36px;     /* vertical breathing room inside overlay (raise to make modal shorter) */
 }
 
 /* Item.css */
@@ -12,13 +12,12 @@
 
 /* Left media column (darker stage & smaller image) */
 /* ===== remove the bluish/dark stage under the image ===== */
+/* ===== left media column & image ===== */
 .media-col {
-  background: transparent;       /* was #0b0f19 */
+  background: transparent;
   min-width: 0;
-  padding-right: 16px;
-  display: flex;                 /* center the image nicely */
-  align-items: center;
-  justify-content: center;
+  padding: 12px 16px;
+  display: flex; align-items: center; justify-content: center;
 }
 
 
@@ -30,10 +29,9 @@
 /* image fills available height without creating extra strip below */
 .media-img {
   display: block;
-  max-height: 100%;
-  max-width: 100%;
-  width: auto;
-  height: auto;
+  max-height: 85%;                      /* don't fill full column height */
+  max-width: min(62vw, 640px);          /* avoid huge portrait width */
+  width: auto; height: auto;
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 12px 28px rgba(0,0,0,.35);
@@ -61,7 +59,7 @@
   box-sizing: border-box;
 
   height: auto;
-  max-height: min(820px, calc(100% - var(--modal-vpad) * 2));  /* cap smaller */
+  max-height: min(760px, calc(100% - var(--modal-vpad) * 2)); /* ↓ shorter */
   background: var(--card-bg, #ffffff);
   color: var(--text, #0f172a);
   border-radius: 12px;
@@ -77,7 +75,7 @@
   flex-wrap: nowrap;
   align-items: stretch;
   height: 100%;
-  overflow: hidden;
+  overflow: visible; /* was hidden; could clip overlay scrollbars */
   gap: 0;
   padding-right: 0;
 }
