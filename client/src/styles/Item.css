@@ -29,7 +29,7 @@
 /* image fills available height without creating extra strip below */
 .media-img {
   display: block;
-  max-width: 90%;                     /* smaller than the column */
+  max-width: 100%;                     /* smaller than the column */
   max-height: 90%;                    /* leave breathing room */
   width: auto;
   height: auto;
