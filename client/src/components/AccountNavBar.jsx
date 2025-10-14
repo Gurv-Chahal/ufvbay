@@ -10,8 +10,8 @@ const AccountNavBar = () => {
   return (
     <nav
       //Sets nav bar colour and makes it appear above homeside navbar
-      className="navbar navbar-light bg-light z-1 fixed-top"
-      style={{ boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)" }}
+      className="navbar navbar-light bg-light fixed-top"
+      style={{ zIndex: 1100, boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)" }}
     >
       <div className="container-fluid">
         <a className="navbar-brand d-flex" href="#">
