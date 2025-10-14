@@ -8,7 +8,7 @@
     /* space between sidebar bubble and the content */
     --main-gap: clamp(12px, 2vw, 24px);
 
-    --home-content-scale: 0.8;
+    --home-content-scale: 0.9;
 
     --home-radius: 22px;
 
