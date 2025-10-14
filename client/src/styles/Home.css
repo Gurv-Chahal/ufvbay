@@ -36,25 +36,24 @@
     z-index: 0;
 }
 
-
-/* ---------- 1) Fade the hero smoothly into the gutter ---------- */
-.home-main::after{
+/*gutter styling*/
+.home-body::after{
     content: "";
     position: absolute;
     top: 0; right: 0; bottom: 0;
-    width: var(--fade-w);
+    width: var(--edge-gap);
     pointer-events: none;
-    /* transparent -> soft -> full page bg */
-    background: linear-gradient(
-            to right,
-            rgba(11, 15, 25, 0) 0%,
-            rgba(11, 15, 25, 0.45) 60%,
-            var(--page-bg) 100%
-    );
-    z-index: 1; /* make sure your typewriter is above this */
+
+    /* subtle vertical sheen + thin inner edge */
+    background:
+            linear-gradient(180deg,
+            rgba(255,255,255,.05) 0%,
+            rgba(255,255,255,.02) 100%);
+    box-shadow:
+            inset 1px 0 0 rgba(255,255,255,.06),   /* light inner line */
+            inset 0 0 0 1px rgba(0,0,0,.35);       /* faint depth */
+    opacity: .9;
 }
-
-
 
 
 /* make the image fill the space and crop as needed */
@@ -100,14 +99,13 @@
 }
 
 
-.light .home-main::after{
-    background: linear-gradient(
-            to right,
-            rgba(255,255,255,0) 0%,
-            rgba(255,255,255,.55) 60%,
-            #ffffff 100%
-    );
+.light .home-body::after{
+    background: linear-gradient(180deg, rgba(0,0,0,.03), rgba(0,0,0,.02));
+    box-shadow:
+            inset 1px 0 0 rgba(0,0,0,.08),
+            inset 0 0 0 1px rgba(0,0,0,.06);
 }
+
 
 @media (max-width: 640px) {
     .home-body { grid-template-columns: var(--sidebar-w) 1fr 0; }
