@@ -30,6 +30,7 @@
     min-width: 0;
     min-height: 0;
     position: relative;
+    z-index: 0;
 }
 
 /* make the image fill the space and crop as needed */
@@ -38,6 +39,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;               /* fills area, may crop */
+    z-index: 0;
 }
 
 .typewriter {
