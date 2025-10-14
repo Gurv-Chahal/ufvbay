@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {useState, useEffect, useRef, useLayoutEffect} from "react";
 import ufvbaylogo from "../images/ufvbaylogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
@@ -49,11 +49,23 @@ const Navbar = ({ onSearch, results }) => {
   };
 
 
-  // // function to toggle visibility of chat box
-  // const toggleChatRoom = () => {
-  //   // toggle state
-  //   setShowChatRoom(!showChatRoom);
-  // };
+
+
+  useLayoutEffect(() => {
+    const setNavHeight = () => {
+      const nav = document.querySelector("nav.navbar.fixed-top");
+      if (nav) {
+        document.documentElement.style.setProperty(
+            "--nav-height",
+            `${nav.offsetHeight}px`
+        );
+      }
+    };
+    setNavHeight();
+    window.addEventListener("resize", setNavHeight);
+    return () => window.removeEventListener("resize", setNavHeight);
+  }, []);
+
 
   return (
       <nav
