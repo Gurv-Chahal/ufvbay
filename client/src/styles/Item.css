@@ -1,3 +1,7 @@
+/* set this to your real navbar height */
+:root { --nav-h: 72px; }  /* try 64–80px if your navbar differs */
+
+
 /* Item.css */
 .map-container {
   height: 500px;
@@ -20,47 +24,61 @@
 
 .media-img {
   max-width: 60%;
+  max-height: 100%;    /* contain vertically */
   height: auto;
   border-radius: 10px;
   box-shadow: 0 12px 28px rgba(0,0,0,.35);
 }
 
+
 .item-overlay {
   position: fixed;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: var(--nav-h);   /* start below navbar */
+  bottom: 0;           /* fill the rest of the viewport */
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;        /* keep home visible on the sides */
-  z-index: 2000;
-  padding: 16px;
+  padding: 16px;       /* keeps panel off the edges */
+  background: transparent;
+  z-index: 1100;       /* BELOW navbar (your navbar is ~1200) */
 }
 
+
+/* ===== Panel clamps to the remaining viewport height ===== */
 .item-panel {
   width: min(80vw, 1100px);
   max-width: calc(100vw - 32px);
   box-sizing: border-box;
+
   height: auto;
+  max-height: 100%;    /* <- critical: use the overlay’s height */
   background: var(--card-bg, #ffffff);
   color: var(--text, #0f172a);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 24px 64px rgba(0,0,0,.35);
-  padding: 0px;
+  padding: 0;
 }
 
+
+/* inner layout stays locked to panel height */
 .item-panel > .row {
   display: flex;
   flex-wrap: nowrap;
   align-items: stretch;
   height: 100%;
   overflow: hidden;
-  gap: 0;             /* was 16px – this pushed columns over the edge */
-  padding-right: 0;   /* remove gutter here; use panel padding instead */
+  gap: 0;
+  padding-right: 0;
 }
 
+
+/* prefer dynamic viewport units when supported (iOS Safari, etc.) */
 @supports (height: 1dvh) {
-  .item-panel { max-height: 90dvh; }
+  .item-overlay { bottom: 0; }          /* already set; here for clarity */
+  .item-panel  { max-height: 100%; }    /* remains tied to overlay height */
 }
 
 
