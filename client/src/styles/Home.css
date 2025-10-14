@@ -155,8 +155,10 @@
 
 /* 1) Drive the sidebar→content separation at the GRID level */
 :root {
-    /* tune this number; it becomes your consistent sidebar→cards gap */
-    --cards-gap: clamp(24px, 3vw, 40px);
+    /* was: clamp(24px, 3vw, 40px) */
+    --cards-gap: clamp(108px, 12vw, 192px);
+    /* optional extra breathing room inside the content column */
+    --main-gap: clamp(16px, 3vw, 36px);
 }
 
 /* Your sidebar/content grid */
@@ -168,7 +170,7 @@
 /* 2) Avoid “double gap” from left padding inside the content column */
 .home-main {
     /* keep right padding for breathing room, but let column-gap handle the left */
-    padding-left: 0;                      /* let the grid gap do the work */
+    padding-left: var(--main-gap);
     padding-right: var(--main-gap);       /* keep right breathing room */}
 
 /* 3) If your product list uses Bootstrap .row, kill the negative margins */
