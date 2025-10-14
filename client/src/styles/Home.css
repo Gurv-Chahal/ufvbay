@@ -1,7 +1,7 @@
 :root {
     /* adjust to your actual sidebar width */
     --sidebar-w: clamp(220px, 16vw, 280px);
-    --edge-gap: clamp(16px, 2.5vw, 56px);
+    --edge-gap: clamp(32px, 5vw, 108px);
 }
 
 
