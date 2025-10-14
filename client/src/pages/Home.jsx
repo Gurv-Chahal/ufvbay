@@ -17,13 +17,12 @@ const Home = () => {
     const navigate = useNavigate()
 
 
-
     // function to handle changes in selected subject
-        const handleSubjectChange = (subject) => {
+    const handleSubjectChange = (subject) => {
         const normalized = subject === "ALL" ? "" : subject;
         // go to Browse ("/") and let Browse.jsx handle filtering
-            navigate("/", { state: { subject: normalized } });
-        };
+        navigate("/", {state: {subject: normalized}});
+    };
 
     //handles search queries from user using title and description
     const handleSearch = (query) => {
@@ -40,19 +39,19 @@ const Home = () => {
 
     return (
         <div className="home-shell">
-            <Navbar onSearch={handleSearch} results={filteredItems} />
+            <Navbar onSearch={handleSearch} results={filteredItems}/>
 
             <div className="home-body">
                 <div className="home-sidebar">
-                    <HomeSideBar onSubjectChange={handleSubjectChange} />
+                    <HomeSideBar onSubjectChange={handleSubjectChange}/>
                 </div>
 
                 <div className="home-main">
-                    <img className="home-hero" src={mainimage} alt="UFVBay" />
+                    <img className="home-hero" src={mainimage} alt="UFVBay"/>
                 </div>
             </div>
         </div>
     );
-
+}
 
 export default Home;
