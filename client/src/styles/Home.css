@@ -26,7 +26,7 @@
     height: 100dvh;                  /* use dynamic viewport on mobile too */
     display: grid;
     grid-template-rows: auto 1fr;    /* navbar height (auto) + fill row */
-    overflow: hidden;                /* prevent page scrollbars from breaking the fill */
+    overflow: visible;                /* prevent page scrollbars from breaking the fill */
 }
 
 /* second row: sidebar + main content */
@@ -40,12 +40,6 @@
 }
 
 /* keep your sidebar scrolling independently if it overflows */
-.home-sidebar {
-    min-height: 0;
-    overflow: auto;
-    top: calc(var(--nav-height, 80px));
-    height: calc(100dvh - var(--nav-height));
-}
 
 /* the image area */
 .home-main{

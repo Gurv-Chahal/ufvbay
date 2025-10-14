@@ -74,7 +74,6 @@ const HomeSideBar = ({ onSubjectChange }) => {
               backgroundColor: "transparent",
               color: "var(--text)",
               borderRight: "none",
-              position: "fixed",
               boxShadow: "none",
           }}
       >
