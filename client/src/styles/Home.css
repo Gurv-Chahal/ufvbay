@@ -7,7 +7,6 @@
     /* adjust this to your bubble navbar’s actual height */
     /* space between sidebar bubble and the content */
     --main-gap: clamp(12px, 2vw, 24px);
-    --nav-gap: 16px;
 
     --home-content-scale: 0.8;
 
@@ -15,7 +14,10 @@
 
     --home-lift: -2.5vh;
 
-    --nav-height: 0;
+   --nav-h: 72px;                 /* set to your actual navbar height */
+   --nav-gap: 16px;
+   --nav-height: var(--nav-h);    /* alias used everywhere */
+
 
 }
 
@@ -57,8 +59,7 @@
     min-width: 0;
     min-height: 0;
     z-index: 0;
-    padding-inline: var(--main-gap);   /* replace your padding-left */
-    padding-bottom: var(--main-gap);
+
     box-sizing: border-box;
 }
 
@@ -151,33 +152,3 @@
 @media (max-width: 900px){
     :root { --home-lift: -1vh; }
 }
-
-/* 1) Drive the sidebar→content separation at the GRID level */
-:root {
-    /* was: clamp(24px, 3vw, 40px) */
-    --cards-gap: clamp(48px, 5vw, 80px);
-    /* optional extra breathing room inside the content column */
-    --main-gap: clamp(16px, 3vw, 36px);
-}
-
-/* Your sidebar/content grid */
-.home-body {
-    /* existing: grid-template-columns: var(--sidebar-w) 1fr var(--edge-gap); */
-    column-gap: calc(var(--cards-gap) + var(--sidebar-offset, 0px));
-}
-
-/* 2) Avoid “double gap” from left padding inside the content column */
-.home-main {
-    /* keep right padding for breathing room, but let column-gap handle the left */
-    padding-left: var(--main-gap);
-    padding-right: var(--main-gap);       /* keep right breathing room */}
-
-/* 3) If your product list uses Bootstrap .row, kill the negative margins */
-.home-main > .row {
-    margin-left: 0;
-    margin-right: 0;
-}
-
-.home-main .container,
-.home-main .container-fluid { padding-left: 0; padding-right: 0; }
-.home-main .row { margin-left: 0; margin-right: 0; }

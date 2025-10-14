@@ -87,9 +87,9 @@
 
 .home-sidebar {
     /* anchor the fixed sidebar directly under the navbar */
-    top: var(--nav-height);
+    top: calc(var(--nav-height) + var(--nav-gap));
     left: 0;
-    height: calc(100dvh - var(--nav-height));
+    height: calc(100dvh - (var(--nav-height) + var(--nav-gap)));
     width: var(--sidebar-w) !important; /* keep it inside the grid track */
     display: flex;
     flex-direction: column;
