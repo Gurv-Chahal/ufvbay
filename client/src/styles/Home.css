@@ -1,6 +1,7 @@
 :root {
     /* adjust to your actual sidebar width */
     --sidebar-w: clamp(220px, 16vw, 280px);
+    --edge-gap: clamp(16px, 2.5vw, 56px);
 }
 
 
@@ -15,7 +16,7 @@
 /* second row: sidebar + main content */
 .home-body {
     display: grid;
-    grid-template-columns: var(--sidebar-w) 1fr;
+    grid-template-columns: var(--sidebar-w) 1fr var(--edge-gap);
     min-height: 0;                   /* allow children to shrink inside grid */
 }
 
@@ -27,6 +28,7 @@
 
 /* the image area */
 .home-main {
+    grid-column: 2 / 3;
     min-width: 0;
     min-height: 0;
     position: relative;
@@ -75,3 +77,6 @@
     }
 }
 
+@media (max-width: 640px) {
+    .home-body { grid-template-columns: var(--sidebar-w) 1fr 0; }
+}
