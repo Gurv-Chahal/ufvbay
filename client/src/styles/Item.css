@@ -1,6 +1,6 @@
 :root {
   --nav-h: 72px;          /* your navbar height */
-  --modal-vpad: 36px;     /* vertical breathing room inside overlay (raise to make modal shorter) */
+  --modal-vpad: 42px;     /* vertical breathing room inside overlay (raise to make modal shorter) */
 }
 
 /* Item.css */
