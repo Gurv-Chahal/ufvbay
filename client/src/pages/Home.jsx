@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import {useNavigate} from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import HomeSideBar from "../components/HomeSideBar.jsx";
+import mainimage from "../images/main-image.png";
+
 
 
 const Home = () => {
@@ -41,6 +43,10 @@ const Home = () => {
             <Navbar onSearch={handleSearch} results={filteredItems} />
             <div className="d-flex">
                 <HomeSideBar onSubjectChange={handleSubjectChange} />
+            </div>
+
+            <div className='front-image'>
+                <img className='mainpage-image' src={mainimage} alt='cant find image' />
             </div>
         </div>
     );
