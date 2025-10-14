@@ -10,7 +10,7 @@
     --main-gap: clamp(12px, 2vw, 24px);
     --nav-gap: 16px;
 
-    --home-content-scale: 0.5;
+    --home-content-scale: 0.8;
 }
 
 /* full-viewport page with header row + fill row */
