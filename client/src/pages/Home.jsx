@@ -85,7 +85,7 @@ const Home = () => {
             <Navbar onSearch={handleSearch} results={filteredItems}/>
 
             <div className="home-body">
-                <div className="home-sidebar">
+                <div className="home-left">
                     <HomeSideBar onSubjectChange={handleSubjectChange}/>
                 </div>
 
