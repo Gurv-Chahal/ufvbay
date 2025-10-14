@@ -188,3 +188,45 @@
   border-color: #64748b;
   box-shadow: 0 0 0 .2rem rgba(2,132,199,.15);
 }
+
+
+
+
+/* ---------- Safe light defaults even when `.light` isn't present ---------- */
+:root:not(.dark) {
+  --surface: #ffffff;
+  --text: #0f172a;
+  --border: #e5e7eb;
+  --bg: #f8fafc;
+  --muted: #64748b;
+}
+
+/* Make the search input clearly visible in light mode */
+:root:not(.dark) .nav-bubble .form-control,
+.light .nav-bubble .form-control {
+  background: #fff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+:root:not(.dark) .nav-bubble .form-control::placeholder,
+.light .nav-bubble .form-control::placeholder {
+  color: #64748b !important;
+}
+:root:not(.dark) .nav-bubble .form-control:focus,
+.light .nav-bubble .form-control:focus {
+  border-color: #64748b !important;
+  box-shadow: 0 0 0 .2rem rgba(2,132,199,.15) !important;
+}
+
+/* If you're using Bootstrap's .navbar-light, neutralize its overrides */
+:root:not(.dark) .navbar.navbar-light .form-control {
+  background: #fff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* Prevent accidental width collapse of the search area */
+.nav-bubble .search-bar {
+  flex: 1 1 420px;
+  min-width: 240px;
+}
