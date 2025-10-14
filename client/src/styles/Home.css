@@ -1,9 +1,10 @@
-:root {
-    /* adjust to your actual sidebar width */
+:root{
+    /* your existing values are fine—tune if you want */
     --sidebar-w: clamp(220px, 16vw, 280px);
-    --edge-gap: clamp(48px, 7.5vw, 164px);
+    --edge-gap: clamp(16px, 2.5vw, 56px);   /* width of the right gutter */
+    --fade-w: clamp(24px, 4vw, 96px);       /* width of the fade into gutter */
+    --page-bg: #0b0f19;                     /* page background used for blends */
 }
-
 
 /* full-viewport page with header row + fill row */
 .home-shell {
@@ -35,6 +36,27 @@
     z-index: 0;
 }
 
+
+/* ---------- 1) Fade the hero smoothly into the gutter ---------- */
+.home-main::after{
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: var(--fade-w);
+    pointer-events: none;
+    /* transparent -> soft -> full page bg */
+    background: linear-gradient(
+            to right,
+            rgba(11, 15, 25, 0) 0%,
+            rgba(11, 15, 25, 0.45) 60%,
+            var(--page-bg) 100%
+    );
+    z-index: 1; /* make sure your typewriter is above this */
+}
+
+
+
+
 /* make the image fill the space and crop as needed */
 .home-hero {
     display: block;
@@ -65,7 +87,7 @@
     font-weight: 700;
     font-size: clamp(20px, 3vw, 42px);
 
-    z-index: 1;
+    z-index: 2;
     pointer-events: none;           /* keep clicks on image */
 }
 
@@ -75,6 +97,16 @@
         background: rgba(255, 255, 255, 0.72);
         backdrop-filter: blur(6px) saturate(1.05);
     }
+}
+
+
+.light .home-main::after{
+    background: linear-gradient(
+            to right,
+            rgba(255,255,255,0) 0%,
+            rgba(255,255,255,.55) 60%,
+            #ffffff 100%
+    );
 }
 
 @media (max-width: 640px) {
