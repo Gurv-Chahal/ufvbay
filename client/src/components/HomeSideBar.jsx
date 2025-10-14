@@ -71,13 +71,14 @@ const HomeSideBar = ({ onSubjectChange }) => {
               /* drop the hardcoded light bg */
               // backgroundColor: "#f8f9fa",
               // use theme variables instead (or move to CSS entirely)
-              backgroundColor: "var(--surface)",
+              backgroundColor: "transparent",
               color: "var(--text)",
               borderRight: "none",
               position: "fixed",
-              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+              boxShadow: "none",
           }}
       >
+          <div className="sidebar-bubble">
           <div className="d-flex flex-column">
               <Link to="/create-listing" style={{textDecoration: "none"}}>
                   <button
@@ -172,6 +173,7 @@ const HomeSideBar = ({ onSubjectChange }) => {
                   </button>
               )}
           </div>
+      </div>
       </div>
   );
 };

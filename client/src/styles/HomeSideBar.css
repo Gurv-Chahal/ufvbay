@@ -100,11 +100,64 @@
 
 
 
-/* dropdown should render cleanly in a fixed aside */
+
+
+
+
+
+
+
+
+/* The rounded "bubble" that holds all sidebar items */
+.sidebar-bubble {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 12px;
+
+    background: var(--surface, #0b0f19);                  /* dark theme surface */
+    border: 1px solid var(--border, rgba(255,255,255,.08));
+    border-radius: 22px;                                   /* << round edges */
+    box-shadow:
+            0 8px 24px rgba(0,0,0,.35),                          /* outer depth */
+            inset 0 1px 0 rgba(255,255,255,.06);                 /* soft inner line */
+    overflow: visible;                                     /* let dropdowns show */
+}
+
+/* Light theme version (if you use a .light root/class) */
+.light .sidebar-bubble {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow:
+            0 8px 24px rgba(2,6,23,.08),
+            inset 0 1px 0 rgba(255,255,255,.65);
+}
+
+/* Make every sidebar control fill the bubble width and feel pill-like */
+.home-sidebar .btn,
+.home-sidebar .gradient-button,
+.home-sidebar .dropdown-toggle,
+.home-sidebar a.btn {
+    width: 100%;
+    border-radius: 14px;
+}
+
+/* Keep consistent vertical rhythm between items */
+.home-sidebar .btn + .btn,
+.home-sidebar .btn + .dropdown,
+.home-sidebar .dropdown + .btn,
+.home-sidebar .dropdown + .dropdown {
+    margin-top: 8px;
+}
+
+/* Dropdown should look contained by the bubble */
 .home-sidebar .dropdown-menu {
-    position: absolute;
-    inset: auto auto auto 0;
-    z-index: 1040;
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid var(--border, rgba(255,255,255,.10));
+    overflow: hidden;
+    transform: translateY(4px);
+    z-index: 1040; /* above the bubble itself */
 }
 
 
