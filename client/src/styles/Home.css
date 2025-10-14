@@ -38,3 +38,11 @@
     height: 100%;
     object-fit: cover;               /* fills area, may crop */
 }
+
+#id {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    align-content: center !important;
+    justify-content: center !important;
+}
