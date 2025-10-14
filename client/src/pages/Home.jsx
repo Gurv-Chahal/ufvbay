@@ -93,6 +93,11 @@ const Home = () => {
                     <img className="home-hero" src={mainimage} alt="UFVBay"/>
                     <p id="demo" className='typewriter'></p>
                 </div>
+
+                <div className='home-second'>
+                    <h2>How UFVBay works</h2>
+
+                </div>
             </div>
         </div>
     );
