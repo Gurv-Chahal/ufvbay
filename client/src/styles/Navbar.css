@@ -115,6 +115,13 @@
   box-shadow: none !important;
   padding-top: 10px;   /* breathing room around the bubble */
   padding-bottom: 10px;
+  left: var(--sidebar-w);   /* same width as the sidebar */
+  right: var(--edge-gap);   /* same as the right gutter */
+  width: auto;              /* let left/right define the width */
+}
+
+@media (max-width: 900px) {
+  .navbar.fixed-top { left: 0; right: 0; }
 }
 
 /* The rounded pill that holds logo, search, and account button */
