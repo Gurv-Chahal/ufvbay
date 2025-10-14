@@ -59,17 +59,16 @@
   max-width: calc(100vw - 32px);
   box-sizing: border-box;
 
-  height: auto;
-  max-height: min(760px, calc(100% - var(--modal-vpad) * 2)); /* ↓ shorter */
-  background: var(--card-bg, #ffffff);
+  height: calc(100% - 0px);    /* definite height so children can use 100% */
+  max-height: min(760px, calc(100% - var(--modal-vpad) * 2));
+  min-height: 0;
+
+  background: var(--card-bg, #fff);
   color: var(--text, #0f172a);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 24px 64px rgba(0,0,0,.35);
   padding: 0;
-
-  /* important so children can actually scroll */
-  min-height: 0 !important;
 }
 
 

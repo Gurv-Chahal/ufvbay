@@ -426,7 +426,6 @@ const Item = ({ asModal = false }) => {
           {/* -------- RIGHT: clean details panel -------- */}
           <aside
           className="col-5 col-xl-5 details-panel"
-          style={{ height: asModal ? "100%" : "100vh" }}
           >
             {/* header */}
             <header className="details-header">
