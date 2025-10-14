@@ -14,7 +14,7 @@
 /* ===== remove the bluish/dark stage under the image ===== */
 /* ===== left media column & image ===== */
 .media-col {
-  background: transparent;
+  background: #0b0f19;               /* bring the black stage back */
   min-width: 0;
   padding: 12px 16px;
   display: flex; align-items: center; justify-content: center;
@@ -29,10 +29,11 @@
 /* image fills available height without creating extra strip below */
 .media-img {
   display: block;
-  max-height: 85%;                      /* don't fill full column height */
-  max-width: min(62vw, 640px);          /* avoid huge portrait width */
-  width: auto; height: auto;
-  object-fit: contain;
+  max-width: 80%;                     /* smaller than the column */
+  max-height: 80%;                    /* leave breathing room */
+  width: auto;
+  height: auto;
+  object-fit: contain;                 /* never overflow */
   border-radius: 10px;
   box-shadow: 0 12px 28px rgba(0,0,0,.35);
 }
@@ -66,6 +67,9 @@
   overflow: hidden;
   box-shadow: 0 24px 64px rgba(0,0,0,.35);
   padding: 0;
+
+  /* important so children can actually scroll */
+  min-height: 0;
 }
 
 
@@ -75,9 +79,11 @@
   flex-wrap: nowrap;
   align-items: stretch;
   height: 100%;
-  overflow: visible; /* was hidden; could clip overlay scrollbars */
+  overflow: hidden; /* was hidden; could clip overlay scrollbars */
   gap: 0;
   padding-right: 0;
+  min-height: 0;       /* <-- CRITICAL for flex children to scroll */
+
 }
 
 

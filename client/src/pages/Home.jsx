@@ -95,7 +95,7 @@ const Home = () => {
                 </div>
 
                 <div className='home-second'>
-                    <h2>How UFVBay works</h2>
+                    {/*<h2>How UFVBay works</h2>*/}
 
                 </div>
             </div>
