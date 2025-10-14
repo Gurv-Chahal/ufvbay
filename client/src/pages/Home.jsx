@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import HomeSideBar from "../components/HomeSideBar.jsx";
-import mainimage from "../images/main-image.png";
+import mainimage from "../images/library.jpg";
 import "../styles/Home.css";
 
 
@@ -19,8 +19,8 @@ const Home = () => {
     const navigate = useNavigate()
 
     // typewriter config/refs
-    const txt = "Random text";
-    const speed = 100;         // ms per character
+    const txt = "Welcome to UFVBay!";
+    const speed = 300;         // ms per character
     const loopDelay = 800;    // pause before restarting
     const idxRef = useRef(0); // current character index
     const timerRef = useRef(null);

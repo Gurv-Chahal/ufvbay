@@ -42,31 +42,27 @@
 
 .typewriter {
     position: absolute;
-    inset: 0;                     /* sits over the image area */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);  /* perfectly center, no stretching */
 
-    /* readable “card” behind the text */
+    /* readable “chip” */
     padding: clamp(12px, 2.2vw, 24px) clamp(16px, 3vw, 36px);
-    background: rgba(255, 255, 255, 0.88);    /* soft white panel */
-    border: 1px solid rgba(15, 23, 42, 0.18); /* subtle border */
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(15, 23, 42, 0.18);
     border-radius: 16px;
     box-shadow:
             0 6px 16px rgba(0, 0, 0, 0.25),
             0 1px 2px rgba(0, 0, 0, 0.15);
 
-    width: max-content;
     max-width: min(90%, 900px);
-    margin: auto;                 /* center the card */
-
-    color: #0f172a;               /* black/dark text */
-    text-shadow: none;            /* remove white glow */
+    color: #0f172a;                 /* dark text */
+    text-shadow: none;
     font-weight: 700;
     font-size: clamp(20px, 3vw, 42px);
 
     z-index: 1;
-    pointer-events: none;         /* don’t block clicks on image */
+    pointer-events: none;           /* keep clicks on image */
 }
 
 /*add a slight glass effect on capable browsers *!*/
