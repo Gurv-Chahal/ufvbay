@@ -20,7 +20,7 @@ const Home = () => {
 
     // typewriter config/refs
     const txt = "Random text";
-    const speed = 10;         // ms per character
+    const speed = 100;         // ms per character
     const loopDelay = 800;    // pause before restarting
     const idxRef = useRef(0); // current character index
     const timerRef = useRef(null);
