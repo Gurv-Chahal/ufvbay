@@ -103,7 +103,7 @@ const HomeSideBar = ({ onSubjectChange }) => {
                   className="btn my-3 py-3 d-flex align-items-center text-start gradient-button"
                   style={{width: "100%"}}
               >
-                  <i className="bi bi-bag px-3" style={{fontSize: "30px"}}/>
+                  <i className="bi bi-house px-3" style={{fontSize: "30px"}}/>
 
                   Home
               </button>
