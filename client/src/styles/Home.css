@@ -42,26 +42,38 @@
 
 .typewriter {
     position: absolute;
-    inset: 0;               /* fill the same box as the image */
+    inset: 0;                     /* sits over the image area */
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+
+    /* readable “card” behind the text */
+    padding: clamp(12px, 2.2vw, 24px) clamp(16px, 3vw, 36px);
+    background: rgba(255, 255, 255, 0.88);    /* soft white panel */
+    border: 1px solid rgba(15, 23, 42, 0.18); /* subtle border */
+    border-radius: 16px;
+    box-shadow:
+            0 6px 16px rgba(0, 0, 0, 0.25),
+            0 1px 2px rgba(0, 0, 0, 0.15);
+
+    width: max-content;
+    max-width: min(90%, 900px);
+    margin: auto;                 /* center the card */
+
+    color: #0f172a;               /* black/dark text */
+    text-shadow: none;            /* remove white glow */
+    font-weight: 700;
+    font-size: clamp(20px, 3vw, 42px);
 
     z-index: 1;
-    pointer-events: none;
-
-    /* readable styling—tweak as you like */
-    color: #fff;
-    text-shadow: 0 2px 4px rgba(0,0,0,.35);
-    font-weight: 600;
-    font-size: clamp(20px, 3vw, 42px);
+    pointer-events: none;         /* don’t block clicks on image */
 }
 
-/*#demo {*/
-/*    display: flex !important;*/
-/*    flex-direction: column !important;*/
-/*    align-items: center !important;*/
-/*    align-content: center !important;*/
-/*    justify-content: center !important;*/
-/*}*/
+/*add a slight glass effect on capable browsers *!*/
+@supports (backdrop-filter: blur(6px)) {
+    .typewriter {
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(6px) saturate(1.05);
+    }
+}
+
