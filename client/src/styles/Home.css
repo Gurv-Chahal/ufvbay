@@ -9,6 +9,8 @@
     /* space between sidebar bubble and the content */
     --main-gap: clamp(12px, 2vw, 24px);
     --nav-gap: 16px;
+
+    --home-content-scale: 0.5;
 }
 
 /* full-viewport page with header row + fill row */
@@ -43,10 +45,38 @@
     min-width: 0;
     min-height: 0;
     position: relative;
+    place-items: center;
     z-index: 0;
     padding-left: var(--main-gap);
     padding-bottom: var(--main-gap);
     box-sizing: border-box;
+}
+
+/* the “canvas” that holds the image + typewriter */
+.home-content {
+    position: relative;
+    width: calc(100% * var(--home-content-scale));
+    height: calc(100% * var(--home-content-scale));
+    min-width: 320px;                  /* optional safety for very small screens */
+    min-height: 200px;
+}
+
+
+/* make the image fill only the canvas (not the whole page) */
+.home-content > .home-hero {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* keep the typewriter centered inside the canvas */
+.home-content > .typewriter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 

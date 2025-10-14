@@ -90,8 +90,10 @@ const Home = () => {
                 </div>
 
                 <div className="home-main">
+                    <div className="home-content">
                     <img className="home-hero" src={mainimage} alt="UFVBay"/>
                     <p id="demo" className='typewriter'></p>
+                    </div>
                 </div>
 
                 <div className='home-second'>
