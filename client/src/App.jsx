@@ -11,6 +11,7 @@ import Item from "./pages/Item.jsx";
 import CreateListing from "./pages/CreateListing.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
+import Home from "./pages/Home.jsx";
 
 function getInitialTheme() {
     const saved = localStorage.getItem("theme");
@@ -29,6 +30,7 @@ function AppRoutes() {
         <>
             {/* Show normal routes OR the background page when we have a modal */}
             <Routes location={backgroundLocation || location}>
+                <Route path="/home" element={<Home />} />
                 <Route path="/" element={<Browse />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
