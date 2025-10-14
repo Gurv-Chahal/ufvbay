@@ -29,6 +29,7 @@
 .home-main {
     min-width: 0;
     min-height: 0;
+    position: relative;
 }
 
 /* make the image fill the space and crop as needed */
@@ -39,10 +40,28 @@
     object-fit: cover;               /* fills area, may crop */
 }
 
-#id {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    align-content: center !important;
-    justify-content: center !important;
+.typewriter {
+    position: absolute;
+    inset: 0;               /* fill the same box as the image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+
+    z-index: 1;
+    pointer-events: none;
+
+    /* readable styling—tweak as you like */
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,.35);
+    font-weight: 600;
+    font-size: clamp(20px, 3vw, 42px);
 }
+
+/*#demo {*/
+/*    display: flex !important;*/
+/*    flex-direction: column !important;*/
+/*    align-items: center !important;*/
+/*    align-content: center !important;*/
+/*    justify-content: center !important;*/
+/*}*/
