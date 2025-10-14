@@ -17,19 +17,33 @@ const Browse = () => {
   // state
   const [selectedSubject, setSelectedSubject] = useState("");
   const [listings, setListings] = useState([]);
-  const [filteredItems, setFilteredItems] = useState("");
+  const [filteredItems, setFilteredItems] = useState([]);
+
+  const location = useLocation();
 
 
-  // function to handle changes in selected subject
-  const handleSubjectChange = (subject) => {
-    setSelectedSubject(subject === "ALL" ? "" : subject);
-  };
+
+
 
 
   useEffect(() => {
     // call function to fetch listings from backend
     fetchListings();
   }, []);
+
+  // when arriving from Home, pick up the chosen subject
+  useEffect(() => {
+    const incoming = location.state?.subject;
+    if (typeof incoming === "string") {
+      setSelectedSubject(incoming);
+    }}, [location.state]);
+
+
+
+  // function to handle changes in selected subject
+  const handleSubjectChange = (subject) => {
+    setSelectedSubject(subject === "ALL" ? "" : subject);
+  };
 
 
   //handles search queries from user using title and description
@@ -74,7 +88,6 @@ const Browse = () => {
       // if no subject is selected show all listings
     : listings;
 
-  const location = useLocation();
 
 
   return (

@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import {useNavigate} from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import HomeSideBar from "../components/HomeSideBar.jsx";
 
@@ -6,17 +7,21 @@ import HomeSideBar from "../components/HomeSideBar.jsx";
 const Home = () => {
 
     // state for search bar
-    const [filteredItems, setFilteredItems] = useState("");
+    const [filteredItems, setFilteredItems] = useState([]);
     // state to handle subject change
     const [selectedSubject, setSelectedSubject] = useState("");
     const [listings, setListings] = useState([]);
 
+    const navigate = useNavigate()
+
 
 
     // function to handle changes in selected subject
-    const handleSubjectChange = (subject) => {
-        setSelectedSubject(subject === "ALL" ? "" : subject);
-    };
+        const handleSubjectChange = (subject) => {
+        const normalized = subject === "ALL" ? "" : subject;
+        // go to Browse ("/") and let Browse.jsx handle filtering
+            navigate("/", { state: { subject: normalized } });
+        };
 
     //handles search queries from user using title and description
     const handleSearch = (query) => {
