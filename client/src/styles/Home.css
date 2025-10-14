@@ -33,7 +33,7 @@
 .home-sidebar {
     min-height: 0;
     overflow: auto;
-    top: 0;
+    top: calc(var(--nav-height, 80px));
     height: calc(100dvh - var(--nav-height));
 }
 
