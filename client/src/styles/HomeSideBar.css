@@ -99,10 +99,13 @@
 }
 
 
-
-
-
-
+/* flexible spacers (create equal space above & below the bubble) */
+.home-sidebar::before,
+.home-sidebar::after{
+    content: "";
+    display: block;
+    margin-top: 30px;
+}
 
 
 
@@ -122,6 +125,7 @@
             0 8px 24px rgba(0,0,0,.35),                          /* outer depth */
             inset 0 1px 0 rgba(255,255,255,.06);                 /* soft inner line */
     overflow: visible;                                     /* let dropdowns show */
+    margin: 0;
 }
 
 /* Light theme version (if you use a .light root/class) */
