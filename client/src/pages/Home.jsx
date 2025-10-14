@@ -3,6 +3,8 @@ import {useNavigate} from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import HomeSideBar from "../components/HomeSideBar.jsx";
 import mainimage from "../images/main-image.png";
+import "../styles/Home.css";
+
 
 
 
