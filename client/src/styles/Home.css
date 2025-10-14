@@ -11,6 +11,8 @@
     --nav-gap: 16px;
 
     --home-content-scale: 0.8;
+
+    --home-radius: 22px;
 }
 
 /* full-viewport page with header row + fill row */
@@ -63,6 +65,14 @@
     height: calc(100% * var(--home-content-scale));
     min-width: 320px;                  /* optional safety for very small screens */
     min-height: 200px;
+
+    border-radius: var(--home-radius);
+    overflow: hidden;                     /* clips the hero image to the radius */
+    background: var(--page-bg, #0b0f19);  /* fallback fill while image loads */
+    box-shadow:
+            0 12px 28px rgba(0,0,0,.35),        /* depth like your bubbles */
+            inset 0 1px 0 rgba(255,255,255,.06);
+    outline: 1px solid rgba(255,255,255,.08); /* subtle edge line (optional) */
 }
 
 
