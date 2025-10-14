@@ -9,6 +9,8 @@ import Map from "../components/Map.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { getUserById } from "../services/AuthService.js"; // adjust path if needed
+import HomeSideBar from "../components/HomeSideBar.jsx";
+
 
 
 const Item = ({ asModal = false }) => {

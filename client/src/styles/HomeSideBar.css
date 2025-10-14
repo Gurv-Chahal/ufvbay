@@ -1,7 +1,11 @@
 
 :root {
     --sidebar-offset: 50px;
+    --nav-h: 72px;
+    --nav-gap: 16px;
+    --nav-height: var(--nav-h);
 }
+
 
 
 .gradient-button {
