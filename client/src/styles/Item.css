@@ -1,6 +1,7 @@
-/* set this to your real navbar height */
-:root { --nav-h: 72px; }  /* try 64–80px if your navbar differs */
-
+:root {
+  --nav-h: 72px;          /* your navbar height */
+  --modal-vpad: 28px;     /* vertical breathing room inside overlay (raise to make modal shorter) */
+}
 
 /* Item.css */
 .map-container {
@@ -10,11 +11,15 @@
 
 
 /* Left media column (darker stage & smaller image) */
+/* ===== remove the bluish/dark stage under the image ===== */
 .media-col {
-  background: #0b0f19;
+  background: transparent;       /* was #0b0f19 */
   min-width: 0;
   padding-right: 16px;
-}         /* subtle dark canvas */
+  display: flex;                 /* center the image nicely */
+  align-items: center;
+  justify-content: center;
+}
 
 
 .item-panel .details-panel {
@@ -22,38 +27,41 @@
 }
 
 
+/* image fills available height without creating extra strip below */
 .media-img {
-  max-width: 60%;
-  max-height: 100%;    /* contain vertically */
+  display: block;
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
   height: auto;
+  object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 12px 28px rgba(0,0,0,.35);
 }
 
-
+/* overlay sits below the navbar */
 .item-overlay {
   position: fixed;
   left: 0;
   right: 0;
-  top: var(--nav-h);   /* start below navbar */
-  bottom: 0;           /* fill the rest of the viewport */
+  top: var(--nav-h);
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;       /* keeps panel off the edges */
+  padding: var(--modal-vpad) 16px;   /* extra top/bottom gap -> smaller modal */
   background: transparent;
-  z-index: 1100;       /* BELOW navbar (your navbar is ~1200) */
+  z-index: 1100;                     /* below navbar */
 }
 
-
-/* ===== Panel clamps to the remaining viewport height ===== */
+/* panel height clamps to overlay height minus the padding above */
 .item-panel {
-  width: min(80vw, 1100px);
+  width: min(78vw, 1080px);
   max-width: calc(100vw - 32px);
   box-sizing: border-box;
 
   height: auto;
-  max-height: 100%;    /* <- critical: use the overlay’s height */
+  max-height: min(820px, calc(100% - var(--modal-vpad) * 2));  /* cap smaller */
   background: var(--card-bg, #ffffff);
   color: var(--text, #0f172a);
   border-radius: 12px;
@@ -63,7 +71,7 @@
 }
 
 
-/* inner layout stays locked to panel height */
+/* inner layout respects panel height */
 .item-panel > .row {
   display: flex;
   flex-wrap: nowrap;
@@ -73,6 +81,7 @@
   gap: 0;
   padding-right: 0;
 }
+
 
 
 /* prefer dynamic viewport units when supported (iOS Safari, etc.) */
