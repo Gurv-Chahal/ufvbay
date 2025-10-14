@@ -18,12 +18,13 @@ const Home = () => {
 
     const navigate = useNavigate()
 
-    // typewriting vars
-    let i = 0;
-    const txt = 'Random text';
-    const speed = 50;
-    const typingId = useRef(null);     // holds setTimeout id
-    const startedRef = useRef(false);  // guards double-run in StrictMode
+    // typewriter config/refs
+    const txt = "Random text";
+    const speed = 10;         // ms per character
+    const loopDelay = 800;    // pause before restarting
+    const idxRef = useRef(0); // current character index
+    const timerRef = useRef(null);
+    const startedRef = useRef(false);
 
     // function to handle changes in selected subject
     const handleSubjectChange = (subject) => {
@@ -45,13 +46,22 @@ const Home = () => {
         setFilteredItems(results);
     };
 
+    // typewriter loop
     const typeWriter = () => {
-        if (i < txt.length) {
-            const el = document.getElementById("demo");
-            if (!el) return;
-            el.textContent += txt.charAt(i);
-            i++;
-            typingId.current = setTimeout(typeWriter, speed);
+        const el = document.getElementById("demo");
+        if (!el) return;
+
+        if (idxRef.current < txt.length) {
+            el.textContent += txt.charAt(idxRef.current);
+            idxRef.current += 1;
+            timerRef.current = setTimeout(typeWriter, speed);
+        } else {
+            // finished one pass — wait, clear, restart
+            timerRef.current = setTimeout(() => {
+                el.textContent = "";
+                idxRef.current = 0;
+                typeWriter();
+            }, loopDelay);
         }
     };
 
@@ -59,12 +69,14 @@ const Home = () => {
     useEffect(() => {
         if (startedRef.current) return;
         startedRef.current = true;
+
         const el = document.getElementById("demo");
         if (el) el.textContent = "";
-        i = 0;
+        idxRef.current = 0;
         typeWriter();
+
         return () => {
-            if (typingId.current) clearTimeout(typingId.current);
+            if (timerRef.current) clearTimeout(timerRef.current);
         };
     }, []);
 
