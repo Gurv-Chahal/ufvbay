@@ -1,62 +1,63 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import HomeSideBar from "../components/HomeSideBar.jsx";
 import mainimage from "../images/library.jpg";
 import "../styles/Home.css";
 
-
-
-
 const Home = () => {
-
-    // state for search bar
+    // search plumbing (unchanged)
     const [filteredItems, setFilteredItems] = useState([]);
-    // state to handle subject change
     const [selectedSubject, setSelectedSubject] = useState("");
     const [listings, setListings] = useState([]);
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
+    // ---- slides --------------------------------------------------------------
+    // Slide #0 is your current hero. Add/replace slide objects to taste.
+    const slides = [
+        { key: "hero", kind: "hero" }, // uses your image + typewriter
+        {
+            key: "how",
+            kind: "panel",
+            title: "How UFVBay Works",
+            body:
+                "Browse local listings, message sellers, and meet on campus. Keep things student-friendly and safe."
+        },
+        {
+            key: "sell",
+            kind: "panel",
+            title: "Sell Textbooks Fast",
+            body:
+                "Create a listing in seconds. Add photos, set a fair price, and reach UFV students right away."
+        }
+    ];
+    const [index, setIndex] = useState(0);
+    const clamp = (i) => Math.max(0, Math.min(i, slides.length - 1));
+    const next = () => setIndex((i) => clamp(i + 1));
+    const prev = () => setIndex((i) => clamp(i - 1));
+    const onKey = (e) => {
+        if (e.key === "ArrowRight") next();
+        if (e.key === "ArrowLeft") prev();
+    };
 
-    // typewriter config/refs
+    // ---- existing typewriter for hero only ----------------------------------
     const txt = "Welcome to UFVBay!";
-    const speed = 300;         // ms per character
-    const loopDelay = 800;    // pause before restarting
-    const idxRef = useRef(0); // current character index
+    const speed = 300;
+    const loopDelay = 800;
+    const idxRef = useRef(0);
     const timerRef = useRef(null);
     const startedRef = useRef(false);
 
-    // function to handle changes in selected subject
-    const handleSubjectChange = (subject) => {
-        const normalized = subject === "ALL" ? "" : subject;
-        // go to Browse ("/") and let Browse.jsx handle filtering
-        navigate("/", {state: {subject: normalized}});
-    };
-
-    //handles search queries from user using title and description
-    const handleSearch = (query) => {
-        const lowerCaseQuery = query.toLowerCase();
-        const results = listings.filter((item) => {
-            return (
-                item.title.toLowerCase().includes(lowerCaseQuery) ||
-                item.description.toLowerCase().includes(lowerCaseQuery)
-            );
-        });
-        // update state with search results
-        setFilteredItems(results);
-    };
-
-    // typewriter loop
     const typeWriter = () => {
         const el = document.getElementById("demo");
         if (!el) return;
+        if (index !== 0) return; // run only when the hero slide is visible
 
         if (idxRef.current < txt.length) {
             el.textContent += txt.charAt(idxRef.current);
             idxRef.current += 1;
             timerRef.current = setTimeout(typeWriter, speed);
         } else {
-            // finished one pass — wait, clear, restart
             timerRef.current = setTimeout(() => {
                 el.textContent = "";
                 idxRef.current = 0;
@@ -65,41 +66,104 @@ const Home = () => {
         }
     };
 
-    // start once on mount, clean up on unmount
     useEffect(() => {
+        // boot once
         if (startedRef.current) return;
         startedRef.current = true;
-
-        const el = document.getElementById("demo");
-        if (el) el.textContent = "";
-        idxRef.current = 0;
-        typeWriter();
-
+        document.addEventListener("keydown", onKey);
         return () => {
+            document.removeEventListener("keydown", onKey);
             if (timerRef.current) clearTimeout(timerRef.current);
         };
     }, []);
 
+    useEffect(() => {
+        // restart the hero typewriter whenever we return to slide 0
+        if (index !== 0) return;
+        const el = document.getElementById("demo");
+        if (el) el.textContent = "";
+        idxRef.current = 0;
+        if (timerRef.current) clearTimeout(timerRef.current);
+        typeWriter();
+    }, [index]);
+
+    // subject change from sidebar → go to Browse
+    const handleSubjectChange = (subject) => {
+        const normalized = subject === "ALL" ? "" : subject;
+        navigate("/", { state: { subject: normalized } });
+    };
+
+    // (search plumbing you already had)
+    const handleSearch = (query) => {
+        const q = query.toLowerCase();
+        const results = listings.filter(
+            (item) =>
+                item.title.toLowerCase().includes(q) ||
+                item.description.toLowerCase().includes(q)
+        );
+        setFilteredItems(results);
+    };
+
     return (
         <div className="home-shell">
-            <Navbar onSearch={handleSearch} results={filteredItems}/>
+            <Navbar onSearch={handleSearch} results={filteredItems} />
 
             <div className="home-body">
                 <div className="home-left">
-                    <HomeSideBar onSubjectChange={handleSubjectChange}/>
+                    <HomeSideBar onSubjectChange={handleSubjectChange} />
                 </div>
 
+                {/* ------- SLIDER LIVES ONLY INSIDE THE MAIN COLUMN ------- */}
                 <div className="home-main">
-                    <div className="home-content">
-                    <img className="home-hero" src={mainimage} alt="UFVBay"/>
-                    <p id="demo" className='typewriter'></p>
+                    <div className="home-slider" aria-roledescription="carousel">
+                        <div
+                            className="home-track"
+                            style={{ transform: `translateX(-${index * 100}%)` }}
+                        >
+                            {slides.map((s) => (
+                                <section className="home-slide" key={s.key}>
+                                    {s.kind === "hero" ? (
+                                        <div className="home-content">
+                                            <img className="home-hero" src={mainimage} alt="UFVBay" />
+                                            <p id="demo" className="typewriter" />
+                                        </div>
+                                    ) : (
+                                        <div className="home-content home-content--panel">
+                                            <div className="panel-inner">
+                                                <h2>{s.title}</h2>
+                                                <p>{s.body}</p>
+                                            </div>
+                                        </div>
+                                    )}
+                                </section>
+                            ))}
+                        </div>
+
+                        {/* Controls pinned at bottom center of the main column */}
+                        <div className="home-controls" role="group" aria-label="Slides">
+                            <button
+                                className="nav-btn nav-btn--left"
+                                onClick={prev}
+                                disabled={index === 0}
+                                aria-label="Previous slide"
+                            >
+                                ‹
+                            </button>
+                            <button
+                                className="nav-btn nav-btn--right"
+                                onClick={next}
+                                disabled={index === slides.length - 1}
+                                aria-label="Next slide"
+                            >
+                                ›
+                            </button>
+                        </div>
                     </div>
                 </div>
-
-
+                {/* --------------------------------------------------------- */}
             </div>
         </div>
     );
-}
+};
 
 export default Home;

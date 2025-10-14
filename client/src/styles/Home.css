@@ -19,6 +19,23 @@
    --nav-height: var(--nav-h);    /* alias used everywhere */
 
 
+
+    /* slider button sizing (already in your file)… */
+    --slider-btn-size: clamp(56px, 6.5vh, 68px);
+    --slider-btn-icon: clamp(26px, 3vh, 34px);
+    --slider-btn-gap: clamp(16px, 2vw, 24px);
+
+    /* add: contrast rings/halo */
+    --slider-btn-ring-1: rgba(255,255,255,.92); /* inner light ring */
+    --slider-btn-ring-2: rgba(15,23,42,.35);    /* outer dark ring */
+
+
+}
+
+:root.dark{
+    /* slightly stronger contrast in dark mode */
+    --slider-btn-ring-1: rgba(255,255,255,.85);
+    --slider-btn-ring-2: rgba(0,0,0,.55);
 }
 
 /* full-viewport page with header row + fill row */
@@ -146,3 +163,147 @@
 @media (max-width: 900px){
     :root { --home-lift: -1vh; }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== SLIDER (lives entirely inside .home-main) ===== */
+
+/* container that clips the animated track */
+.home-slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;           /* important: hide sliding edges */
+    display: grid;              /* keeps content centered */
+    place-items: center;
+}
+
+/* the moving strip */
+.home-track {
+    display: flex;
+    height: 100%;
+    transition: transform 560ms cubic-bezier(.22,.61,.36,1);
+    will-change: transform;
+}
+
+/* each slide occupies 100% of the main column */
+.home-slide {
+    flex: 0 0 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+}
+
+/* reuse your existing card-like canvas */
+.home-content {
+    /* already defined above in your file; no change needed */
+}
+
+/* simple light panel look for non-hero slides */
+.home-content--panel {
+    background: var(--surface, #0b0f19);
+    border: 1px solid var(--border, rgba(255,255,255,.08));
+    box-shadow:
+            0 12px 28px rgba(0,0,0,.35),
+            inset 0 1px 0 rgba(255,255,255,.06);
+    display: grid;
+    place-items: center;
+}
+
+.home-content--panel .panel-inner {
+    padding: clamp(20px, 4vw, 48px);
+    max-width: min(90%, 960px);
+    text-align: center;
+}
+
+.home-content--panel h2 {
+    margin: 0 0 12px;
+    font-size: clamp(22px, 3.2vw, 40px);
+    font-weight: 800;
+}
+
+.home-content--panel p {
+    margin: 0 auto;
+    font-size: clamp(14px, 1.4vw, 18px);
+    line-height: 1.6;
+    opacity: .9;
+}
+
+/* Bottom-centered controls *//* Bottom-centered controls */
+.home-controls {
+    position: absolute;
+    bottom: clamp(16px, 3vh, 36px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--slider-btn-gap);
+    z-index: 3;
+}
+
+.nav-btn{
+    position: relative; /* for the ring layers */
+    width: var(--slider-btn-size);
+    height: var(--slider-btn-size);
+    border-radius: 999px;
+    border: 1px solid rgba(15,23,42,.28);
+    background: rgba(255,255,255,.96);
+    color: #0f172a;
+
+    /* 👉 add the double outline + keep depth and inner bevel */
+    box-shadow:
+            0 0 0 3px var(--slider-btn-ring-1),  /* inner light ring */
+            0 0 0 6px var(--slider-btn-ring-2),  /* outer dark ring */
+            0 8px 22px rgba(0,0,0,.35),          /* drop shadow */
+            inset 0 0 0 2px rgba(255,255,255,.35);
+
+    font-size: var(--slider-btn-icon);
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, background .2s ease, opacity .2s ease;
+}
+
+/* subtle lift = stronger ring */
+.nav-btn:hover:not(:disabled){
+    transform: translateY(-2px) scale(1.03);
+    box-shadow:
+            0 0 0 3px var(--slider-btn-ring-1),
+            0 0 0 6px var(--slider-btn-ring-2),
+            0 12px 28px rgba(0,0,0,.4),
+            inset 0 0 0 2px rgba(255,255,255,.35);
+}
+
+/* keep your strong keyboard focus ring */
+.nav-btn:focus-visible{
+    outline: none;
+    box-shadow:
+            0 0 0 3px rgba(255,255,255,.98),
+            0 0 0 5px rgba(59,130,246,.65);
+}
+
+/* dark mode */
+/* dark mode button base (keeps the ring vars above) */
+:root.dark .nav-btn{
+    background: rgba(17,24,39,.92);
+    color: #fff;
+    border-color: rgba(255,255,255,.18);
+}
+
+.nav-btn:active:not(:disabled){ transform: translateY(0); box-shadow: 0 4px 12px rgba(0,0,0,.28); }
+.nav-btn:disabled{ opacity: .45; cursor: default; }
