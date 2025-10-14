@@ -17,6 +17,7 @@
     --home-lift: -2.5vh;
 
     --nav-height: 0;
+
 }
 
 /* full-viewport page with header row + fill row */
@@ -152,3 +153,30 @@
     :root { --home-lift: -1vh; }
 }
 
+/* 1) Drive the sidebar→content separation at the GRID level */
+:root {
+    /* tune this number; it becomes your consistent sidebar→cards gap */
+    --cards-gap: clamp(24px, 3vw, 40px);
+}
+
+/* Your sidebar/content grid */
+.home-body {
+    /* existing: grid-template-columns: var(--sidebar-w) 1fr var(--edge-gap); */
+    column-gap: calc(var(--cards-gap) + var(--sidebar-offset, 0px));
+}
+
+/* 2) Avoid “double gap” from left padding inside the content column */
+.home-main {
+    /* keep right padding for breathing room, but let column-gap handle the left */
+    padding-left: 0;                      /* let the grid gap do the work */
+    padding-right: var(--main-gap);       /* keep right breathing room */}
+
+/* 3) If your product list uses Bootstrap .row, kill the negative margins */
+.home-main > .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.home-main .container,
+.home-main .container-fluid { padding-left: 0; padding-right: 0; }
+.home-main .row { margin-left: 0; margin-right: 0; }
