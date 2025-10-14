@@ -96,10 +96,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className='home-second'>
-                    {/*<h2>How UFVBay works</h2>*/}
 
-                </div>
             </div>
         </div>
     );

@@ -90,13 +90,14 @@
     top: var(--nav-height);
     left: 0;
     height: calc(100dvh - var(--nav-height));
-    width: calc(var(--sidebar-w) - var(--sidebar-offset)) !important; /* keep it inside the grid track */
+    width: var(--sidebar-w) !important; /* keep it inside the grid track */
     display: flex;
     flex-direction: column;
     padding: 8px 12px;
     overflow-y: auto;
     z-index: 1030;                          /* above content, below nav dropdowns */
-    margin-left: var(--sidebar-offset);
+    margin-left: 0;
+    scrollbar-gutter: stable both-edges;
 
 }
 
@@ -105,16 +106,9 @@
     :root { --sidebar-w: clamp(420px, 32vw, 480px); }
 }
 
-/* flexible spacers (create equal space above & below the bubble) */
+
 .home-sidebar::before,
-.home-sidebar::after{
-    content: "";
-    display: block;
-    margin-top: 30px;
-}
-
-
-
+.home-sidebar::after{ content: none; }
 
 
 /* The rounded "bubble" that holds all sidebar items */
