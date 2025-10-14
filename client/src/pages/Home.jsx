@@ -39,17 +39,20 @@ const Home = () => {
     };
 
     return (
-        <div>
+        <div className="home-shell">
             <Navbar onSearch={handleSearch} results={filteredItems} />
-            <div className="d-flex">
-                <HomeSideBar onSubjectChange={handleSubjectChange} />
-            </div>
 
-            <div className='front-image'>
-                <img className='mainpage-image' src={mainimage} alt='cant find image' />
+            <div className="home-body">
+                <div className="home-sidebar">
+                    <HomeSideBar onSubjectChange={handleSubjectChange} />
+                </div>
+
+                <div className="home-main">
+                    <img className="home-hero" src={mainimage} alt="UFVBay" />
+                </div>
             </div>
         </div>
     );
-}
+
 
 export default Home;
