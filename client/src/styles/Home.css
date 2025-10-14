@@ -13,6 +13,8 @@
     --home-content-scale: 0.8;
 
     --home-radius: 22px;
+
+    --home-lift: -5vh;
 }
 
 /* full-viewport page with header row + fill row */
@@ -73,6 +75,7 @@
             0 12px 28px rgba(0,0,0,.35),        /* depth like your bubbles */
             inset 0 1px 0 rgba(255,255,255,.06);
     outline: 1px solid rgba(255,255,255,.08); /* subtle edge line (optional) */
+    transform: translateY(var(--home-lift));
 }
 
 
@@ -142,4 +145,8 @@
 }
 
 
+/* optional: smaller lift on narrow screens */
+@media (max-width: 900px){
+    :root { --home-lift: -1vh; }
+}
 
