@@ -1,6 +1,5 @@
 
 :root {
-    --nav-height: 0px;
 }
 
 
@@ -90,7 +89,7 @@
     top: var(--nav-height);
     left: 0;
     height: calc(100dvh - var(--nav-height));
-    width: clamp(220px, 16vw, 280px);      /* prevents Bootstrap cols from fighting fixed layout */
+    width: var(--sidebar-w) !important;
     display: flex;
     flex-direction: column;
     padding: 8px 12px;
@@ -98,6 +97,10 @@
     z-index: 1030;                          /* above content, below nav dropdowns */
 }
 
+/* Optional: give laptops (MB Air range) a little extra bump */
+@media (min-width: 1100px) and (max-width: 1536px) {
+    :root { --sidebar-w: clamp(420px, 32vw, 480px); }
+}
 
 /* flexible spacers (create equal space above & below the bubble) */
 .home-sidebar::before,

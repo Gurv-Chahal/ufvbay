@@ -1,6 +1,6 @@
 :root{
     /* your existing values are fine—tune if you want */
-    --sidebar-w: clamp(220px, 16vw, 280px);
+    --sidebar-w: clamp(250px, 22vw, 320px);
     --edge-gap: clamp(16px, 2.5vw, 56px);   /* width of the right gutter */
     --fade-w: clamp(24px, 4vw, 96px);       /* width of the fade into gutter */
     --page-bg: #0b0f19;                     /* page background used for blends */
