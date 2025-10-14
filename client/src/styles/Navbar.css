@@ -97,4 +97,94 @@
 
 
 
-/* Keep your existing rules (e.g., .navbar-fixed) */
+
+
+
+
+
+
+
+
+
+/* ===== Bubble navbar ===== */
+
+/* Make the bar itself transparent so only the bubble is visible */
+.navbar.fixed-top {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding-top: 10px;   /* breathing room around the bubble */
+  padding-bottom: 10px;
+}
+
+/* The rounded pill that holds logo, search, and account button */
+.nav-bubble {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(8px, 2vw, 16px);
+
+  /* size & centering */
+  width: min(1200px, 94vw);
+  margin: 0 auto;
+
+  /* look & feel (matches your sidebar bubble) */
+  background: var(--surface, #0b0f19);
+  border: 1px solid var(--border, rgba(255,255,255,.08));
+  border-radius: 9999px; /* pill */
+  box-shadow:
+          0 8px 24px rgba(0,0,0,.35),
+          inset 0 1px 0 rgba(255,255,255,.06);
+  padding: clamp(6px, 1.2vw, 10px) clamp(10px, 2vw, 18px);
+
+  position: relative;  /* keeps dropdowns aligned */
+  z-index: 1;
+}
+
+/* Brand tweaks inside the bubble */
+.nav-bubble .navbar-brand img { width: 42px; height: 42px; }
+.nav-bubble .navbar-brand h2  { font-size: clamp(18px, 2.3vw, 28px); margin: 0; }
+
+/* Search takes remaining space nicely */
+.nav-bubble .search-bar {
+  flex: 1 1 480px;                   /* grow but keep a sensible min width */
+  max-width: 720px;
+  width: auto;                       /* override the earlier width rule */
+}
+@media (max-width: 767.98px) {
+  .nav-bubble .search-bar { flex-basis: 100%; order: 2; }
+}
+
+/* Inputs/buttons inside bubble look lighter on dark surface */
+.nav-bubble .form-control {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--text, #fff);
+}
+.nav-bubble .form-control::placeholder { color: rgba(255,255,255,0.55); }
+.nav-bubble .form-control:focus {
+  border-color: rgba(255,255,255,0.35);
+  box-shadow: 0 0 0 .2rem rgba(255,255,255,.18);
+  background: rgba(255,255,255,0.08);
+}
+
+/* Keep the account button compact inside the pill */
+.nav-bubble .btn.border-0 { padding: 8px 12px; }
+
+/* Light theme variant (optional) */
+.light .nav-bubble {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  box-shadow:
+          0 8px 24px rgba(2,6,23,.08),
+          inset 0 1px 0 rgba(255,255,255,.65);
+}
+.light .nav-bubble .form-control {
+  background: #fff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+.light .nav-bubble .form-control:focus {
+  border-color: #64748b;
+  box-shadow: 0 0 0 .2rem rgba(2,132,199,.15);
+}
