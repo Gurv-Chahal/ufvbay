@@ -14,15 +14,10 @@ const Home = () => {
 
     // ---- slides --------------------------------------------------------------
     // Slide #0 is your current hero. Add/replace slide objects to taste.
+// ---- slides --------------------------------------------------------------
     const slides = [
         { key: "hero", kind: "hero" }, // uses your image + typewriter
-        {
-            key: "how",
-            kind: "panel",
-            title: "How UFVBay Works",
-            body:
-                "Browse local listings, message sellers, and meet on campus. Keep things student-friendly and safe."
-        },
+        { key: "how", kind: "how" },   // <-- changed: special layout with 3 cards
         {
             key: "sell",
             kind: "panel",
@@ -31,6 +26,7 @@ const Home = () => {
                 "Create a listing in seconds. Add photos, set a fair price, and reach UFV students right away."
         }
     ];
+
     const [index, setIndex] = useState(0);
     const clamp = (i) => Math.max(0, Math.min(i, slides.length - 1));
     const next = () => setIndex((i) => clamp(i + 1));
@@ -124,10 +120,61 @@ const Home = () => {
                                 <section className="home-slide" key={s.key}>
                                     {s.kind === "hero" ? (
                                         <div className="home-content">
-                                            <img className="home-hero" src={mainimage} alt="UFVBay" />
-                                            <p id="demo" className="typewriter" />
+                                            <img className="home-hero" src={mainimage} alt="UFVBay"/>
+                                            <p id="demo" className="typewriter"/>
+                                        </div>
+                                    ) : s.kind === "how" ? (
+                                        // ======== CUSTOM SECOND SLIDE (3 boxes with hover-reveal) ========
+                                        <div className="home-content home-content--panel panel--how">
+                                            <div className="panel-inner">
+                                                <h2 className="panel-title">How UFVBay Works</h2>
+                                                <div className="features-grid">
+                                                    <article className="feature-card">
+                                                        <h3 className="feature-title">Browse Local Listings</h3>
+                                                        <p className="feature-text">
+                                                            Find items posted by UFV students. Filter by subject,
+                                                            category, or price.
+                                                        </p>
+
+                                                        {/* Reveals on hover */}
+                                                        <div className="feature-cta">
+                                                            <button className="feature-btn" type="button">Explore
+                                                                Listings
+                                                            </button>
+                                                        </div>
+                                                    </article>
+
+                                                    <article className="feature-card">
+                                                        <h3 className="feature-title">Message Sellers</h3>
+                                                        <p className="feature-text">
+                                                            Chat in-app to ask questions and agree on a fair price—keep
+                                                            it respectful.
+                                                        </p>
+
+                                                        <div className="feature-cta">
+                                                            <button className="feature-btn" type="button">Open
+                                                                Messages
+                                                            </button>
+                                                        </div>
+                                                    </article>
+
+                                                    <article className="feature-card">
+                                                        <h3 className="feature-title">Meet On Campus</h3>
+                                                        <p className="feature-text">
+                                                            Pick visible meet-up spots and follow simple safety tips.
+                                                            Students helping students.
+                                                        </p>
+
+                                                        <div className="feature-cta">
+                                                            <button className="feature-btn" type="button">Safety Tips
+                                                            </button>
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                            </div>
                                         </div>
                                     ) : (
+                                        // ======== default simple panel (your third slide) ========
                                         <div className="home-content home-content--panel">
                                             <div className="panel-inner">
                                                 <h2>{s.title}</h2>
