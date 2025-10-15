@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import HomeSideBar from "../components/HomeSideBar.jsx";
 import mainimage from "../images/library.jpg";
+import secondimage from "../images/books.jpg";
+
 import "../styles/Home.css";
 
 const Home = () => {
@@ -36,10 +38,14 @@ const Home = () => {
         if (e.key === "ArrowLeft") prev();
     };
 
+
+
+
+
     // ---- existing typewriter for hero only ----------------------------------
     const txt = "Welcome to UFVBay!";
-    const speed = 300;
-    const loopDelay = 800;
+    const speed = 150;
+    const loopDelay = 2000;
     const idxRef = useRef(0);
     const timerRef = useRef(null);
     const startedRef = useRef(false);
@@ -62,6 +68,29 @@ const Home = () => {
         }
     };
 
+
+    // --- typewriter for second slide ("How UFVBay Works")
+// --- typewriter for second slide ("How UFVBay Works") — NO LOOP
+    const howTxt = "How UFVBay Works";
+    const howIdxRef = useRef(0);
+    const howTimerRef = useRef(null);
+
+    const typeWriterHow = () => {
+        const el = document.getElementById("how-typed");
+        if (!el || index !== 1) return;               // only on slide 2
+        if (howIdxRef.current < howTxt.length) {
+            el.textContent += howTxt.charAt(howIdxRef.current++);
+            howTimerRef.current = setTimeout(typeWriterHow, speed);
+        } else {
+            // done — no loop, no reset
+            howTimerRef.current = null;
+        }
+    };
+
+
+
+
+
     useEffect(() => {
         // boot once
         if (startedRef.current) return;
@@ -83,6 +112,18 @@ const Home = () => {
         typeWriter();
     }, [index]);
 
+
+    useEffect(() => {
+        if (index !== 1) return;
+        const el = document.getElementById("how-typed");
+        if (el) el.textContent = "";
+        howIdxRef.current = 0;
+        if (howTimerRef.current) clearTimeout(howTimerRef.current);
+        typeWriterHow();
+    }, [index]);
+
+
+
     // subject change from sidebar → go to Browse
     const handleSubjectChange = (subject) => {
         const normalized = subject === "ALL" ? "" : subject;
@@ -99,6 +140,7 @@ const Home = () => {
         );
         setFilteredItems(results);
     };
+
 
     return (
         <div className="home-shell">
@@ -125,49 +167,40 @@ const Home = () => {
                                         </div>
                                     ) : s.kind === "how" ? (
                                         // ======== CUSTOM SECOND SLIDE (3 boxes with hover-reveal) ========
-                                        <div className="home-content home-content--panel panel--how">
+                                        // image background + top-aligned content
+                                        <div className="home-content panel--how">
+                                            <img className="home-hero" src={secondimage} alt="" />
                                             <div className="panel-inner">
-                                                <h2 className="panel-title">How UFVBay Works</h2>
+                                                <h2 className="panel-title"><span id="how-typed"></span></h2>
+
                                                 <div className="features-grid">
-                                                    <article className="feature-card">
+                                                    <article className="feature-card" tabIndex="0">
                                                         <h3 className="feature-title">Browse Local Listings</h3>
                                                         <p className="feature-text">
-                                                            Find items posted by UFV students. Filter by subject,
-                                                            category, or price.
+                                                            Find items posted by UFV students. Filter by subject, category, or price.
                                                         </p>
-
-                                                        {/* Reveals on hover */}
                                                         <div className="feature-cta">
-                                                            <button className="feature-btn" type="button">Explore
-                                                                Listings
-                                                            </button>
+                                                            <button className="feature-btn" type="button">Explore Listings</button>
                                                         </div>
                                                     </article>
 
-                                                    <article className="feature-card">
+                                                    <article className="feature-card" tabIndex="0">
                                                         <h3 className="feature-title">Message Sellers</h3>
                                                         <p className="feature-text">
-                                                            Chat in-app to ask questions and agree on a fair price—keep
-                                                            it respectful.
+                                                            Chat in-app to ask questions and agree on a fair price—keep it respectful.
                                                         </p>
-
                                                         <div className="feature-cta">
-                                                            <button className="feature-btn" type="button">Open
-                                                                Messages
-                                                            </button>
+                                                            <button className="feature-btn" type="button">Open Messages</button>
                                                         </div>
                                                     </article>
 
-                                                    <article className="feature-card">
+                                                    <article className="feature-card" tabIndex="0">
                                                         <h3 className="feature-title">Meet On Campus</h3>
                                                         <p className="feature-text">
-                                                            Pick visible meet-up spots and follow simple safety tips.
-                                                            Students helping students.
+                                                            Pick visible meet-up spots and follow simple safety tips. Students helping students.
                                                         </p>
-
                                                         <div className="feature-cta">
-                                                            <button className="feature-btn" type="button">Safety Tips
-                                                            </button>
+                                                            <button className="feature-btn" type="button">Safety Tips</button>
                                                         </div>
                                                     </article>
                                                 </div>

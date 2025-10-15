@@ -30,6 +30,19 @@
     --slider-btn-ring-2: rgba(15,23,42,.35);    /* outer dark ring */
 
 
+    /* characters in "How UFVBay Works" → 16 (update if you change the title) */
+    --how-typing-steps: 16;
+    /* duration should roughly equal steps * JS typing speed */
+    --how-typing-dur: 1200ms;
+
+
+    --how-accent-1: #22c55e; /* emerald */
+    --how-accent-2: #06b6d4; /* teal   */
+    --how-accent-3: #6366f1; /* indigo */
+    --ufvbay-accent: #16a34a; /* emerald/UFV-ish green */
+
+
+
 }
 
 :root.dark{
@@ -315,29 +328,144 @@
 
 
 /* ---------- HOW slide (3 feature cards) ---------- */
+
+.panel--how{
+    display: grid;                 /* it doesn't inherit grid from --panel anymore */
+    place-items: stretch center;   /* stretch vertically, center horizontally */
+    background: transparent;       /* let the <img.home-hero> be visible */
+    border: none;                  /* no panel border over the image */
+    position: relative; /* new */
+
+}
+
+/* Top gradient band behind the title (dark → transparent) */
+.panel--how::before{
+    content:"";
+    position:absolute; inset:0 0 38% 0; /* top ~62% gradient; adjust if needed */
+    background:
+        /* contrast band */
+            linear-gradient(to bottom,
+            rgba(5,10,20,.86) 0%,
+            rgba(5,10,20,.66) 45%,
+            rgba(5,10,20,0) 100%
+            ),
+                /* single-color wash using the brand */
+            linear-gradient(90deg,
+            color-mix(in srgb, var(--ufvbay-accent) 22%, transparent) 0%,
+            color-mix(in srgb, var(--ufvbay-accent) 22%, transparent) 100%
+            );
+    pointer-events:none; z-index:0;
+}
+/* Extra edge contrast for the letters */
+.panel--how .panel-title,
+.panel--how #how-typed{
+    -webkit-text-stroke: 0.6px rgba(0,0,0,.35);
+    text-shadow:
+            0 2px 10px rgba(0,0,0,.45),
+            0 6px 24px rgba(0,0,0,.35);
+}
+
 .panel--how .panel-inner{
+    display: grid;
+    grid-template-rows: auto 1fr;  /* row 1 = title, row 2 = flexible area */
+    height: 100%;                  /* fill the slide */
+    position: relative;
+    z-index: 1;                    /* above the image */
     max-width: min(92%, 1120px);
     margin-inline: auto;
     text-align: left;
     padding: clamp(24px, 4vw, 56px);
 }
 
+
 .panel--how .panel-title{
-    margin: 0 0 clamp(16px, 2.2vw, 24px);
-    font-size: clamp(22px, 3.2vw, 40px);
-    font-weight: 800;
-    text-align: center; /* title centered at top */
+    position: relative;
+    display: inline-block;      /* shrink to text width so underline matches */
+    margin: 0 auto clamp(16px, 2.2vw, 24px); /* stay centered with bottom gap */
+    padding-inline: .25ch;      /* tiny horizontal breathing room */
+    text-align: center;
+    color: #fff;
+
+    padding: clamp(6px, 0.9vw, 10px) clamp(12px, 1.6vw, 16px);
+    border-radius: 14px;
+
+
+    -webkit-text-stroke: .4px rgba(0,0,0,.35);
+    text-shadow: 0 2px 12px rgba(0,0,0,.6);
+    background: rgba(5,10,20,.88);    /* darker */
+    border-color: color-mix(in srgb, var(--ufvbay-accent) 70%, #ffffff 30%);
 }
+
+@supports (backdrop-filter: blur(8px)){
+    .panel--how .panel-title{
+        background: rgba(5,10,20,.78);
+        backdrop-filter: blur(8px) saturate(1.05);
+    }
+}
+
+/* soft glow behind the title for legibility */
+.panel--how .panel-title::before{
+    content:"";
+    position:absolute; inset:-2px; border-radius:16px;
+    background: linear-gradient(135deg,
+    color-mix(in srgb, var(--ufvbay-accent) 85%, #ffffff 15%),
+    color-mix(in srgb, var(--ufvbay-accent) 60%, #000000 40%)
+    );
+    filter: drop-shadow(0 6px 16px color-mix(in srgb, var(--ufvbay-accent) 35%, transparent));
+    /* make it a 2px ring using masking */
+    -webkit-mask:
+            linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    padding:2px; pointer-events:none;
+}
+
+
+
+/* underline that expands as the title types */
+.panel--how .panel-title::after{
+    content: none !important;
+    position:absolute;
+    left:50%;
+    bottom: -.35em;
+    height: 3px;
+    width: calc(100% + 0.5rem);      /* match final title width */
+    border-radius: 999px;
+    background: linear-gradient(90deg,
+    var(--how-accent-1) 0%,
+    var(--how-accent-2) 50%,
+    var(--how-accent-3) 100%
+    );
+
+    box-shadow:
+            0 2px 14px rgba(0,0,0,.45),
+            0 0 18px rgba(6,182,212,.35);
+
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: 0 50%;
+    animation: how-underline var(--how-typing-dur, 1200ms)
+    steps(var(--how-typing-steps, 16)) forwards;
+}
+
+@keyframes how-underline { to { transform: translateX(-50%) scaleX(1); } }
+
 
 .features-grid{
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: clamp(14px, 2vw, 24px);
-    align-items: start; /* so taller hovered card grows downward only */
+    align-self: center;            /* center the grid in the flexible area */
+    justify-self: center;
+    width: 100%;
+    max-width: 1120px;
+    align-items: stretch;          /* equalize card heights in the row */
 }
 
 /* Card base */
 .feature-card{
+    display: grid;
+    grid-template-rows: auto 1fr auto;   /* title | text (flex) | cta */
+    min-height: clamp(180px, 24vh, 220px);
     background: rgba(255,255,255,.96);
     color: #0f172a;
     border: 1px solid rgba(15,23,42,.12);
@@ -388,6 +516,7 @@
             margin-top .28s ease,
             transform .28s ease;
     transform: translateY(-6px);
+    align-self: end;
 }
 
 /* On hover, open downward and show button */
