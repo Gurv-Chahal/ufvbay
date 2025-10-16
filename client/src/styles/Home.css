@@ -40,8 +40,11 @@
     --how-accent-2: #06b6d4; /* teal   */
     --how-accent-3: #6366f1; /* indigo */
     --ufvbay-accent: #16a34a; /* emerald/UFV-ish green */
+    --ufvbay-border: color-mix(in srgb, var(--ufvbay-accent) 70%, #ffffff 30%);
 
 
+    --title-chip-border-w: 5px; /* try 3–5px */
+    --title-chip-ring-w: 5px;   /* ring thickness (optional) */
 
 }
 
@@ -394,6 +397,8 @@
     text-shadow: 0 2px 12px rgba(0,0,0,.6);
     background: rgba(5,10,20,.88);    /* darker */
     border-color: color-mix(in srgb, var(--ufvbay-accent) 70%, #ffffff 30%);
+    border-style: solid;
+    border-width: var(--title-chip-border-w);
 }
 
 @supports (backdrop-filter: blur(8px)){
@@ -418,6 +423,7 @@
             linear-gradient(#000 0 0);
     -webkit-mask-composite: xor; mask-composite: exclude;
     padding:2px; pointer-events:none;
+
 }
 
 
@@ -459,6 +465,7 @@
     width: 100%;
     max-width: 1120px;
     align-items: stretch;          /* equalize card heights in the row */
+
 }
 
 /* Card base */
@@ -481,14 +488,82 @@
 :root.dark .feature-card{
     background: rgba(17,24,39,.92);
     color: #fff;
-    border-color: rgba(255,255,255,.12);
+    border-color: var(--ufvbay-border) !important;
+    box-shadow:
+            0 8px 22px rgba(0,0,0,.28),
+            0 0 0 1px color-mix(in srgb, var(--ufvbay-accent) 20%, transparent),
+            inset 0 1px 0 rgba(255,255,255,.35);
 }
 
 /* Light lift on hover */
 .feature-card:hover{
     transform: translateY(-3px);
     box-shadow: 0 12px 28px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.35);
+    border-color: var(--ufvbay-border) !important;
+
 }
+
+:root.dark .features-grid .feature-card{
+    border-color: color-mix(in srgb, var(--ufvbay-accent) 80%, #ffffff 20%) !important;
+}
+
+.panel--how .feature-card{
+    position: relative; /* host the animated ring */
+    border-color: var(--ufvbay-border) !important;  /* idle */
+    border-width: 5px;                            /* optional: a tad thicker */
+    border-style: solid;
+
+    box-shadow:
+            0 8px 22px rgba(0,0,0,.28),
+            0 0 0 1px color-mix(in srgb, var(--ufvbay-accent) 20%, transparent),
+            inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+/* animated brand ring */
+.panel--how .feature-card::before{
+    content: "";
+    position: absolute;
+    inset: -2px;                 /* sits just outside the card border */
+    border-radius: inherit;
+    padding: 2px;                /* ring thickness */
+    pointer-events: none;
+    opacity: 0;                  /* only show on hover/focus */
+    background:
+            conic-gradient(
+                    from 0turn,
+                    color-mix(in srgb, var(--ufvbay-accent) 68%, #00140a 32%) 0%,
+                    color-mix(in srgb, var(--ufvbay-accent) 68%, #00140a 32%) 78%,
+                    color-mix(in srgb, var(--ufvbay-accent) 96%, #ffffff 4%) 92%,
+                    color-mix(in srgb, var(--ufvbay-accent) 68%, #00140a 32%) 100%
+            );
+    /* hollow out the center so it looks like a border */
+    -webkit-mask:
+            linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--ufvbay-accent) 35%, transparent));
+    transform: rotate(0turn);
+    transition: opacity .2s ease, filter .2s ease;
+}
+
+/* show + rotate the ring on hover or keyboard focus */
+.panel--how .feature-card:hover::before,
+.panel--how .feature-card:focus-within::before{
+    opacity: 1;
+    animation: ufvbay-ring 1.2s linear infinite;
+}
+
+@keyframes ufvbay-ring{
+    to { transform: rotate(1turn); }
+}
+
+/* keep the same color on hover (no flip back) */
+.panel--how .feature-card:hover{
+    border-color: var(--ufvbay-border) !important;
+}
+
+
 
 /* Titles & text */
 .feature-title{

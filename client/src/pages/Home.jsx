@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar.jsx";
 import HomeSideBar from "../components/HomeSideBar.jsx";
 import mainimage from "../images/library.jpg";
 import secondimage from "../images/books.jpg";
+import camera from "../images/camera.jpg";
 
 import "../styles/Home.css";
 
@@ -18,15 +19,57 @@ const Home = () => {
     // Slide #0 is your current hero. Add/replace slide objects to taste.
 // ---- slides --------------------------------------------------------------
     const slides = [
-        { key: "hero", kind: "hero" }, // uses your image + typewriter
-        { key: "how", kind: "how" },   // <-- changed: special layout with 3 cards
+        { key: "hero", kind: "hero" },
+
+        // Slide 2 — same styling as slide 3, unique title + cards
         {
-            key: "sell",
-            kind: "panel",
-            title: "Sell Textbooks Fast",
-            body:
-                "Create a listing in seconds. Add photos, set a fair price, and reach UFV students right away."
-        }
+            key: "how",
+            kind: "how",
+            title: "How UFVBay Works",
+            bg: secondimage, // use any image; you can change this later
+            items: [
+                {
+                    h: "Browse Local Listings",
+                    p: "Find items posted by UFV students. Filter by subject, category, or price.",
+                    cta: "Explore Listings",
+                },
+                {
+                    h: "Message Sellers",
+                    p: "Chat in-app to ask questions and agree on a fair price—keep it respectful.",
+                    cta: "Open Messages",
+                },
+                {
+                    h: "Meet On Campus",
+                    p: "Pick visible meet-up spots and follow simple safety tips. Students helping students.",
+                    cta: "Safety Tips",
+                },
+            ],
+        },
+
+        // Slide 3 — same styling, different title + cards
+        {
+            key: "how2",
+            kind: "how",
+            title: "Convenient Selling",
+            bg: camera, // can be a different photo if you want
+            items: [
+                {
+                    h: "Snap Clear Photos",
+                    p: "Good lighting and multiple angles help your listing stand out.",
+                    cta: "Photo Tips",
+                },
+                {
+                    h: "Price It Smart",
+                    p: "Check recent comps on UFVBay and set a fair, student-friendly price.",
+                    cta: "See Pricing Tips",
+                },
+                {
+                    h: "Post & Meet",
+                    p: "Publish your listing and choose a safe on-campus meet-up spot.",
+                    cta: "Create Listing",
+                },
+            ],
+        },
     ];
 
     const [index, setIndex] = useState(0);
@@ -44,8 +87,8 @@ const Home = () => {
 
     // ---- existing typewriter for hero only ----------------------------------
     const txt = "Welcome to UFVBay!";
-    const speed = 150;
-    const loopDelay = 2000;
+    const speed = 120;
+    const loopDelay = 1500;
     const idxRef = useRef(0);
     const timerRef = useRef(null);
     const startedRef = useRef(false);
@@ -71,19 +114,17 @@ const Home = () => {
 
     // --- typewriter for second slide ("How UFVBay Works")
 // --- typewriter for second slide ("How UFVBay Works") — NO LOOP
-    const howTxt = "How UFVBay Works";
+// Non-looping typewriter for any "how" slide
     const howIdxRef = useRef(0);
     const howTimerRef = useRef(null);
 
-    const typeWriterHow = () => {
-        const el = document.getElementById("how-typed");
-        if (!el || index !== 1) return;               // only on slide 2
-        if (howIdxRef.current < howTxt.length) {
-            el.textContent += howTxt.charAt(howIdxRef.current++);
-            howTimerRef.current = setTimeout(typeWriterHow, speed);
+    const typeWriterHow = (el, text, speed) => {
+        if (!el) return;
+        if (howIdxRef.current < text.length) {
+            el.textContent += text.charAt(howIdxRef.current++);
+            howTimerRef.current = setTimeout(() => typeWriterHow(el, text, speed), speed);
         } else {
-            // done — no loop, no reset
-            howTimerRef.current = null;
+            howTimerRef.current = null; // stop (no loop)
         }
     };
 
@@ -114,13 +155,16 @@ const Home = () => {
 
 
     useEffect(() => {
-        if (index !== 1) return;
-        const el = document.getElementById("how-typed");
+        const s = slides[index];
+        if (!s || s.kind !== "how") return;
+
+        const el = document.getElementById(`how-typed-${s.key}`);
         if (el) el.textContent = "";
         howIdxRef.current = 0;
         if (howTimerRef.current) clearTimeout(howTimerRef.current);
-        typeWriterHow();
+        typeWriterHow(el, s.title || "", speed);
     }, [index]);
+
 
 
 
@@ -169,40 +213,23 @@ const Home = () => {
                                         // ======== CUSTOM SECOND SLIDE (3 boxes with hover-reveal) ========
                                         // image background + top-aligned content
                                         <div className="home-content panel--how">
-                                            <img className="home-hero" src={secondimage} alt="" />
+                                            <img className="home-hero" src={s.bg || secondimage} alt=""/>
                                             <div className="panel-inner">
-                                                <h2 className="panel-title"><span id="how-typed"></span></h2>
+                                                <h2 className="panel-title">
+                                                    <span id={`how-typed-${s.key}`}></span>
+                                                </h2>
 
                                                 <div className="features-grid">
-                                                    <article className="feature-card" tabIndex="0">
-                                                        <h3 className="feature-title">Browse Local Listings</h3>
-                                                        <p className="feature-text">
-                                                            Find items posted by UFV students. Filter by subject, category, or price.
-                                                        </p>
-                                                        <div className="feature-cta">
-                                                            <button className="feature-btn" type="button">Explore Listings</button>
-                                                        </div>
-                                                    </article>
-
-                                                    <article className="feature-card" tabIndex="0">
-                                                        <h3 className="feature-title">Message Sellers</h3>
-                                                        <p className="feature-text">
-                                                            Chat in-app to ask questions and agree on a fair price—keep it respectful.
-                                                        </p>
-                                                        <div className="feature-cta">
-                                                            <button className="feature-btn" type="button">Open Messages</button>
-                                                        </div>
-                                                    </article>
-
-                                                    <article className="feature-card" tabIndex="0">
-                                                        <h3 className="feature-title">Meet On Campus</h3>
-                                                        <p className="feature-text">
-                                                            Pick visible meet-up spots and follow simple safety tips. Students helping students.
-                                                        </p>
-                                                        <div className="feature-cta">
-                                                            <button className="feature-btn" type="button">Safety Tips</button>
-                                                        </div>
-                                                    </article>
+                                                    {(s.items ?? []).map((it, i) => (
+                                                        <article className="feature-card" tabIndex="0" key={i}>
+                                                            <h3 className="feature-title">{it.h}</h3>
+                                                            <p className="feature-text">{it.p}</p>
+                                                            <div className="feature-cta">
+                                                                <button className="feature-btn"
+                                                                        type="button">{it.cta}</button>
+                                                            </div>
+                                                        </article>
+                                                    ))}
                                                 </div>
                                             </div>
                                         </div>
