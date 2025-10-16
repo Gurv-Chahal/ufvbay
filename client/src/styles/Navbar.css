@@ -1,7 +1,5 @@
 
 
-
-
 @media (max-width: 767.98px) {
   .search-bar {
     width: 100%;
@@ -240,4 +238,17 @@
 .nav-bubble .search-bar {
   flex: 1 1 420px;
   min-width: 240px;
+}
+
+:root:not(.dark) .nav-bubble {
+  border: var(--chrome-border-w) solid #0a0a0a !important; /* black */
+}
+
+:root.dark .nav-bubble {
+  border: var(--chrome-border-w) solid #ffffff !important; /* white */
+  /* optional pop: a faint outer glow so the white edge reads on dark photos */
+  box-shadow:
+          0 8px 24px rgba(0,0,0,.35),
+          0 0 0 1px rgba(255,255,255,.25),
+          inset 0 1px 0 rgba(255,255,255,.06) !important;
 }

@@ -4,6 +4,7 @@
     --nav-h: 72px;
     --nav-gap: 16px;
     --nav-height: var(--nav-h);
+    --chrome-border-w: 2px;
 }
 
 
@@ -172,3 +173,16 @@
 
 
 
+
+:root:not(.dark) .sidebar-bubble {
+    border: var(--chrome-border-w) solid #0a0a0a !important; /* black */
+}
+
+:root.dark .sidebar-bubble {
+    border: var(--chrome-border-w) solid #ffffff !important; /* white */
+    /* optional pop */
+    box-shadow:
+            0 8px 24px rgba(0,0,0,.35),
+            0 0 0 1px rgba(255,255,255,.25),
+            inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
