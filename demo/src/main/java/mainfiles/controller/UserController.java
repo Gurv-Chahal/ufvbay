@@ -3,9 +3,9 @@ package mainfiles.controller;
 import mainfiles.dto.UserDTO;
 import mainfiles.dto.UnreadUserDTO;
 import mainfiles.entity.User;
-import mainfiles.entity.Message;
+//import mainfiles.entity.Message;
 import mainfiles.mapper.UserMapper;
-import mainfiles.repository.MessageRepository;
+//import mainfiles.repository.MessageRepository;
 import mainfiles.repository.UserRepository;
 import mainfiles.utility.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private MessageRepository messageRepository;
+//    private MessageRepository messageRepository;
 
     private final UserUtil userUtil;
 
@@ -66,81 +66,81 @@ public class UserController {
         return ResponseEntity.ok(userDTO);
     }
 
-    // Endpoint to get all users with their unread message counts
-    @GetMapping("/users/unread")
-    public List<UnreadUserDTO> getAllUsersWithUnreadCount(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
-
-        // retrieve authenticated user
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-
-        // create a pageable object with the specified page and size
-        Pageable pageable = PageRequest.of(page, size);
-
-        // retrieve a paginated list of users from the database
-        List<User> users = userRepository.findAll(pageable).getContent();
-
-        // create a list to store the results
-        List<UnreadUserDTO> userWithUnreadDTOs = new ArrayList<>();
-
-
-        // iterate through users using for each loop
-        // for each user calculate the number of unread messages from them to the current user
-        for (User user : users) {
-
-            if (!user.getUsername().equals(currentUsername)) {
-
-                // Count the unread messages from this user to the current user
-                int unreadCount = messageRepository.countUnreadMessages(user.getUsername(), currentUsername);
-
-                // initialize the lastMessageTime
-                LocalDateTime lastMessageTime = null;
-
-                // fetch the last message between this user and the current user
-                Optional<Message> lastMessage = messageRepository.findTopBySenderNameAndReceiverNameOrderByTimestampDesc(user.getUsername(), currentUsername);
-
-                // if a message exists then set its timestamp
-                if (lastMessage.isPresent()) {
-                    lastMessageTime = lastMessage.get().getTimestamp();
-                }
-
-
-                UnreadUserDTO dto = new UnreadUserDTO();
-                dto.setId(user.getId());
-                dto.setName(user.getName());
-                dto.setUsername(user.getUsername());
-                dto.setEmail(user.getEmail());
-                dto.setUnreadCount(unreadCount);
-                dto.setLastMessageTime(lastMessageTime);
-
-                // add dto to arraylist
-                userWithUnreadDTOs.add(dto);
-
-            }
-        }
-
-
-        // sort the list by lastMessageTime in descending order
-        userWithUnreadDTOs.sort(new Comparator<UnreadUserDTO>() {
-            @Override
-            public int compare(UnreadUserDTO o1, UnreadUserDTO o2) {
-
-                if (o1.getLastMessageTime() == null && o2.getLastMessageTime() == null) {
-                    return 0;
-                } else if (o1.getLastMessageTime() == null) {
-                    return 1;
-                } else if (o2.getLastMessageTime() == null) {
-                    return -1;
-                } else {
-                    return o2.getLastMessageTime().compareTo(o1.getLastMessageTime());
-                }
-            }
-        });
-
-        return userWithUnreadDTOs;
-    }
+//    // Endpoint to get all users with their unread message counts
+//    @GetMapping("/users/unread")
+//    public List<UnreadUserDTO> getAllUsersWithUnreadCount(
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "20") int size) {
+//
+//        // retrieve authenticated user
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentUsername = authentication.getName();
+//
+//        // create a pageable object with the specified page and size
+//        Pageable pageable = PageRequest.of(page, size);
+//
+//        // retrieve a paginated list of users from the database
+//        List<User> users = userRepository.findAll(pageable).getContent();
+//
+//        // create a list to store the results
+//        List<UnreadUserDTO> userWithUnreadDTOs = new ArrayList<>();
+//
+//
+//        // iterate through users using for each loop
+//        // for each user calculate the number of unread messages from them to the current user
+//        for (User user : users) {
+//
+//            if (!user.getUsername().equals(currentUsername)) {
+//
+//                // Count the unread messages from this user to the current user
+//                int unreadCount = messageRepository.countUnreadMessages(user.getUsername(), currentUsername);
+//
+//                // initialize the lastMessageTime
+//                LocalDateTime lastMessageTime = null;
+//
+//                // fetch the last message between this user and the current user
+//                Optional<Message> lastMessage = messageRepository.findTopBySenderNameAndReceiverNameOrderByTimestampDesc(user.getUsername(), currentUsername);
+//
+//                // if a message exists then set its timestamp
+//                if (lastMessage.isPresent()) {
+//                    lastMessageTime = lastMessage.get().getTimestamp();
+//                }
+//
+//
+//                UnreadUserDTO dto = new UnreadUserDTO();
+//                dto.setId(user.getId());
+//                dto.setName(user.getName());
+//                dto.setUsername(user.getUsername());
+//                dto.setEmail(user.getEmail());
+//                dto.setUnreadCount(unreadCount);
+//                dto.setLastMessageTime(lastMessageTime);
+//
+//                // add dto to arraylist
+//                userWithUnreadDTOs.add(dto);
+//
+//            }
+//        }
+//
+//
+//        // sort the list by lastMessageTime in descending order
+//        userWithUnreadDTOs.sort(new Comparator<UnreadUserDTO>() {
+//            @Override
+//            public int compare(UnreadUserDTO o1, UnreadUserDTO o2) {
+//
+//                if (o1.getLastMessageTime() == null && o2.getLastMessageTime() == null) {
+//                    return 0;
+//                } else if (o1.getLastMessageTime() == null) {
+//                    return 1;
+//                } else if (o2.getLastMessageTime() == null) {
+//                    return -1;
+//                } else {
+//                    return o2.getLastMessageTime().compareTo(o1.getLastMessageTime());
+//                }
+//            }
+//        });
+//
+//        return userWithUnreadDTOs;
+//    }
 
 
     // Endpoint to get all users
