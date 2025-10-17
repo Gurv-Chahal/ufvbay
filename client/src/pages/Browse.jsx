@@ -101,7 +101,7 @@ const Browse = () => {
           </div>
 
           {/* was: ms-auto flex-grow-1 browse-main */}
-          <div className="home-main">
+          <div className="home-main browse-main">
             <div className="browse-grid">
               {filteredData.map((product) => {
                 const image =

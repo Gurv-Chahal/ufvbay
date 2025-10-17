@@ -161,11 +161,16 @@
   display: flex;
   flex-wrap: wrap;
   gap: 24px;             /* use gap instead of per-card margins */
-  padding: 40px 24px 24px;
-  box-sizing: border-box;
+  padding: var(--main-gap, 16px) 24px 24px;  /* was 40px on top */  box-sizing: border-box;
   overflow-x: clip;      /* or hidden; prevents horizontal scrollbar */
   width: 100%;
 }
 
 /* Optional: neutralize old per-card margins if you keep them in JSX */
 .browse-grid > * { margin: 0 !important; }
+
+/* Browse only: align the grid at the top-left under the navbar */
+.home-main.browse-main {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
