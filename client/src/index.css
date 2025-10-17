@@ -27,6 +27,7 @@
 html, body, #root {
   background: var(--bg);
   color: var(--text);
+  min-height: 100%;
 }
 
 /* optional: panels/nav/sidebar using the surface color */
@@ -47,10 +48,9 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: clip;           /* prevents tiny horizontal slivers from shadows */
 }
 
 h1 {
@@ -78,9 +78,10 @@ button:focus-visible {
 }
 
 /* body is a flex container in your globals; ensure #root spans the viewport */
-#root { width: 100vw; }
-
-
+#root {
+  width: 100%;
+  min-height: 100%;
+}
 
 html {
   scrollbar-gutter: stable both-edges;  /* modern, no layout jiggle */
