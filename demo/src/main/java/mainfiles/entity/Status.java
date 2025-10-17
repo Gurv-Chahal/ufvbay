@@ -1,7 +1,7 @@
-package mainfiles.entity;
-
-public enum Status {
-    JOIN,
-    MESSAGE,
-    LEAVE
-}
+//package mainfiles.entity;
+//
+//public enum Status {
+//    JOIN,
+//    MESSAGE,
+//    LEAVE
+//}
