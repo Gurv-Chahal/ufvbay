@@ -91,40 +91,45 @@ const Browse = () => {
 
 
   return (
-    <div>
-      <Navbar onSearch={handleSearch} results={filteredItems} />
-      <div className="d-flex">
-        <HomeSideBar onSubjectChange={handleSubjectChange}/>
-        <div className="ms-auto flex-grow-1 browse-main">
-          <div className="browse-grid">
-            {filteredData.map((product) => {
-              const image =
-                  (product.imageUrls && product.imageUrls[0]) ||
-                  (product.images && product.images[0]) ||
-                  product.image;
+      <div>
+        <Navbar onSearch={handleSearch} results={filteredItems}/>
+        {/* was: <div className="d-flex"> */}
+        <div className="home-body">
+          <div className="home-left">
+            <HomeSideBar onSubjectChange={handleSubjectChange}/>
+          </div>
 
-              return (
-                  <div key={product.id} className="m-4">
-                    <Link
-                        to={`/item/${product.id}`}
-                        state={{backgroundLocation: location}}
-                        className="prodcards"
-                        style={{textDecoration: "none"}}
-                    >
-                      <ProductCards
-                          price={`$ ${product.amount || product.price}$`}
-                          image={image}
-                          name={product.title}
-                          author={product.author}
-                      />
-                    </Link>
-                  </div>
-              );
-            })}
+          {/* was: ms-auto flex-grow-1 browse-main */}
+          <div className="home-main">
+            <div className="browse-grid">
+              {filteredData.map((product) => {
+                const image =
+                    (product.imageUrls && product.imageUrls[0]) ||
+                    (product.images && product.images[0]) ||
+                    product.image;
+
+                return (
+                    <div key={product.id} className="m-4">
+                      <Link
+                          to={`/item/${product.id}`}
+                          state={{backgroundLocation: location}}
+                          className="prodcards"
+                          style={{textDecoration: "none"}}
+                      >
+                        <ProductCards
+                            price={`$ ${product.amount || product.price}$`}
+                            image={image}
+                            name={product.title}
+                            author={product.author}
+                        />
+                      </Link>
+                    </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
