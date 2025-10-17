@@ -66,7 +66,7 @@ const HomeSideBar = ({ onSubjectChange }) => {
 
   return (
       <div
-          className="home-sidebar h-100 z-0 col-2 navbar-fixed"
+          className="home-sidebar"
           style={{
               /* drop the hardcoded light bg */
               // backgroundColor: "#f8f9fa",

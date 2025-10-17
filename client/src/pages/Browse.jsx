@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar.jsx";
 import HomeSideBar from "../components/HomeSideBar.jsx";
 import ProductCards from "../components/ProductCards.jsx";
 import { getAllListings } from "../services/ListingService.js";
+import "../styles/Home.css";
 
 
 
