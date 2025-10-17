@@ -94,31 +94,31 @@ const Browse = () => {
     <div>
       <Navbar onSearch={handleSearch} results={filteredItems} />
       <div className="d-flex">
-        <HomeSideBar onSubjectChange={handleSubjectChange} />
-        <div className="ms-auto col-10 col-md-10">
-          <div className="m-5 py-5 d-flex flex-wrap">
+        <HomeSideBar onSubjectChange={handleSubjectChange}/>
+        <div className="ms-auto flex-grow-1 browse-main">
+          <div className="browse-grid">
             {filteredData.map((product) => {
               const image =
-                (product.imageUrls && product.imageUrls[0]) ||
-                (product.images && product.images[0]) ||
-                product.image;
+                  (product.imageUrls && product.imageUrls[0]) ||
+                  (product.images && product.images[0]) ||
+                  product.image;
 
               return (
-                <div key={product.id} className="m-4">
-                  <Link
-                    to={`/item/${product.id}`}
-                    state={{backgroundLocation: location}}
-                    className="prodcards"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <ProductCards
-                      price={`$ ${product.amount || product.price}$`}
-                      image={image}
-                      name={product.title}
-                      author={product.author}
-                    />
-                  </Link>
-                </div>
+                  <div key={product.id} className="m-4">
+                    <Link
+                        to={`/item/${product.id}`}
+                        state={{backgroundLocation: location}}
+                        className="prodcards"
+                        style={{textDecoration: "none"}}
+                    >
+                      <ProductCards
+                          price={`$ ${product.amount || product.price}$`}
+                          image={image}
+                          name={product.title}
+                          author={product.author}
+                      />
+                    </Link>
+                  </div>
               );
             })}
           </div>

@@ -147,3 +147,25 @@
   .card:hover { transform: none; box-shadow: 0 10px 20px rgba(0,0,0,.12); }
   .card:hover::after { opacity: 0; animation: none; }
 }
+
+
+
+/* The main content column inside the .d-flex wrapper */
+.browse-main {
+  min-width: 0;          /* CRITICAL: let flex child shrink instead of forcing overflow */
+  max-width: 100%;
+}
+
+/* The card grid */
+.browse-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;             /* use gap instead of per-card margins */
+  padding: 40px 24px 24px;
+  box-sizing: border-box;
+  overflow-x: clip;      /* or hidden; prevents horizontal scrollbar */
+  width: 100%;
+}
+
+/* Optional: neutralize old per-card margins if you keep them in JSX */
+.browse-grid > * { margin: 0 !important; }
