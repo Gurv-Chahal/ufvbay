@@ -108,10 +108,7 @@
 
 }
 
-/* Optional: give laptops (MB Air range) a little extra bump */
-@media (min-width: 1100px) and (max-width: 1536px) {
-    :root { --sidebar-w: clamp(420px, 32vw, 480px); }
-}
+
 
 
 .home-sidebar::before,

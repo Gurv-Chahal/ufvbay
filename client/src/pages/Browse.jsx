@@ -92,7 +92,7 @@ const Browse = () => {
 
 
   return (
-      <div>
+      <div className="home-shell">
         <Navbar onSearch={handleSearch} results={filteredItems}/>
         {/* was: <div className="d-flex"> */}
         <div className="home-body">
