@@ -86,7 +86,7 @@ const CreateListing = () => {
       );
 
       // redirect to the listing page when submission is complete
-      navigate(`/bay/item/${response.data.id}`);
+      navigate(`/item/${response.data.id}`);
 
     } catch (error) {
       console.error("Error adding listing:", error);
