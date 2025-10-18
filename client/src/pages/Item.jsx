@@ -16,7 +16,7 @@ import HomeSideBar from "../components/HomeSideBar.jsx";
 const Item = ({ asModal = false }) => {
 
   // state
-  const { id: productId } = useParams();
+  const { productId } = useParams();
   const [listing, setListing] = useState(null);
   const [count, setCount] = useState(0);
   const [slider, setSlider] = useState(null);
