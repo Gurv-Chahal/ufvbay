@@ -177,7 +177,7 @@ const CreateListing = () => {
               style={{textDecoration: "none"}}
           >
             <div className="my-5 py-5 ">
-              <Dropzone onDrop={handleDrop} accept="image/*">
+              <Dropzone onDrop={handleDrop} accept={{ "image/*": [] }}>
                 {({getRootProps, getInputProps}) => (
                     <section className="dropzone my-5">
                       <div {...getRootProps()} className="p-3 text-center">

@@ -16,7 +16,7 @@ import HomeSideBar from "../components/HomeSideBar.jsx";
 const Item = ({ asModal = false }) => {
 
   // state
-  const { productId } = useParams();
+  const { id: productId } = useParams();
   const [listing, setListing] = useState(null);
   const [count, setCount] = useState(0);
   const [slider, setSlider] = useState(null);
@@ -468,13 +468,12 @@ const Item = ({ asModal = false }) => {
               </button>
 
               {showMap ? (
-                  listing.latitude && listing.longitude ? (
-                      <div className="map-wrap">
-                        <Map
-                            position={{lat: listing.latitude, lng: listing.longitude}}
-                        />
-                      </div>
-                  ) : (
+                    Number.isFinite(listing.latitude) && Number.isFinite(listing.longitude) ? (
+                          <div className="map-wrap">
+                              {/* If your Map prefers a tuple, pass [lat, lng] instead of an object */}
+                              <Map position={{ lat: listing.latitude, lng: listing.longitude }} />
+                            </div>
+                        ) : (
                       <p className="muted">No meeting spot specified.</p>
                   )
               ) : null}
