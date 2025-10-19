@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 /* @jsxRuntime classic */
 import React from 'react';
 const CreateListing = () => {
+
   const navigate = useNavigate();
 
 
@@ -20,6 +21,22 @@ const CreateListing = () => {
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
+
+    // near the top of CreateListing.jsx (after imports)
+    const SUBJECTS = [
+        "MATH",
+        "PHYSICS",
+        "COMPUTER SCIENCE",
+        "BIOLOGY",
+        "CHEMISTRY",
+        "ENGLISH",
+        "HISTORY",
+        "ECONOMICS",
+        "PSYCHOLOGY",
+        "ENGINEERING",
+        "BUSINESS",
+        "STATISTICS",
+    ];
 
   // handles even when user selects or drops images
   const handleDrop = (acceptedFiles) => {
@@ -120,53 +137,52 @@ const CreateListing = () => {
                 value={bookTitle}
                 onChange={(e) => setBookTitle(e.target.value)}
             />
-            <div className="my-3 d-flex">
-              <input
-                  type="text"
-                  className="form-control py-2"
-                  placeholder="Enter Listing Amount"
+              <div className="my-3 d-flex">
+                  <input
+                      type="text"
+                      className="form-control py-2"
+                      placeholder="Enter Listing Amount"
+                      style={{
+                          width: "300px",
+                          borderTop: "none",
+                          borderLeft: "none",
+                          borderRight: "none",
+                          backgroundColor: "#e0e0e0",
+                      }}
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                  />
+                  <select
+                      className="form-control py-2 mx-2"
+                      style={{
+                          width: "300px",
+                          borderTop: "none",
+                          borderLeft: "none",
+                          borderRight: "none",
+                          backgroundColor: "#e0e0e0",
+                      }}
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
+                  >
+                      <option value="" disabled>Select subject</option>
+                      {SUBJECTS.map((s) => (
+                          <option key={s} value={s}>{s}</option>
+                      ))}
+                  </select>
+
+              </div>
+              <textarea
+                  id="description"
+                  className="form-control"
+                  rows="4"
+                  placeholder="Enter your description here"
                   style={{
-                    width: "300px",
-                    borderTop: "none",
-                    borderLeft: "none",
-                    borderRight: "none",
-                    backgroundColor: "#e0e0e0",
+                      borderTop: "none",
+                      borderLeft: "none",
+                      borderRight: "none",
+                      backgroundColor: "#e0e0e0",
                   }}
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-              />
-              <select
-                  className="form-control py-2 mx-2"
-                  style={{
-                    width: "300px",
-                    borderTop: "none",
-                    borderLeft: "none",
-                    borderRight: "none",
-                    backgroundColor: "#e0e0e0",
-                  }}
-                  value={subject}
-                  onChange={(e) => setSubject(e.target.value)}
-              >
-                <option value="" disabled>
-                  Select subject
-                </option>
-                <option value="MATH">MATH</option>
-                <option value="COMPUTER SCIENCE">COMPUTER SCIENCE</option>
-                <option value="PHYSICS">PHYSICS</option>
-              </select>
-            </div>
-            <textarea
-                id="description"
-                className="form-control"
-                rows="4"
-                placeholder="Enter your description here"
-                style={{
-                  borderTop: "none",
-                  borderLeft: "none",
-                  borderRight: "none",
-                  backgroundColor: "#e0e0e0",
-                }}
-                value={description}
+                  value={description}
                 onChange={(e) => {
                   setDescription(e.target.value);
                 }}
