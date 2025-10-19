@@ -10,22 +10,24 @@ import { useState } from "react";
 
 //Dropdown menu that records which subject is being selected
 const SubjectMenu = ({ onSubjectClick }) => {
-  return (
-    <ul className="dropdown-menu" aria-labelledby="subjectsDropdown">
-      <li className="dropdown-item" onClick={() => onSubjectClick("MATH")}>
-        Math
-      </li>
-      <li className="dropdown-item" onClick={() => onSubjectClick("PHYSICS")}>
-        Physics
-      </li>
-      <li
-        className="dropdown-item"
-        onClick={() => onSubjectClick("COMPUTER SCIENCE")}
-      >
-        Computer Science
-      </li>
-    </ul>
-  );
+    return (
+        <ul className="dropdown-menu" aria-labelledby="subjectsDropdown">
+            <li className="dropdown-item" onClick={() => onSubjectClick("MATH")}>Math</li>
+            <li className="dropdown-item" onClick={() => onSubjectClick("PHYSICS")}>Physics</li>
+            <li className="dropdown-item" onClick={() => onSubjectClick("COMPUTER SCIENCE")}>Computer Science</li>
+
+            {/* NEW subjects */}
+            <li className="dropdown-item" onClick={() => onSubjectClick("BIOLOGY")}>Biology</li>
+            <li className="dropdown-item" onClick={() => onSubjectClick("CHEMISTRY")}>Chemistry</li>
+            <li className="dropdown-item" onClick={() => onSubjectClick("ENGLISH")}>English</li>
+            <li className="dropdown-item" onClick={() => onSubjectClick("HISTORY")}>History</li>
+            <li className="dropdown-item" onClick={() => onSubjectClick("ECONOMICS")}>Economics</li>
+            <li className="dropdown-item" onClick={() => onSubjectClick("PSYCHOLOGY")}>Psychology</li>
+            <li className="dropdown-item" onClick={() => onSubjectClick("ENGINEERING")}>Engineering</li>
+            <li className="dropdown-item" onClick={() => onSubjectClick("BUSINESS")}>Business</li>
+            <li className="dropdown-item" onClick={() => onSubjectClick("STATISTICS")}>Statistics</li>
+        </ul>
+    );
 };
 
 //HomeSideBar component has all elements in the menu and takes in parameter onSubjectChange

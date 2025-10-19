@@ -166,8 +166,21 @@
     overflow: hidden;
     transform: translateY(4px);
     z-index: 1040; /* above the bubble itself */
+    /* NEW: scrolling while keeping current footprint */
+    max-height: 220px;         /* pick your preferred cap */
+    overflow-y: auto;          /* was: overflow: hidden; */
+    overscroll-behavior: contain;
 }
 
+/* Optional: nicer thin scrollbar */
+.home-sidebar .dropdown-menu::-webkit-scrollbar { width: 8px; }
+.home-sidebar .dropdown-menu::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.25);
+    border-radius: 8px;
+}
+:root.dark .home-sidebar .dropdown-menu::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.25);
+}
 
 
 
