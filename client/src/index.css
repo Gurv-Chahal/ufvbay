@@ -91,3 +91,25 @@ html {
 @supports not (scrollbar-gutter: stable) {
   html { overflow-y: scroll; }          /* always reserve the gutter */
 }
+
+
+/* Always paint the entire viewport with the active bg colour */
+html, body, #root, .home-shell, .home-body {
+  background: var(--bg) !important;
+}
+
+/* Fixed background layer eliminates transient seams on theme flips */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* No horizontal rubber-banding slivers */
+html, body {
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+}

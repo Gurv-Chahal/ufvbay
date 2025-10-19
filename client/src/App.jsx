@@ -1,6 +1,6 @@
 
 /* @jsxRuntime classic */
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import { useEffect, useState } from "react";
 import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
 import Browse from "./pages/Browse.jsx";
@@ -71,7 +71,7 @@ function AppRoutes() {
 export default function App() {
     const [theme, setTheme] = useState(getInitialTheme);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const root = document.documentElement;
         root.classList.toggle("dark", theme === "dark");
         localStorage.setItem("theme", theme);

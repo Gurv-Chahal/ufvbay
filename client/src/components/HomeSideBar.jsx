@@ -26,7 +26,7 @@ const SubjectMenu = ({ onSubjectClick }) => {
             <li className="dropdown-item" onClick={() => onSubjectClick("ENGINEERING")}>Engineering</li>
             <li className="dropdown-item" onClick={() => onSubjectClick("BUSINESS")}>Business</li>
             <li className="dropdown-item" onClick={() => onSubjectClick("STATISTICS")}>Statistics</li>
-            <li className="dropdown-item" onClick={() => onSubjectClick("PHILOSOPHY")}>Statistics</li>
+            <li className="dropdown-item" onClick={() => onSubjectClick("PHILOSOPHY")}>Philosophy</li>
         </ul>
     );
 };
