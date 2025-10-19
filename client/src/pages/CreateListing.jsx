@@ -36,6 +36,7 @@ const CreateListing = () => {
         "ENGINEERING",
         "BUSINESS",
         "STATISTICS",
+        "PHILOSOPHY"
     ];
 
   // handles even when user selects or drops images
