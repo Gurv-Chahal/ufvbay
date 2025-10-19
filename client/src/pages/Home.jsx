@@ -5,6 +5,8 @@ import HomeSideBar from "../components/HomeSideBar.jsx";
 import mainimage from "../images/library.jpg";
 import secondimage from "../images/books.jpg";
 import camera from "../images/camera.jpg";
+import { getAllListings } from "../services/ListingService.js";
+
 
 import "../styles/Home.css";
 
@@ -184,13 +186,23 @@ const Home = () => {
         navigate("/", { state: { subject: normalized } });
     };
 
-    // (search plumbing you already had)
+// load listings once so the navbar can search them
+    useEffect(() => {
+        getAllListings()
+            .then(({ data }) => setListings([...data]))
+            .catch((err) => console.error("Error fetching listings:", err));
+    }, []);
+
+// search handler used by <Navbar />
     const handleSearch = (query) => {
-        const q = query.toLowerCase();
-        const results = listings.filter(
-            (item) =>
-                item.title.toLowerCase().includes(q) ||
-                item.description.toLowerCase().includes(q)
+        const q = (query || "").trim().toLowerCase();
+        if (!q) {
+            setFilteredItems([]);   // hide dropdown on empty query
+            return;
+        }
+        const results = listings.filter((item) =>
+            (item.title || "").toLowerCase().includes(q) ||
+            (item.description || "").toLowerCase().includes(q)
         );
         setFilteredItems(results);
     };
