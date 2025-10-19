@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import HomeSideBar from "../components/HomeSideBar.jsx";
 import mainimage from "../images/library.jpg";
@@ -14,6 +14,8 @@ const Home = () => {
     const [selectedSubject, setSelectedSubject] = useState("");
     const [listings, setListings] = useState([]);
     const navigate = useNavigate();
+
+    const location = useLocation();
 
     // ---- slides --------------------------------------------------------------
     // Slide #0 is your current hero. Add/replace slide objects to taste.
@@ -32,16 +34,20 @@ const Home = () => {
                     h: "Browse Local Listings",
                     p: "Find items posted by UFV students. Filter by subject, category, or price.",
                     cta: "Explore Listings",
+                    to: "/home/info/explore",
                 },
                 {
                     h: "Message Sellers",
                     p: "Chat in-app to ask questions and agree on a fair price—keep it respectful.",
                     cta: "Open Messages",
+                    to: "/home/info/messages",
+
                 },
                 {
                     h: "Meet On Campus",
                     p: "Pick visible meet-up spots and follow simple safety tips. Students helping students.",
                     cta: "Safety Tips",
+                    to: "/home/info/safety",
                 },
             ],
         },
@@ -57,16 +63,20 @@ const Home = () => {
                     h: "Snap Clear Photos",
                     p: "Good lighting and multiple angles help your listing stand out.",
                     cta: "Photo Tips",
+                    to: "/home/info/photo-tips",
                 },
                 {
                     h: "Price It Smart",
                     p: "Check recent comps on UFVBay and set a fair, student-friendly price.",
                     cta: "See Pricing Tips",
+                    to: "/home/info/pricing",
                 },
                 {
                     h: "Post & Meet",
                     p: "Publish your listing and choose a safe on-campus meet-up spot.",
                     cta: "Create Listing",
+                    to: "/home/info/create",
+
                 },
             ],
         },
@@ -225,8 +235,17 @@ const Home = () => {
                                                             <h3 className="feature-title">{it.h}</h3>
                                                             <p className="feature-text">{it.p}</p>
                                                             <div className="feature-cta">
-                                                                <button className="feature-btn"
-                                                                        type="button">{it.cta}</button>
+                                                                {it.to ? (
+                                                                    <Link
+                                                                        to={it.to}
+                                                                      state={{ backgroundLocation: location }}   // <-- shows as modal over Home
+                                                                      className="feature-btn"
+                                                                    >
+                                                                      {it.cta}
+                                                                    </Link>
+                                                                  ) : (
+                                                                    <button className="feature-btn" type="button">{it.cta}</button>
+                                                              )}
                                                             </div>
                                                         </article>
                                                     ))}

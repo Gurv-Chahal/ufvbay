@@ -46,12 +46,21 @@
     --title-chip-border-w: 5px; /* try 3–5px */
     --title-chip-ring-w: 5px;   /* ring thickness (optional) */
 
+
+    --modal-radius: 18px;
+    --modal-border: 1px solid rgba(255,255,255,.18);
+    --modal-pad: 24px;                    /* more breathing room */
+    --modal-shadow: 0 24px 70px rgba(0,0,0,.45);
+    --infosheet-border: #000;
+
 }
 
 :root.dark{
     /* slightly stronger contrast in dark mode */
     --slider-btn-ring-1: rgba(255,255,255,.85);
     --slider-btn-ring-2: rgba(0,0,0,.55);
+
+    --infosheet-border: #fff;
 }
 
 /* full-viewport page with header row + fill row */
@@ -642,4 +651,117 @@
 }
 @media (max-width: 640px){
     .features-grid{ grid-template-columns: 1fr; }
+}
+
+
+
+/* Home info styling*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Backdrop */
+.modal-backdrop.infosheet .modal-sheet.infosheet-sheet{
+    position: fixed;
+    left: var(--modal-left, 50%);
+    top:  var(--modal-top, 50%);
+    transform: translate(-50%, -50%); /* no scale, we want crisp text */
+    width: min(92vw, 820px);
+    max-height: 70vh;
+    overflow: auto;
+    border-radius: 16px;
+
+    /* Match your feature-card visual language */
+    background: rgba(255,255,255,.96);
+    color: #0f172a;
+    border: 7px solid var(--infosheet-border);
+    box-shadow:
+            0 12px 28px rgba(0,0,0,.35),
+            inset 0 1px 0 rgba(255,255,255,.35);
+}
+:root.dark .modal-backdrop.infosheet .modal-sheet.infosheet-sheet{
+    background: rgba(17,24,39,.92);
+    color: #fff;
+}
+
+/* Header centered like your cards, close on the right */
+.modal-backdrop.infosheet .modal-header{
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* [spacer] [title] [close] */
+    align-items: center;
+    gap: 8px;
+    padding: 14px 20px 12px;
+    background: inherit;
+    border-bottom: 1px solid rgba(15,23,42,.1);
+}
+:root.dark .modal-backdrop.infosheet .modal-header{
+    border-bottom-color: rgba(255,255,255,.12);
+}
+.modal-backdrop.infosheet .modal-title{
+    grid-column: 2;
+    margin: 0;
+    text-align: center;
+    font-weight: 800;
+    font-size: clamp(18px, 2.2vw, 22px);
+}
+.modal-backdrop.infosheet .modal-close{
+    grid-column: 3;
+    justify-self: end;
+    appearance: none; border: 0; background: transparent;
+    font-size: 26px; line-height: 1; cursor: pointer; color: inherit;
+    border-radius: 10px; padding: 2px 6px;
+}
+
+/* Comfortable reading column + improved list styling */
+.modal-backdrop.infosheet .modal-body{
+    padding: 18px 22px 22px;
+    font-size: clamp(14px, 1.2vw, 16px);
+    line-height: 1.7;
+}
+.modal-backdrop.infosheet .modal-body > *{
+    max-width: 720px;
+    margin-inline: auto;
+}
+.modal-backdrop.infosheet .modal-body ol,
+.modal-backdrop.infosheet .modal-body ul{
+    padding-left: 1.15rem;
+    margin: .35rem 0 0;
+}
+.modal-backdrop.infosheet .modal-body li{ margin: .3rem 0 .12rem; }
+.modal-backdrop.infosheet .modal-body ul li::marker{ color: var(--ufvbay-accent, #16a34a); }
+.modal-backdrop.infosheet .modal-body ol{ counter-reset: step; }
+.modal-backdrop.infosheet .modal-body ol li{
+    list-style: none; position: relative; padding-left: 1.45rem;
+}
+.modal-backdrop.infosheet .modal-body ol li::before{
+    content: counter(step) "."; counter-increment: step;
+    position: absolute; left: 0; top: 0; font-weight: 800;
+    color: var(--ufvbay-accent, #16a34a);
+}
+
+/* Subtle fade/blur of slide content behind the modal */
+html.modal-open .panel--how .features-grid{
+    opacity: .28;
+    filter: blur(2px);
+    transform: scale(.995);
+    transition: opacity .18s ease, filter .18s ease, transform .18s ease;
+}
+
+/* Keep the top band faint while the modal is open */
+html.modal-open .panel--how::before{ opacity: .15 !important; }
+
+/* Ensure the infosheet backdrop never dims the page */
+.modal-backdrop.infosheet{
+    background: transparent !important;
+    backdrop-filter: none !important;
 }
