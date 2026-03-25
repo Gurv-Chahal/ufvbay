@@ -1,0 +1,17 @@
+[Unit]
+Description=UFVBay Spring Boot backend
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/opt/ufvbay
+EnvironmentFile=/etc/ufvbay/ufvbay.env
+ExecStart=/usr/bin/java -jar /opt/ufvbay/demo.jar
+SuccessExitStatus=143
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
