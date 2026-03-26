@@ -1,307 +1,201 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import HomeSideBar from "../components/HomeSideBar.jsx";
-import mainimage from "../images/library.jpg";
-import secondimage from "../images/books.jpg";
-import camera from "../images/camera.jpg";
+import ProductCards from "../components/ProductCards.jsx";
 import { getAllListings } from "../services/ListingService.js";
-
 
 import "../styles/Home.css";
 
 const Home = () => {
-    // search plumbing (unchanged)
-    const [filteredItems, setFilteredItems] = useState([]);
-    const [selectedSubject, setSelectedSubject] = useState("");
-    const [listings, setListings] = useState([]);
-    const navigate = useNavigate();
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [listings, setListings] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    const location = useLocation();
+  // Subject change from sidebar → go to Browse
+  const handleSubjectChange = (subject) => {
+    const normalized = subject === "ALL" ? "" : subject;
+    navigate("/", { state: { subject: normalized } });
+  };
 
-    // ---- slides --------------------------------------------------------------
-    // Slide #0 is your current hero. Add/replace slide objects to taste.
-// ---- slides --------------------------------------------------------------
-    const slides = [
-        { key: "hero", kind: "hero" },
+  // Load listings for search + featured section
+  useEffect(() => {
+    getAllListings()
+      .then(({ data }) => setListings([...data]))
+      .catch((err) => console.error("Error fetching listings:", err));
+  }, []);
 
-        // Slide 2 — same styling as slide 3, unique title + cards
-        {
-            key: "how",
-            kind: "how",
-            title: "How UFVBay Works",
-            bg: secondimage, // use any image; you can change this later
-            items: [
-                {
-                    h: "Browse Local Listings",
-                    p: "Find items posted by UFV students. Filter by subject, category, or price.",
-                    cta: "Explore Listings",
-                    to: "/home/info/explore",
-                },
-                {
-                    h: "Message Sellers",
-                    p: "Chat in-app to ask questions and agree on a fair price—keep it respectful.",
-                    cta: "Open Messages",
-                    to: "/home/info/messages",
-
-                },
-                {
-                    h: "Meet On Campus",
-                    p: "Pick visible meet-up spots and follow simple safety tips. Students helping students.",
-                    cta: "Safety Tips",
-                    to: "/home/info/safety",
-                },
-            ],
-        },
-
-        // Slide 3 — same styling, different title + cards
-        {
-            key: "how2",
-            kind: "how",
-            title: "Convenient Selling",
-            bg: camera, // can be a different photo if you want
-            items: [
-                {
-                    h: "Snap Clear Photos",
-                    p: "Good lighting and multiple angles help your listing stand out.",
-                    cta: "Photo Tips",
-                    to: "/home/info/photo-tips",
-                },
-                {
-                    h: "Price It Smart",
-                    p: "Check recent comps on UFVBay and set a fair, student-friendly price.",
-                    cta: "See Pricing Tips",
-                    to: "/home/info/pricing",
-                },
-                {
-                    h: "Post & Meet",
-                    p: "Publish your listing and choose a safe on-campus meet-up spot.",
-                    cta: "Create Listing",
-                    to: "/home/info/create",
-
-                },
-            ],
-        },
-    ];
-
-    const [index, setIndex] = useState(0);
-    const clamp = (i) => Math.max(0, Math.min(i, slides.length - 1));
-    const next = () => setIndex((i) => clamp(i + 1));
-    const prev = () => setIndex((i) => clamp(i - 1));
-    const onKey = (e) => {
-        if (e.key === "ArrowRight") next();
-        if (e.key === "ArrowLeft") prev();
-    };
-
-
-
-
-
-    // ---- existing typewriter for hero only ----------------------------------
-    const txt = "Welcome to UFVBay!";
-    const speed = 120;
-    const loopDelay = 1500;
-    const idxRef = useRef(0);
-    const timerRef = useRef(null);
-    const startedRef = useRef(false);
-
-    const typeWriter = () => {
-        const el = document.getElementById("demo");
-        if (!el) return;
-        if (index !== 0) return; // run only when the hero slide is visible
-
-        if (idxRef.current < txt.length) {
-            el.textContent += txt.charAt(idxRef.current);
-            idxRef.current += 1;
-            timerRef.current = setTimeout(typeWriter, speed);
-        } else {
-            timerRef.current = setTimeout(() => {
-                el.textContent = "";
-                idxRef.current = 0;
-                typeWriter();
-            }, loopDelay);
-        }
-    };
-
-
-    // --- typewriter for second slide ("How UFVBay Works")
-// --- typewriter for second slide ("How UFVBay Works") — NO LOOP
-// Non-looping typewriter for any "how" slide
-    const howIdxRef = useRef(0);
-    const howTimerRef = useRef(null);
-
-    const typeWriterHow = (el, text, speed) => {
-        if (!el) return;
-        if (howIdxRef.current < text.length) {
-            el.textContent += text.charAt(howIdxRef.current++);
-            howTimerRef.current = setTimeout(() => typeWriterHow(el, text, speed), speed);
-        } else {
-            howTimerRef.current = null; // stop (no loop)
-        }
-    };
-
-
-
-
-
-    useEffect(() => {
-        // boot once
-        if (startedRef.current) return;
-        startedRef.current = true;
-        document.addEventListener("keydown", onKey);
-        return () => {
-            document.removeEventListener("keydown", onKey);
-            if (timerRef.current) clearTimeout(timerRef.current);
-        };
-    }, []);
-
-    useEffect(() => {
-        // restart the hero typewriter whenever we return to slide 0
-        if (index !== 0) return;
-        const el = document.getElementById("demo");
-        if (el) el.textContent = "";
-        idxRef.current = 0;
-        if (timerRef.current) clearTimeout(timerRef.current);
-        typeWriter();
-    }, [index]);
-
-
-    useEffect(() => {
-        const s = slides[index];
-        if (!s || s.kind !== "how") return;
-
-        const el = document.getElementById(`how-typed-${s.key}`);
-        if (el) el.textContent = "";
-        howIdxRef.current = 0;
-        if (howTimerRef.current) clearTimeout(howTimerRef.current);
-        typeWriterHow(el, s.title || "", speed);
-    }, [index]);
-
-
-
-
-    // subject change from sidebar → go to Browse
-    const handleSubjectChange = (subject) => {
-        const normalized = subject === "ALL" ? "" : subject;
-        navigate("/", { state: { subject: normalized } });
-    };
-
-// load listings once so the navbar can search them
-    useEffect(() => {
-        getAllListings()
-            .then(({ data }) => setListings([...data]))
-            .catch((err) => console.error("Error fetching listings:", err));
-    }, []);
-
-// search handler used by <Navbar />
-    const handleSearch = (query) => {
-        const q = (query || "").trim().toLowerCase();
-        if (!q) {
-            setFilteredItems([]);   // hide dropdown on empty query
-            return;
-        }
-        const results = listings.filter((item) =>
-            (item.title || "").toLowerCase().includes(q) ||
-            (item.description || "").toLowerCase().includes(q)
-        );
-        setFilteredItems(results);
-    };
-
-
-    return (
-        <div className="home-shell">
-            <Navbar onSearch={handleSearch} results={filteredItems} />
-
-            <div className="home-body">
-                <div className="home-left">
-                    <HomeSideBar onSubjectChange={handleSubjectChange} />
-                </div>
-
-                {/* ------- SLIDER LIVES ONLY INSIDE THE MAIN COLUMN ------- */}
-                <div className="home-main">
-                    <div className="home-slider" aria-roledescription="carousel">
-                        <div
-                            className="home-track"
-                            style={{ transform: `translateX(-${index * 100}%)` }}
-                        >
-                            {slides.map((s) => (
-                                <section className="home-slide" key={s.key}>
-                                    {s.kind === "hero" ? (
-                                        <div className="home-content">
-                                            <img className="home-hero" src={mainimage} alt="UFVBay"/>
-                                            <p id="demo" className="typewriter"/>
-                                        </div>
-                                    ) : s.kind === "how" ? (
-                                        // ======== CUSTOM SECOND SLIDE (3 boxes with hover-reveal) ========
-                                        // image background + top-aligned content
-                                        <div className="home-content panel--how">
-                                            <img className="home-hero" src={s.bg || secondimage} alt=""/>
-                                            <div className="panel-inner">
-                                                <h2 className="panel-title">
-                                                    <span id={`how-typed-${s.key}`}></span>
-                                                </h2>
-
-                                                <div className="features-grid">
-                                                    {(s.items ?? []).map((it, i) => (
-                                                        <article className="feature-card" tabIndex="0" key={i}>
-                                                            <h3 className="feature-title">{it.h}</h3>
-                                                            <p className="feature-text">{it.p}</p>
-                                                            <div className="feature-cta">
-                                                                {it.to ? (
-                                                                    <Link
-                                                                        to={it.to}
-                                                                      state={{ backgroundLocation: location }}   // <-- shows as modal over Home
-                                                                      className="feature-btn"
-                                                                    >
-                                                                      {it.cta}
-                                                                    </Link>
-                                                                  ) : (
-                                                                    <button className="feature-btn" type="button">{it.cta}</button>
-                                                              )}
-                                                            </div>
-                                                        </article>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        // ======== default simple panel (your third slide) ========
-                                        <div className="home-content home-content--panel">
-                                            <div className="panel-inner">
-                                                <h2>{s.title}</h2>
-                                                <p>{s.body}</p>
-                                            </div>
-                                        </div>
-                                    )}
-                                </section>
-                            ))}
-                        </div>
-
-                        {/* Controls pinned at bottom center of the main column */}
-                        <div className="home-controls" role="group" aria-label="Slides">
-                            <button
-                                className="nav-btn nav-btn--left"
-                                onClick={prev}
-                                disabled={index === 0}
-                                aria-label="Previous slide"
-                            >
-                                ‹
-                            </button>
-                            <button
-                                className="nav-btn nav-btn--right"
-                                onClick={next}
-                                disabled={index === slides.length - 1}
-                                aria-label="Next slide"
-                            >
-                                ›
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                {/* --------------------------------------------------------- */}
-            </div>
-        </div>
+  // Search handler for Navbar
+  const handleSearch = (query) => {
+    const q = (query || "").trim().toLowerCase();
+    if (!q) {
+      setFilteredItems([]);
+      return;
+    }
+    const results = listings.filter(
+      (item) =>
+        (item.title || "").toLowerCase().includes(q) ||
+        (item.description || "").toLowerCase().includes(q)
     );
+    setFilteredItems(results);
+  };
+
+  // Get up to 4 images for the hero preview
+  const previewListings = listings.slice(0, 4);
+
+  return (
+    <div className="home-shell">
+      <Navbar onSearch={handleSearch} results={filteredItems} />
+
+      <div className="home-body">
+        <div className="home-left">
+          <HomeSideBar onSubjectChange={handleSubjectChange} />
+        </div>
+
+        <div className="home-main">
+          {/* ---- Hero Section (two-column) ---- */}
+          <section className="hero-section">
+            <div className="hero-content">
+              <h1 className="hero-title">
+                Buy &amp; sell textbooks at UFV
+              </h1>
+              <p className="hero-subtitle">
+                The student marketplace for University of the Fraser Valley.
+                Find what you need, sell what you don't.
+              </p>
+              <div className="hero-actions">
+                <Link to="/" className="hero-btn-primary">
+                  Browse Listings
+                </Link>
+                <Link to="/create-listing" className="hero-btn-secondary">
+                  Start Selling
+                </Link>
+              </div>
+            </div>
+
+            <div className="hero-preview">
+              {previewListings.length > 0
+                ? previewListings.map((item) => {
+                    const img =
+                      (item.imageUrls && item.imageUrls[0]) ||
+                      (item.images && item.images[0]) ||
+                      item.image;
+                    return img ? (
+                      <img key={item.id} src={img} alt={item.title || ""} />
+                    ) : (
+                      <div key={item.id} className="hero-preview-placeholder" />
+                    );
+                  })
+                : Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} className="hero-preview-placeholder" />
+                  ))}
+            </div>
+          </section>
+
+          {/* ---- Recently Posted ---- */}
+          {listings.length > 0 && (
+            <section className="featured-section">
+              <div className="section-header">
+                <h2>Recently Posted</h2>
+                <Link to="/" className="view-all-link">
+                  View All <i className="bi bi-arrow-right" />
+                </Link>
+              </div>
+              <div className="featured-grid">
+                {listings.slice(0, 8).map((product) => {
+                  const image =
+                    (product.imageUrls && product.imageUrls[0]) ||
+                    (product.images && product.images[0]) ||
+                    product.image;
+                  return (
+                    <Link
+                      key={product.id}
+                      to={`/item/${product.id}`}
+                      state={{ backgroundLocation: location }}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <ProductCards
+                        price={`$ ${product.amount || product.price}$`}
+                        image={image}
+                        name={product.title}
+                        subject={product.subject}
+                      />
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
+          {/* ---- How It Works ---- */}
+          <section className="how-section">
+            <p className="how-eyebrow">How It Works</p>
+            <h2 className="how-heading">Three simple steps</h2>
+
+            <div className="how-grid">
+              <Link
+                to="/home/info/explore"
+                state={{ backgroundLocation: location }}
+                className="how-card"
+              >
+                <div className="step-number">1</div>
+                <h3>Browse Local Listings</h3>
+                <p>
+                  Find items posted by UFV students. Filter by subject,
+                  category, or price.
+                </p>
+              </Link>
+
+              <Link
+                to="/home/info/messages"
+                state={{ backgroundLocation: location }}
+                className="how-card"
+              >
+                <div className="step-number">2</div>
+                <h3>Message Sellers</h3>
+                <p>
+                  Chat in-app to ask questions and agree on a fair
+                  price — keep it respectful.
+                </p>
+              </Link>
+
+              <Link
+                to="/home/info/safety"
+                state={{ backgroundLocation: location }}
+                className="how-card"
+              >
+                <div className="step-number">3</div>
+                <h3>Meet On Campus</h3>
+                <p>
+                  Pick visible meet-up spots and follow simple safety tips.
+                  Students helping students.
+                </p>
+              </Link>
+            </div>
+          </section>
+
+          {/* ---- Community Stats ---- */}
+          <section className="stats-bar">
+            <div className="stat-card">
+              <div className="stat-number">{listings.length}</div>
+              <div className="stat-label">Active Listings</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">13</div>
+              <div className="stat-label">Subjects Available</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">
+                <i className="bi bi-shield-check" />
+              </div>
+              <div className="stat-label">UFV Students Only</div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Home;

@@ -86,48 +86,53 @@ const AccountInfo = () => {
 
 
     if (!user) {
-        return <div>No user is logged in.</div>;
+        return (
+            <div className="acct-empty">
+                <i className="bi bi-person-slash" />
+                <h3>No user logged in</h3>
+                <p>Please log in to view your account information.</p>
+            </div>
+        );
     }
 
     return (
-        <div className="account-container">
-            <header className="account-header">
-                <h1>Account Information</h1>
-            </header>
+        <div className="acct-card">
+            <div className="acct-card-header">
+                <h2>Account Information</h2>
+            </div>
 
-            {error && <div className="error-message">{error}</div>}
+            {error && <div className="acct-error">{error}</div>}
 
             {!isEditing ? (
-                <div>
-                    {/* account detials*/}
-                    <div className="account-details">
-                        <p>
-                            <strong>Name:</strong> {user.name || user.username}
-                        </p>
-                        <p>
-                            <strong>Email:</strong> {user.email}
-                        </p>
-                        <p>
-                            <strong>Username:</strong> {user.username}
-                        </p>
+                <>
+                    <div className="acct-card-body">
+                        <div className="acct-field">
+                            <span className="acct-field-label">Name</span>
+                            <span className="acct-field-value">{user.name || user.username}</span>
+                        </div>
+                        <div className="acct-field">
+                            <span className="acct-field-label">Email</span>
+                            <span className="acct-field-value">{user.email}</span>
+                        </div>
+                        <div className="acct-field">
+                            <span className="acct-field-label">Username</span>
+                            <span className="acct-field-value">{user.username}</span>
+                        </div>
                     </div>
 
-                    {/* nav buttons */}
-                    <div className="account-actions">
-                        <button className="btn btn-primary" onClick={handleEditClick}>
+                    <div className="acct-actions">
+                        <button className="btn-ufv" onClick={handleEditClick}>
                             Edit Profile
                         </button>
                     </div>
-                </div>
+                </>
             ) : (
-                <div>
-                    {/*edit Form */}
-                    <div className="account-details">
-                        <div className="form-group">
-                            <label htmlFor="name">
-                                <strong>Name:</strong>
-                            </label>
+                <>
+                    <div className="acct-card-body">
+                        <div className="acct-field">
+                            <label className="acct-field-label" htmlFor="name">Name</label>
                             <input
+                                className="acct-input"
                                 type="text"
                                 id="name"
                                 name="name"
@@ -136,11 +141,10 @@ const AccountInfo = () => {
                             />
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="email">
-                                <strong>Email:</strong>
-                            </label>
+                        <div className="acct-field">
+                            <label className="acct-field-label" htmlFor="email">Email</label>
                             <input
+                                className="acct-input"
                                 type="email"
                                 id="email"
                                 name="email"
@@ -149,11 +153,10 @@ const AccountInfo = () => {
                             />
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="username">
-                                <strong>Username:</strong>
-                            </label>
+                        <div className="acct-field">
+                            <label className="acct-field-label" htmlFor="username">Username</label>
                             <input
+                                className="acct-input"
                                 type="text"
                                 id="username"
                                 name="username"
@@ -163,16 +166,15 @@ const AccountInfo = () => {
                         </div>
                     </div>
 
-                    {/* Butons */}
-                    <div className="account-actions">
-                        <button className="btn btn-primary" onClick={handleSaveClick}>
+                    <div className="acct-actions">
+                        <button className="btn-ufv" onClick={handleSaveClick}>
                             Save
                         </button>
-                        <button className="btn btn-primary" onClick={handleCancelClick}>
+                        <button className="btn-ufv-outline" onClick={handleCancelClick}>
                             Cancel
                         </button>
                     </div>
-                </div>
+                </>
             )}
         </div>
     );

@@ -2,16 +2,27 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import "../styles/Item.css";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import Map from "../components/Map.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { getUserById } from "../services/AuthService.js"; // adjust path if needed
-import HomeSideBar from "../components/HomeSideBar.jsx";
+import testImageOne from "../images/testimg2.jpeg";
+import testImageTwo from "../images/testingimg.jpg";
+import testImageThree from "../images/testingimg6.jpg";
 
-
+const DEV_MOCK_PRODUCT_ID = "mock";
+const DEV_MOCK_LISTING = {
+  id: DEV_MOCK_PRODUCT_ID,
+  title: "Calculus I Textbook + Workbook",
+  subject: "MATH",
+  amount: 45,
+  description:
+    "Used for one semester and still in great condition.\n\nIncludes the main textbook, the companion workbook, and a few highlighted study notes tucked inside. Good option if you want something affordable for MATH 141.",
+  latitude: 49.02837,
+  longitude: -122.28492,
+  imageUrls: [testImageOne, testImageTwo, testImageThree],
+  userId: "mock-user",
+};
 
 const Item = ({ asModal = false }) => {
 
@@ -25,11 +36,6 @@ const Item = ({ asModal = false }) => {
   const [isOwner, setIsOwner] = useState(false);
   const [showMap, setShowMap] = useState(true);
   const [posterEmail, setPosterEmail] = useState("");
-  // inside the component
-  const [descExpanded, setDescExpanded] = React.useState(false);
-
-
-
 
   // state for Update Listing functionality
   const [isUpdating, setIsUpdating] = useState(false);
@@ -44,18 +50,27 @@ const Item = ({ asModal = false }) => {
 
   const navigate = useNavigate();
 
-  // Wraps content in a centered 80% panel when shown as a modal
-  const ModalWrapper = ({ children }) =>
-      asModal ? (
-          <div className="item-overlay">
-            <div className="item-panel">{children}</div>
-          </div>
-      ) : (
-          <>{children}</>
-      );
-
 
   useEffect(() => {
+    if (import.meta.env.DEV && productId === DEV_MOCK_PRODUCT_ID) {
+      setListing(DEV_MOCK_LISTING);
+      setSlider(DEV_MOCK_LISTING.imageUrls[0]);
+      setCount(0);
+      setPosterEmail("student.seller@ufv.ca");
+      setIsOwner(false);
+      setUpdatedListing({
+        title: DEV_MOCK_LISTING.title,
+        subject: DEV_MOCK_LISTING.subject,
+        amount: DEV_MOCK_LISTING.amount,
+        description: DEV_MOCK_LISTING.description,
+        longitude: DEV_MOCK_LISTING.longitude,
+        latitude: DEV_MOCK_LISTING.latitude,
+      });
+      setError(null);
+      setLoading(false);
+      return;
+    }
+
     // fetch the listing data from the backend
     const fetchListing = async () => {
       try {
@@ -296,6 +311,36 @@ const Item = ({ asModal = false }) => {
     else navigate("/");
   };
 
+  const handleThumbnailSelect = (image, index) => {
+    setSlider(image);
+    setCount(index);
+  };
+
+  const ModalWrapper = ({ children }) =>
+      asModal ? (
+          <div className="item-overlay">
+            <div className="item-panel item-panel--modal">{children}</div>
+          </div>
+      ) : (
+          <div className="item-page">
+            <div className="item-page-shell">
+              <div className="item-page-topbar">
+                <button type="button" className="item-page-back" onClick={handleClose}>
+                  <i className="bi bi-arrow-left" />
+                  <span>Back to Browse</span>
+                </button>
+
+                <div className="item-page-intro">
+                  <p className="item-page-kicker">UFVBay Listing</p>
+                  <h2 className="item-page-heading">Item Details</h2>
+                </div>
+              </div>
+
+              <div className="item-panel item-panel--page">{children}</div>
+            </div>
+          </div>
+      );
+
   // const handleContactSeller = () => {
   //   if (!posterEmail) return;
   //
@@ -323,124 +368,89 @@ const Item = ({ asModal = false }) => {
 
 
   if (loading) {
-    return <div>Loading listing...</div>;
+    return <div className="item-state-msg">Loading listing...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="item-state-msg item-state-error">Error: {error}</div>;
   }
 
   if (!listing) {
-    return <div>No listing found.</div>;
+    return <div className="item-state-msg">No listing found.</div>;
   }
   return (
       <ModalWrapper>
-        <div className="row g-0 w-100 h-100" style={{position: "relative"}}>
-          {/* -------- LEFT: image slider -------- */}
-          <div className="col-7 col-xl-7 d-flex justify-content-center align-items-center position-relative media-col"
-              style={{
-                backgroundImage: "none",
-                backgroundPosition: "center",
-                backgroundSize: "cover",      // or "contain" if you prefer
-                height: "100%",
-                overflow: "hidden",
-              }}
-          >
-            {/* darken bg behind the main image */}
-            <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  zIndex: 1,
-                }}
-            />
+        <div className={`item-layout ${asModal ? "item-layout--modal" : "item-layout--page"}`}>
+          <section className="item-media-column media-col">
+            <div className="item-media-backdrop" />
 
-            {/* prev / next */}
-            <ArrowBackIosIcon
-                onClick={DecSlider}
-                style={{
-                  zIndex: 3,
-                  color: "white",
-                  fontSize: "2rem",
-                  cursor: "pointer",
-                  position: "absolute",
-                  left: "10px",
-                }}
-            />
-            <ArrowForwardIosIcon
-                onClick={IncSlider}
-                style={{
-                  zIndex: 3,
-                  color: "white",
-                  fontSize: "2rem",
-                  cursor: "pointer",
-                  position: "absolute",
-                  right: "10px",
-                }}
-            />
-
-            {/* current image */}
-            {slider ? (
-              <img
-            src={slider}
-            alt="Listing"
-            className="media-img position-relative mx-auto"
-            style={{ zIndex: 2 }}
-            />
-            ) : (
-                <div
-                    className="w-50 position-relative mx-auto"
-                    style={{
-                      zIndex: 2,
-                      height: "300px",
-                      backgroundColor: "#ccc",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                >
-                  <p>No image available</p>
-                </div>
+            {(listing.imageUrls?.length || 0) > 1 && (
+                <>
+                  <i className="bi bi-chevron-left item-arrow item-arrow-prev" onClick={DecSlider} />
+                  <i className="bi bi-chevron-right item-arrow item-arrow-next" onClick={IncSlider} />
+                </>
             )}
 
-            <button
-                onClick={handleClose}
-                style={{
-                  position: "absolute",
-                  top: "16px",
-                  left: "16px",
-                  background: "transparent",
-                  border: "none",
-                  color: "#fff",
-                  fontSize: "2.5rem",
-                  cursor: "pointer",
-                  zIndex: 5,
-                }}
-                aria-label="Close"
-                title="Close"
-            >
-              <DisabledByDefaultIcon fontSize="inherit"/>
-            </button>
+            {asModal && (
+                <button
+                    onClick={handleClose}
+                    className="item-close"
+                    aria-label="Close"
+                    title="Close"
+                >
+                  <i className="bi bi-x-lg" />
+                </button>
+            )}
 
-          </div>
+            <div className="item-media-content">
+              <div className="item-media-stage">
+                {slider ? (
+                  <img
+                    src={slider}
+                    alt="Listing"
+                    className="media-img"
+                  />
+                ) : (
+                    <div className="item-no-image">
+                      <p>No image available</p>
+                    </div>
+                )}
+              </div>
+
+              {(listing.imageUrls?.length || 0) > 1 && (
+                  <div className="item-thumb-strip">
+                    {listing.imageUrls.map((image, index) => (
+                        <button
+                            type="button"
+                            key={`${listing.id || "listing"}-${index}`}
+                            className={`item-thumb ${slider === image ? "is-active" : ""}`.trim()}
+                            onClick={() => handleThumbnailSelect(image, index)}
+                            aria-label={`View image ${index + 1}`}
+                        >
+                          <img src={image} alt={`${listing.title || "Listing"} view ${index + 1}`} />
+                        </button>
+                    ))}
+                  </div>
+              )}
+            </div>
+          </section>
 
           {/* -------- RIGHT: clean details panel -------- */}
           <aside
-          className="col-5 col-xl-5 details-panel"
+          className="details-panel"
           >
-            {/* header */}
-            <header className="details-header">
-              <h1 className="details-title">{listing.title || "Untitled"}</h1>
-              <div className="chip-row">
-                <span className="chip">{listing.subject || "Unknown"}</span>
-                <span className="chip"> Email: {posterEmail || "Unknown"} </span>
+            <header className="item-header">
+              <h1 className="item-title">{listing.title || "Untitled"}</h1>
+              <div className="item-chips">
+                <span className="item-chip">{listing.subject || "Unknown"}</span>
+                <span className="item-chip">Email: {posterEmail || "Unknown"}</span>
               </div>
             </header>
 
-            {/* price + CTA */}
-            <div className="price-cta">
-              <div className="price-tag">${listing.amount ?? "N/A"} CAD </div>
+            <hr className="item-divider" />
+
+            <div className="item-price-row">
+              <div className="item-price">${listing.amount ?? "N/A"} CAD</div>
 
               {/*<button*/}
               {/*    type="button"*/}
@@ -454,17 +464,20 @@ const Item = ({ asModal = false }) => {
               {/*</button>*/}
             </div>
 
+            <hr className="item-divider" />
 
-            {/* meeting spot */}
-            <section className="section-card">
+            <section className="item-section">
               <button
                   type="button"
-                  className="section-title"
+                  className="item-section-toggle"
                   onClick={() => setShowMap((v) => !v)}
                   aria-expanded={showMap}
               >
-                <span>Meeting Spot</span>
-                <span className={`chev ${showMap ? "open" : ""}`}>▾</span>
+                <span className="item-section-heading">
+                  <i className="bi bi-geo-alt" />
+                  <span>Meeting Spot</span>
+                </span>
+                <i className={`bi bi-chevron-down item-section-chevron ${showMap ? "open" : ""}`} />
               </button>
 
               {showMap ? (
@@ -474,29 +487,39 @@ const Item = ({ asModal = false }) => {
                               <Map position={{ lat: listing.latitude, lng: listing.longitude }} />
                             </div>
                         ) : (
-                      <p className="muted">No meeting spot specified.</p>
+                      <p className="muted item-empty-note">No meeting spot specified.</p>
                   )
               ) : null}
             </section>
 
-            {/* description */}
-            <section className="section-card">
-              <div className="section-title static">Listing Description</div>
-              <div className="desc desc--scroll">
+            <hr className="item-divider" />
+
+            <section className="item-section">
+              <div className="item-section-label">
+                <span className="item-section-heading">
+                  <i className="bi bi-text-left" />
+                  <span>Listing Description</span>
+                </span>
+              </div>
+              <div className="item-desc">
                 {listing?.description || "No description provided."}
               </div>
             </section>
 
-            {/* owner actions */}
             {isOwner && (
-                <div className="owner-actions">
-                  <button className="btn-ui btn-solid" onClick={handleUpdateClick}>
-                    Edit
-                  </button>
-                  <button className="btn-ui btn-danger" onClick={handleDeleteListing}>
-                    Delete
-                  </button>
-                </div>
+                <>
+                  <hr className="item-divider" />
+                  <div className="item-actions">
+                    <button className="btn-ufv" onClick={handleUpdateClick}>
+                      <i className="bi bi-pencil" />
+                      <span>Edit</span>
+                    </button>
+                    <button className="btn-ufv-danger" onClick={handleDeleteListing}>
+                      <i className="bi bi-trash" />
+                      <span>Delete</span>
+                    </button>
+                  </div>
+                </>
             )}
 
             {/* previous close */}
@@ -578,12 +601,12 @@ const Item = ({ asModal = false }) => {
                     </div>
 
                     <div className="form-actions">
-                      <button type="submit" className="btn btn-primary">
+                      <button type="submit" className="btn-ufv">
                         Save Changes
                       </button>
                       <button
                           type="button"
-                          className="btn btn-secondary"
+                          className="btn-ufv-outline"
                           onClick={handleCancelUpdate}
                       >
                         Cancel

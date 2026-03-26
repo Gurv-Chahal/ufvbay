@@ -1,6 +1,5 @@
 import { useState } from "react";
-import AccountNavBar from "../components/AccountNavBar.jsx";
-import AccountSideBar from "../components/AccountSideBar.jsx";
+import Navbar from "../components/Navbar.jsx";
 import axios from "axios";
 import Dropzone from "react-dropzone";
 import Map from "../components/Map.jsx";
@@ -114,11 +113,8 @@ const CreateListing = () => {
 
   return (
       <div className="container-fluid p-0 min-vh-100 listing-page">
-        <AccountNavBar/>
-        <div className="d-flex">
-          <div className="col-md-3 p-0">
-            <AccountSideBar/>
-          </div>
+        <Navbar onSearch={() => {}} results={[]} />
+        <div className="d-flex" style={{ paddingTop: "var(--nav-height, 64px)" }}>
           <div className="col-md-4 mx-5 px-5 my-5">
             <div className="my-5 py-3">
               <h1 className="mb-5">Listing Details</h1>

@@ -1,182 +1,120 @@
-
 /* @jsxRuntime classic */
 import React from 'react';
 import "../styles/HomeSideBar.css";
-import "../styles/Navbar.css";
-
 import { Link, useNavigate } from "react-router-dom";
 import { isUserLoggedIn, logout } from "../services/AuthService.js";
-import { useState } from "react";
 
-//Dropdown menu that records which subject is being selected
-const SubjectMenu = ({ onSubjectClick }) => {
-    return (
-        <ul className="dropdown-menu" aria-labelledby="subjectsDropdown">
-            <li className="dropdown-item" onClick={() => onSubjectClick("MATH")}>Math</li>
-            <li className="dropdown-item" onClick={() => onSubjectClick("PHYSICS")}>Physics</li>
-            <li className="dropdown-item" onClick={() => onSubjectClick("COMPUTER SCIENCE")}>Computer Science</li>
+const SUBJECTS = [
+  "MATH",
+  "PHYSICS",
+  "COMPUTER SCIENCE",
+  "BIOLOGY",
+  "CHEMISTRY",
+  "ENGLISH",
+  "HISTORY",
+  "ECONOMICS",
+  "PSYCHOLOGY",
+  "ENGINEERING",
+  "BUSINESS",
+  "STATISTICS",
+  "PHILOSOPHY",
+];
 
-            {/* NEW subjects */}
-            <li className="dropdown-item" onClick={() => onSubjectClick("BIOLOGY")}>Biology</li>
-            <li className="dropdown-item" onClick={() => onSubjectClick("CHEMISTRY")}>Chemistry</li>
-            <li className="dropdown-item" onClick={() => onSubjectClick("ENGLISH")}>English</li>
-            <li className="dropdown-item" onClick={() => onSubjectClick("HISTORY")}>History</li>
-            <li className="dropdown-item" onClick={() => onSubjectClick("ECONOMICS")}>Economics</li>
-            <li className="dropdown-item" onClick={() => onSubjectClick("PSYCHOLOGY")}>Psychology</li>
-            <li className="dropdown-item" onClick={() => onSubjectClick("ENGINEERING")}>Engineering</li>
-            <li className="dropdown-item" onClick={() => onSubjectClick("BUSINESS")}>Business</li>
-            <li className="dropdown-item" onClick={() => onSubjectClick("STATISTICS")}>Statistics</li>
-            <li className="dropdown-item" onClick={() => onSubjectClick("PHILOSOPHY")}>Philosophy</li>
-        </ul>
-    );
-};
+function formatSubject(subject) {
+  return subject
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
 
-//HomeSideBar component has all elements in the menu and takes in parameter onSubjectChange
-//onSubjectChange takes in values from SubjectMenu component
-const HomeSideBar = ({ onSubjectChange }) => {
-  // ---------
-  // functionality for log in button on sidebar
+const HomeSideBar = ({ activeSubject = "", onSubjectChange }) => {
+  const [isAuth, setIsAuth] = React.useState(isUserLoggedIn());
+  const navigate = useNavigate();
 
-  // check if user is logged in
+  React.useEffect(() => {
+    const refresh = () => setIsAuth(isUserLoggedIn());
+    window.addEventListener('auth-changed', refresh);
+    window.addEventListener('focus', refresh);
+    window.addEventListener('storage', refresh);
+    return () => {
+      window.removeEventListener('auth-changed', refresh);
+      window.removeEventListener('focus', refresh);
+      window.removeEventListener('storage', refresh);
+    };
+  }, []);
 
-
-    const [isAuth, setIsAuth] = React.useState(isUserLoggedIn());
-    React.useEffect(() => {
-        const refresh = () => setIsAuth(isUserLoggedIn());
-        // when token changes (your code dispatches 'auth-changed')
-        window.addEventListener('auth-changed', refresh);
-        // when you come back to the tab
-        window.addEventListener('focus', refresh);
-        // when another tab logs in/out
-        window.addEventListener('storage', refresh);
-        return () => {
-            window.removeEventListener('auth-changed', refresh);
-            window.removeEventListener('focus', refresh);
-            window.removeEventListener('storage', refresh);
-            };
-        }, []);
-
-
-
-
-    const navigate = useNavigate();
-
-    function handleLogout(e) {
-        e.preventDefault();
-        logout();                       // clear token & session keys
-        navigate("/login", { replace: true });
-    }
+  function handleLogout(e) {
+    e.preventDefault();
+    logout();
+    navigate("/login", { replace: true });
+  }
 
   return (
-      <div
-          className="home-sidebar"
-          style={{
-              /* drop the hardcoded light bg */
-              // backgroundColor: "#f8f9fa",
-              // use theme variables instead (or move to CSS entirely)
-              backgroundColor: "transparent",
-              color: "var(--text)",
-              borderRight: "none",
-              boxShadow: "none",
-          }}
-      >
-          <div className="sidebar-bubble">
-          <div className="d-flex flex-column">
-              <Link to="/create-listing" style={{textDecoration: "none"}}>
-                  <button
-                      className="btn my-5 py-4 d-flex align-items-center"
-                      style={{
-                          fontFamily: "Lato, sans-serif",
-                          backgroundImage: "linear-gradient(to right, #66DC6A, #0B6A31)",
-                          color: "white",
-                          border: "none",
-                          width: "100%",
-                      }}
-                  >
-                      <i
-                          className="bi bi-plus-circle-dotted px-3"
-                          style={{fontSize: "32px"}}
-                      />
-                      Create Listing
-                  </button>
-              </Link>
+    <div className="home-sidebar">
+      {/* Create Listing CTA */}
+      <Link to="/create-listing" className="sidebar-cta">
+        <i className="bi bi-plus-circle-dotted" />
+        Create Listing
+      </Link>
 
-              <Link to='/home'>
-              <button
-                  className="btn my-3 py-3 d-flex align-items-center text-start gradient-button"
-                  style={{width: "100%"}}
-              >
-                  <i className="bi bi-house px-3" style={{fontSize: "30px"}}/>
+      <div className="sidebar-divider" />
 
-                  Home
-              </button>
-              </Link>
+      {/* Nav items */}
+      <Link to="/home" className="sidebar-item">
+        <i className="bi bi-house" />
+        Home
+      </Link>
 
-              <button
-                  className="btn my-3 py-3 d-flex align-items-center text-start gradient-button"
-                  onClick={() => onSubjectChange("ALL")}
-                  style={{width: "100%"}}
-              >
-                  <i className="bi bi-bag px-3" style={{fontSize: "30px"}}/>
+      <button className="sidebar-item" onClick={() => onSubjectChange("ALL")}>
+        <i className="bi bi-bag" />
+        Browse
+      </button>
 
-                  Browse
-              </button>
+      <div className="sidebar-subjects-wrap">
+        <p className="sidebar-section-label">Subjects</p>
+        <div className="sidebar-subjects">
+          <button
+            className={`sidebar-item sidebar-subject ${!activeSubject ? "is-active" : ""}`.trim()}
+            onClick={() => onSubjectChange("ALL")}
+            type="button"
+          >
+            <i className="bi bi-grid" />
+            All Subjects
+          </button>
 
-              <div className="dropdown">
-                  <button
-                      className="btn my-2 py-3 d-flex align-items-center text-start gradient-button dropdown-toggle"
-                      type="button"
-                      id="subjectsDropdown"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      style={{width: "100%"}}
-                  >
-                      <i className="bi bi-book px-3" style={{fontSize: "30px"}}/>
-                      Subjects
-                  </button>
-                  <SubjectMenu onSubjectClick={(subject) => onSubjectChange(subject)}/>
-              </div>
-
-              {/*<button className="btn my-2 py-3 d-flex align-items-center text-start gradient-button">*/}
-              {/*  <i className="bi bi-bookmark px-3" style={{ fontSize: "30px" }} />*/}
-              {/*  Saved Listings*/}
-              {/*</button>*/}
-
-              {/*<button className="btn my-2 py-3 d-flex align-items-center text-start gradient-button">*/}
-              {/*  <i className="bi bi-bell px-3" style={{ fontSize: "30px" }} />*/}
-              {/*  Notifications*/}
-              {/*</button>*/}
-
-              {/*if isAuth is false then show login button, if its true then show log out button.
-           also using onClick if user clicks logout then logout() method will handle it*/}
-
-              {!isAuth && (
-                  <Link
-                      to="/login"
-                      className="d-flex align-items-center my-3 py-3 text-decoration-none btn gradient-button"
-                      style={{width: "100%"}}
-                  >
-                      <i
-                          className="bi bi-box-arrow-in-right px-3"
-                          style={{fontSize: "30px"}}
-                      />
-                      Log In
-                  </Link>
-              )}
-
-              {isAuth && (
-                  <button
-                      onClick={handleLogout}
-                      className="d-flex align-items-center my-3 py-3 text-decoration-none btn gradient-button"
-                      style={{width: "100%"}}
-                  >
-                      <i className="bi bi-box-arrow-right px-3" style={{fontSize: "30px"}}/>
-                      Log Out
-                  </button>
-              )}
-          </div>
+          {SUBJECTS.map((subject) => (
+            <button
+              className={`sidebar-item sidebar-subject ${activeSubject === subject ? "is-active" : ""}`.trim()}
+              key={subject}
+              onClick={() => onSubjectChange(subject)}
+              type="button"
+            >
+              <i className="bi bi-book" />
+              {formatSubject(subject)}
+            </button>
+          ))}
+        </div>
       </div>
+
+      <div className="sidebar-footer">
+        <div className="sidebar-divider" />
+
+        {!isAuth && (
+          <Link to="/login" className="sidebar-item">
+            <i className="bi bi-box-arrow-in-right" />
+            Log In
+          </Link>
+        )}
+
+        {isAuth && (
+          <button onClick={handleLogout} className="sidebar-item">
+            <i className="bi bi-box-arrow-right" />
+            Log Out
+          </button>
+        )}
       </div>
+    </div>
   );
 };
 

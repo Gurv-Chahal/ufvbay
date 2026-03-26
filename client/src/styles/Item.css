@@ -10,32 +10,160 @@
 }
 
 
-/* Left media column (darker stage & smaller image) */
-/* ===== remove the bluish/dark stage under the image ===== */
-/* ===== left media column & image ===== */
-.media-col {
-  background: var(--surface);
-  min-width: 0;
-  padding: 12px 16px;
-  display: flex; align-items: center; justify-content: center;
+.item-page {
+  padding: clamp(20px, 3vw, 36px);
 }
 
+.item-page-shell {
+  width: min(1280px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 18px;
+}
+
+.item-page-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.item-page-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+
+.item-page-back:hover {
+  background: var(--surface-alt);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.item-page-intro {
+  text-align: right;
+}
+
+.item-page-kicker {
+  margin: 0 0 4px;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.item-page-heading {
+  margin: 0;
+  font-size: clamp(1.35rem, 2vw, 2rem);
+  color: var(--text);
+}
+
+/* Left media column */
+.media-col {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(24px, 3vw, 36px);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top, rgba(52, 211, 153, 0.18), transparent 34%),
+    linear-gradient(160deg, #0f172a 0%, #111827 42%, #0b1220 100%);
+}
+
+.item-media-column {
+  min-width: 0;
+  min-height: 0;
+}
+
+.item-media-backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,.08), transparent 44%),
+    linear-gradient(180deg, rgba(255,255,255,.04), transparent 36%);
+}
+
+.item-media-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  min-height: 0;
+}
+
+.item-media-stage {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: clamp(20px, 3vw, 32px);
+}
+
+.item-thumb-strip {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 6px;
+}
+
+.item-thumb {
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08);
+  box-shadow: 0 12px 24px rgba(0,0,0,.18);
+}
+
+.item-thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.item-thumb.is-active {
+  border-color: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(0,0,0,.28);
+}
 
 .item-panel .details-panel {
-  padding-inline-start: clamp(12px, 1.2vw, 16px) !important;  /* LTR/RTL safe */
+  padding-inline-start: clamp(12px, 1.2vw, 16px) !important;
 }
-
 
 /* image fills available height without creating extra strip below */
 .media-img {
   display: block;
-  max-width: 100%;                     /* smaller than the column */
-  max-height: 90%;                    /* leave breathing room */
+  max-width: min(100%, 520px);
+  max-height: min(100%, 560px);
   width: auto;
   height: auto;
-  object-fit: contain;                 /* never overflow */
-  border-radius: 10px;
-  box-shadow: 0 12px 28px rgba(0,0,0,.35);
+  object-fit: contain;
+  border-radius: 18px;
+  box-shadow: 0 24px 48px rgba(0,0,0,.45);
+  background: rgba(255,255,255,.08);
 }
 
 /* overlay sits below the navbar */
@@ -48,78 +176,61 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--modal-vpad) 16px;   /* extra top/bottom gap -> smaller modal */
+  padding: var(--modal-vpad) 16px;
   background: transparent;
-  z-index: 1100;                     /* below navbar */
+  z-index: 1100;
 }
 
 /* panel height clamps to overlay height minus the padding above */
 .item-panel {
-  width: min(78vw, 1080px);
-  max-width: calc(100vw - 32px);
   box-sizing: border-box;
-
-  height: calc(100% - 0px);    /* definite height so children can use 100% */
-  max-height: min(760px, calc(100% - var(--modal-vpad) * 2));
-  min-height: 0;
-
-  background: var(--card-bg, #fff);
-  color: var(--text, #0f172a);
-  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 22px;
   overflow: hidden;
-  box-shadow: 0 24px 64px rgba(0,0,0,.35);
+  box-shadow: var(--shadow-xl);
   padding: 0;
 }
 
-
-/* inner layout respects panel height */
-.item-panel > .row {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: stretch;
+.item-panel--modal {
+  width: min(78vw, 1080px);
+  max-width: calc(100vw - 32px);
   height: 100%;
-  overflow: hidden; /* was hidden; could clip overlay scrollbars */
-  gap: 0;
-  padding-right: 0;
-  min-height: 0 !important;       /* <-- CRITICAL for flex children to scroll */
-
+  max-height: min(760px, calc(100% - var(--modal-vpad) * 2));
+  min-height: 0;
 }
 
-/* Bootstrap cols inside the modal also need this */
-.item-panel > .row > [class*="col"] { min-height: 0 !important; }
+.item-panel--page {
+  width: 100%;
+  border: 1px solid var(--border);
+}
+
+.item-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(360px, 460px);
+  min-height: 0;
+}
+
+.item-layout--modal {
+  height: 100%;
+}
+
+.item-layout--page {
+  min-height: clamp(700px, 78vh, 920px);
+}
 
 
 /* prefer dynamic viewport units when supported (iOS Safari, etc.) */
 @supports (height: 1dvh) {
-  .item-overlay { bottom: 0; }          /* already set; here for clarity */
-  .item-panel  { max-height: 100%; }    /* remains tied to overlay height */
+  .item-overlay { bottom: 0; }
+  .item-panel--modal  { max-height: 100%; }
 }
-
-
-/* --- Light mode: force white surfaces on the right panel --- */
-html:not(.dark) .details-panel {
-  --panel-bg: #ffffff;
-  background: #ffffff !important;
-  border-left-color: #e5e7eb;
-}
-
-html:not(.dark) .details-header,
-html:not(.dark) .price-cta,
-html:not(.dark) .section-card {
-  background: #ffffff;
-  border-color: #e5e7eb;
-  box-shadow: 0 6px 18px rgba(0,0,0,.06);
-}
-
 
 
 .user-list{
   border-radius: 10%;
   padding-bottom: 5%;
-
 }
-
-
 
 
 /* Modal Overlay */
@@ -137,9 +248,10 @@ html:not(.dark) .section-card {
 }
 
 
-
 .update-form-container {
-  background-color: #fff;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
   padding: 20px;
   border-radius: 8px;
   width: 500px;
@@ -156,27 +268,22 @@ html:not(.dark) .section-card {
 }
 
 .updateformlisting {
-  border-bottom: 3px solid green;
+  border-bottom: 3px solid var(--accent, #16a34a);
   text-align: center;
   padding-bottom: 10px;
+  color: var(--text);
 }
 
 .form-group textarea {
   border-radius: 10px;
 }
 
-.btn {
-  margin-right: 20px;
-}
-
-
-
 
 .listtitle {
   margin-top: 10%;
   background: transparent;
   text-align: center;
-  border-bottom: 2px solid green;
+  border-bottom: 2px solid var(--accent, #16a34a);
   padding-bottom: 10px;
   margin-bottom: 20px;
   font-size: 24px;
@@ -193,24 +300,23 @@ html:not(.dark) .section-card {
 
 .listprice {
   font-weight: bold;
-  color: #333;
-
+  color: var(--text);
 }
 
 
 .listdescr {
-  border: 3px solid green;
+  border: 3px solid var(--accent, #16a34a);
   border-radius: 10px;
   padding: 10px;
 }
 
 .listamount {
-  color: green;
+  color: var(--accent, #16a34a);
 }
 
 .b5 {
   font-weight: bold;
-  border: 3px solid green;
+  border: 3px solid var(--accent, #16a34a);
   text-align: center;
   margin-top: -20px;
   padding: 10px;
@@ -218,14 +324,11 @@ html:not(.dark) .section-card {
 }
 
 
-
-
-
-
 .form-group label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
+  color: var(--text);
 }
 
 .form-group input,
@@ -233,361 +336,386 @@ html:not(.dark) .section-card {
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
+  background: var(--bg);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
 }
 
 .form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin-top: 8px;
 }
 
 
-/* ----- Right-side details panel (clean card stack) ----- */
+/* ----- Right-side details panel ----- */
 .details-panel {
   display: flex;
   flex-direction: column;
   flex: 0 1 clamp(340px, 30vw, 480px);
-  gap: 16px;
-  padding: 16px 16px 20px;
+  gap: 0;
+  padding: 18px 18px 22px;
 
-  background: var(--panel-bg, var(--card-bg, #ffffff));
-  color: var(--text, #0f172a);
-  border-left: 1px solid var(--input-border, #e5e7eb);
+  background: var(--surface);
+  color: var(--text);
+  border-left: 1px solid var(--border);
   position: relative;
-  align-self: stretch;                      /* fill column height */
+  align-self: stretch;
   box-sizing: border-box;
 
-  height: 100%;                 /* fill the column */
-  max-height: 100%;             /* cap to the modal height (90vh from .item-panel) */
+  height: 100%;
+  max-height: 100%;
   max-width: clamp(340px, 30vw, 480px);
-  overflow-y: auto !important;             /* scroll the WHOLE panel */
+  overflow-y: auto !important;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  scrollbar-gutter: stable; /* <-- not 'both-edges': only reserve on scrollbar side */
+  scrollbar-gutter: stable;
   padding-inline-end: calc(clamp(12px, 1.2vw, 16px) + 6px) !important;
-  min-height: 0 !important;                /* critical for flex children to allow scrolling */
-  min-width: 0 !important;   /* prevents long lines/elements from forcing overflow */
-  overflow-wrap: anywhere;   /* breaks long emails/URLs if needed */
-
-  --action-btn-width: 112px;   /* tweak here if you want wider/narrower */
-  --ease-smooth: cubic-bezier(.2,.8,.2,1);
-
+  min-height: 0 !important;
+  min-width: 0 !important;
+  overflow-wrap: anywhere;
 }
 
 /* Fallback for browsers that ignore scrollbar-gutter (e.g., Safari/macOS overlay) */
 @supports not (scrollbar-gutter: stable) {
-  :root { --sbw: 12px; } /* typical overlay scrollbar width */
+  :root { --sbw: 12px; }
   .details-panel {
-    padding-inline-end: calc(16px + var(--sbw)); /* space for the rail */
+    padding-inline-end: calc(16px + var(--sbw));
   }
-  /* Force a fixed-width WebKit scrollbar so the lane is actually taken */
   .details-panel::-webkit-scrollbar { width: var(--sbw); }
   .details-panel::-webkit-scrollbar-thumb {
     border-radius: 8px;
     background-clip: padding-box;
-    border: 3px solid transparent; /* nicer thumb without crowding content */
+    border: 3px solid transparent;
   }
 }
 
-
-
-
-/* Title & chips */
-/* Title & chips — make the header its own card */
-.details-header {
+.item-header {
   display: grid;
-  gap: 8px;
-  padding: 14px;                               /* breathing room */
-  border: 1px solid var(--input-border, #e5e7eb);
-  background: var(--card-bg, #ffffff);
-  border-radius: 12px;                         /* same radius as other cards */
-  box-shadow: 0 6px 18px rgba(0,0,0,.06);      /* match with section cards */
+  gap: 14px;
+  padding: 6px 0 18px;
 }
 
-.details-title {
+.item-title {
   margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.25;
+  font-size: clamp(1.85rem, 1.3vw + 1.35rem, 2.35rem);
+  line-height: 1.08;
   font-weight: 800;
-  letter-spacing: .2px;
-  border-bottom: none;                         /* was a green underline */
-  padding-bottom: 0;
-
-  /* keep long titles tidy */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;                       /* show at most two lines */
-  -webkit-box-orient: vertical;
+  letter-spacing: -0.03em;
+  color: var(--text);
   overflow: hidden;
   word-break: break-word;
 }
 
-.chip-row {
+.item-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.item-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 8px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-subtle);
+  border: 1px solid var(--accent);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.item-divider {
+  width: 100%;
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+.item-price-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 20px 0;
 }
 
-.chip {
-  font-size: .8rem;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(34,197,94,.12);          /* UFV green tint */
-  border: 1px solid rgba(34,197,94,.35);
-}
-.chip-muted {
-  background: rgba(148,163,184,.15);
-  border-color: rgba(148,163,184,.35);
-}
-
-/* Price + CTA */
-.price-cta {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 14px;
-  padding: 12px;
-  border: 1px solid var(--input-border, #e5e7eb);
-  border-radius: 12px;
-  background: var(--card-bg, #ffffff);
-  box-shadow: 0 6px 18px rgba(0,0,0,.06);
-}
-.price-tag {
-  font-size: 1.6rem;
+.item-price {
+  font-size: 1.8rem;
+  line-height: 1.08;
   font-weight: 800;
-  color: var(--accent, #166534);
-}
-.cta-button {
-  border: none;
-  border-radius: 10px;
-  padding: 10px 14px;
-  font-weight: 700;
-  background: linear-gradient(90deg, #66DC6A, #0B6A31);
-  color: white;
-  box-shadow: 0 8px 18px rgba(11,106,49,.25);
-  cursor: pointer;
-  align-self: stretch;
+  letter-spacing: -0.03em;
+  color: var(--accent);
 }
 
-.section-card + .section-card { margin-top: 10px; }
-
-
-/* Cards */
-.section-card {
-  border: 1px solid var(--input-border, #e5e7eb);
-  background: var(--card-bg, #ffffff);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,.05);
+.item-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 0;
 }
-.section-title {
+
+.item-section-heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.item-section-heading i {
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.item-section-toggle,
+.item-section-label {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding: 12px 14px;
+  gap: 12px;
+  color: var(--text);
+  text-align: left;
   font-weight: 700;
-  border-bottom: 1px dashed var(--input-border, #e5e7eb);
-  background: rgba(102, 220, 106, 0.06);
-  cursor: pointer;
-}
-.section-title.static { cursor: default; }
-.chev { transition: transform .18s ease; }
-.chev.open { transform: rotate(180deg); }
-.map-wrap { padding: 10px; }
-.map-wrap .map-container { height: 230px; }
-
-.description {
-  margin: 0;
-  padding: 12px 14px 16px;
-  line-height: 1.55;
-  color: var(--text, #0f172a);
-}
-
-/* Owner actions */
-.owner-actions { display: flex; gap: 10px; }
-
-/* Close button */
-.close-x {
-  position: absolute;
-  top: 10px;
-  left: 10px;
   border: none;
   background: transparent;
+  box-shadow: none;
+}
+
+.item-section-toggle {
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  margin: -10px -12px 0;
+  transition: background .2s ease, color .2s ease;
+}
+
+.item-section-toggle:hover {
+  background: var(--surface-alt);
+}
+
+.item-section-label {
+  padding: 0;
+}
+
+.item-section-chevron {
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  transition: transform .18s ease, color .18s ease;
+}
+
+.item-section-chevron.open {
+  transform: rotate(180deg);
+  color: var(--text);
+}
+
+.map-wrap {
+  margin-top: 2px;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.map-wrap .map-container { height: 230px; }
+
+.item-desc {
+  margin: 0;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.item-empty-note {
+  margin: 0;
+  padding-top: 4px;
+}
+
+.item-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 20px 0 0;
+}
+
+.item-actions > .btn-ufv,
+.item-actions > .btn-ufv-danger {
+  flex: 1 1 160px;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.item-actions > .btn-ufv i,
+.item-actions > .btn-ufv-danger i {
+  font-size: 0.95rem;
+}
+
+.details-panel .btn-ufv-danger {
+  background: var(--danger-subtle);
+  color: var(--danger);
+  border: 1.5px solid var(--danger);
+  border-radius: var(--radius-md);
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+  cursor: pointer;
+}
+
+.details-panel .btn-ufv-danger:hover {
+  background: rgba(239,68,68,.14);
+  border-color: var(--danger);
+  color: var(--danger);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+/* Arrow nav icons */
+.item-arrow {
+  position: absolute;
+  z-index: 3;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 8px 10px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  transition: background 0.2s;
+  line-height: 1;
+}
+.item-arrow:hover { background: rgba(0,0,0,0.5); }
+.item-arrow-prev { left: 12px; }
+.item-arrow-next { right: 12px; }
+
+/* Close button */
+.item-close {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(0,0,0,0.35);
+  border: none;
   color: #fff;
-  font-size: 2.2rem;
+  font-size: 1.4rem;
   cursor: pointer;
   z-index: 5;
-}
-
-/* Light/Dark friendliness */
-:root {
-  --panel-bg: var(--card-bg, #ffffff);
-}
-.dark .details-panel,
-.dark-mode .details-panel {
-  --panel-bg: #0f172a;
-  border-left-color: #1f2937;
-}
-.dark .section-card,
-.dark-mode .section-card {
-  background: #111827;
-  border-color: #1f2937;
-  box-shadow: 0 6px 20px rgba(0,0,0,.35);
-}
-.dark .section-title,
-.dark-mode .section-title {
-  background: rgba(34, 197, 94, 0.08);
-}
-.dark .price-cta,
-.dark-mode .price-cta {
-  background: #0f172a;
-  border-color: #1f2937;
-}
-.muted { color: #6b7280; }
-.dark .muted, .dark-mode .muted { color: #9ca3af; }
-
-
-
-/* stronger specificity so it wins in cascade */
-.details-panel .section-card .desc {
-  /* preserve user newlines, but wrap normally */
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;      /* break very long words/URLs */
-  word-break: break-word;
-  line-height: 1.55;
-  font-size: 0.95rem;
-
-  /* make it obvious and roomy inside the card */
-  background: rgba(0,0,0,.04);
   border-radius: 8px;
-  padding: 12px 14px 14px;
+  padding: 6px 10px;
+  transition: background 0.2s;
+  line-height: 1;
+}
+.item-close:hover { background: rgba(0,0,0,0.55); }
+
+/* Loading / error / not-found states */
+.item-state-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+.item-state-error { color: var(--danger, #dc2626); }
+
+/* No-image fallback */
+.item-no-image {
+  width: min(100%, 360px);
+  height: min(100%, 420px);
+  background: rgba(255,255,255,.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  color: rgba(255,255,255,.72);
+  box-shadow: 0 24px 48px rgba(0,0,0,.25);
+  z-index: 2;
+  position: relative;
+  text-align: center;
+  padding: 24px;
 }
 
-/* === Listing Description: size-to-content, scroll only if long === */
-/* The description should NOT scroll—let it size to content */
-.details-panel .section-card .desc.desc--scroll {
-  height: auto !important;
-  max-height: none !important;
-  overflow: visible !important;
-}
-/* optional: make the scrollbar visible/nice */
-.details-panel .section-card .desc.desc--scroll::-webkit-scrollbar { width: 10px; }
-.details-panel .section-card .desc.desc--scroll::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,.25);
-  border-radius: 8px;
-}
-.dark .details-panel .section-card .desc.desc--scroll::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,.25);
-}
-
-/* if your parent card was clipping scrollbars, unhide its overflow just for this card */
-.details-panel .section-card { overflow: visible; }
+.muted { color: var(--muted, #6b7280); }
 
 /* Responsive tweaks */
 @media (max-width: 1400px) {
-  .media-img { max-width: 66%; }
+  .item-layout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(340px, 430px);
+  }
 }
 @media (max-width: 1200px) {
-  .media-img { max-width: 72%; }
+  .item-page-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .item-page-intro {
+    text-align: left;
+  }
+
+  .item-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .item-layout--page {
+    min-height: 0;
+  }
+
+  .item-media-column {
+    min-height: 520px;
+  }
+
+  .details-panel {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    max-width: none;
+  }
 }
 
+@media (max-width: 768px) {
+  .item-page {
+    padding: 14px;
+  }
 
+  .item-panel--modal {
+    max-width: calc(100vw - 16px);
+  }
 
+  .media-col {
+    padding: 24px 18px;
+  }
 
+  .item-media-column {
+    min-height: 440px;
+  }
 
+  .item-thumb {
+    width: 60px;
+    height: 60px;
+  }
 
+  .item-page-back {
+    width: 100%;
+    justify-content: center;
+  }
 
-/* BUTTONS */
-
-/* Card container for the actions, consistent with the rest */
-.owner-actions-card { padding: 12px 14px; }
-
-/* Align buttons neatly to the right with even spacing */
-.owner-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-}
-
-/* Panel-scoped button design so we don't touch Account pages */
-.details-panel .btn-ui {
-  appearance: none;
-  padding: 10px 14px;
-  border-radius: 10px;
-  font-weight: 600;
-  background: #f8fafc;
-  color: var(--text, #0f172a);
-  border: 1px solid var(--input-border, #e5e7eb);
-  box-shadow: 0 1px 2px rgba(0,0,0,.04);
-  transition: box-shadow .15s ease, transform .06s ease, background-color .2s, border-color .2s;
-}
-.details-panel .btn-ui:hover { box-shadow: 0 2px 6px rgba(0,0,0,.08); transform: translateY(-1px); }
-.details-panel .btn-ui:active { transform: translateY(0); }
-
-/* Primary action = solid green (matches your CTA button vibe) */
-.details-panel .btn-solid {
-  background: linear-gradient(90deg, #66DC6A, #0B6A31);
-  color: #fff;
-  border: 0;                                  /* don't use transparent border */
-  box-shadow: 0 8px 18px rgba(11,106,49,.20);
-  background-clip: padding-box;               /* clip gradient to content box */
-  overflow: hidden;                           /* prevent sub-pixel bleed on edges */
-}
-.details-panel .btn-solid:hover { box-shadow: 0 10px 22px rgba(11,106,49,.25); }
-
-.owner-actions .btn-solid::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
-}
-
-/* Destructive action = soft red */
-.details-panel .btn-danger {
-  background: rgba(239,68,68,.10);
-  border-color: rgba(239,68,68,.35);
-  color: #991b1b;
-}
-.details-panel .btn-danger:hover {
-  background: rgba(239,68,68,.16);
-  border-color: rgba(239,68,68,.45);
-}
-
-/* Kill the rainbow glow only inside the details panel if any .btn-primary slips through */
-.details-panel .btn-primary:before,
-.details-panel .btn-primary:after { display: none !important; }
-.details-panel .btn-spacing { margin-left: 0 !important; }  /* neutralize the 70px offset */
-
-.owner-actions .btn-ui {
-  box-sizing: border-box;
-  min-inline-size: var(--action-btn-width); /* makes Edit & Delete same width */
-  padding-block: 10px;                       /* consistent height */
-  padding-inline: 14px;
-  transform: translateY(0);
-  transition:
-          background-color .24s ease,
-          color .24s ease,
-          border-color .24s ease,
-          box-shadow .28s var(--ease-smooth),
-          transform .28s var(--ease-smooth);
-  will-change: transform, box-shadow, background-color, border-color, color;
-}
-
-.owner-actions .btn-ui:hover {
-  transform: translateY(-2px);
-}
-
-.owner-actions .btn-solid:hover {
-  box-shadow: 0 12px 22px rgba(11,106,49,.28);
-}
-
-/* soften Delete hover without a jarring jump */
-.owner-actions .btn-danger:hover {
-  background: rgba(239,68,68,.14);
-  border-color: rgba(239,68,68,.45);
-  box-shadow: 0 6px 14px rgba(0,0,0,.10);
+  .item-actions {
+    flex-direction: column;
+  }
 }

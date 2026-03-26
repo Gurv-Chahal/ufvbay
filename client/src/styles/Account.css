@@ -1,179 +1,170 @@
-.account-container {
-    max-width: 800px;
-    max-height: 500px;
-    margin: 50px auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
-    font-family: Arial, sans-serif;
+/* ============================================
+   Account Page
+   ============================================ */
 
-    background: #ffffff !important;
-    color: #0f172a !important;          /* dark text on white */
-    color-scheme: only light;           /* form controls render light */
-    isolation: isolate;                 /* keep ancestor effects out */
+/* ---- Card ---- */
+.acct-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  max-width: 640px;
+  padding: 0;
+  overflow: hidden;
 }
 
-.account-container h1,
-.account-container p,
-.account-container label,
-.account-container strong {
-    color: #0f172a !important;
+.acct-card-header {
+  padding: var(--space-lg) var(--space-xl);
+  border-bottom: 1px solid var(--border);
 }
 
-.account-header {
-    margin-bottom: 20px;
-    text-align: center;
-
-    background: transparent !important;
-    color: #0f172a !important;
-    border-bottom: 1px solid #e2e8f0;
-    padding-bottom: 12px;
+.acct-card-header h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text);
 }
 
-.account-details .form-group {
-    margin: 10px 0;
+.acct-card-body {
+  padding: var(--space-lg) var(--space-xl);
 }
 
-.account-details label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+/* ---- Fields (view mode) ---- */
+.acct-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.account-details input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.acct-field:last-child {
+  border-bottom: none;
 }
 
-.account-actions {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
+.acct-field-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
-.account-actions .btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.acct-field-value {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text);
 }
 
-/*.btn-primary {*/
-/*    background-color: #4caf50;*/
-/*    color: white;*/
-/*}*/
-
-/*.btn-primary:hover {*/
-/*    background-color: #45a049;*/
-/*}*/
-
-/*.btn-secondary {*/
-/*    background-color: #f44336;*/
-/*    color: white;*/
-/*}*/
-
-/*.btn-secondary:hover {*/
-/*    background-color: #d32f2f;*/
-/*}*/
-
-.error-message {
-    color: red;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-    text-align: center;
+/* ---- Inputs (edit mode) ---- */
+.acct-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
 }
 
-
-
-                                                       /* CSS */
-.btn-primary {
-    padding: 0.6em 2em;
-    border: none;
-    outline: none;
-    color: #0f172a;          /* dark text on white */
-    background: transparent; /* let :after paint the interior */
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
-    border-radius: 10px;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
+.acct-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
 }
 
-
-
-.btn-spacing {
-    margin-left: 70px;
+.acct-input::placeholder {
+  color: var(--muted);
 }
 
-
-.btn-primary:before {
-    content: "";
-    background: linear-gradient(
-            45deg,
-            #ff0000,
-            #ff7300,
-            #fffb00,
-            #48ff00,
-            #00ffd5,
-            #002bff,
-            #7a00ff,
-            #ff00c8,
-            #ff0000
-    );
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    background-size: 400%;
-    z-index: -1;
-    filter: blur(5px);
-    -webkit-filter: blur(5px);
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    animation: glowing-button-primary 20s linear infinite;
-    transition: opacity 0.3s ease-in-out;
-    border-radius: 10px;
+/* ---- Actions ---- */
+.acct-actions {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-xl);
+  border-top: 1px solid var(--border-subtle);
 }
 
-@keyframes glowing-button-primary {
-    0% {
-        background-position: 0 0;
-    }
-    50% {
-        background-position: 400% 0;
-    }
-    100% {
-        background-position: 0 0;
-    }
+/* ---- Error ---- */
+.acct-error {
+  padding: var(--space-sm) var(--space-xl);
+  color: var(--danger);
+  font-size: 0.9rem;
+  text-align: center;
 }
 
-.btn-primary:after {
-    z-index: -1;
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #fff;        /* white interior */
-    left: 0;
-    top: 0;
-    border-radius: 10px;
+/* ---- Empty state ---- */
+.acct-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl);
+  text-align: center;
+  min-height: 300px;
 }
 
-
-.btn-primary,
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active,
-.btn-primary:disabled {
-    color: #0f172a !important;   /* black */
+.acct-empty i {
+  font-size: 3rem;
+  margin-bottom: var(--space-md);
+  opacity: 0.4;
+  color: var(--muted);
 }
 
-/* If your button is an <a> or contains an <a>/<span>, force those too */
-.btn-primary a,
-.btn-primary span {
-    color: #0f172a !important;
+.acct-empty h3 {
+  color: var(--text);
+  margin: 0 0 var(--space-sm);
+}
+
+.acct-empty p {
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ---- Listings grid ---- */
+.acct-listings-header {
+  margin-bottom: var(--space-lg);
+}
+
+.acct-listings-header h2 {
+  margin: 0;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.acct-listings-header .acct-count {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: var(--space-sm);
+}
+
+.acct-listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-lg);
+  width: 100%;
+}
+
+.acct-listings-grid > * {
+  margin: 0 !important;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 640px) {
+  .acct-card {
+    border-radius: var(--radius-md);
+  }
+
+  .acct-card-header,
+  .acct-card-body,
+  .acct-actions {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+
+  .acct-actions {
+    flex-direction: column;
+  }
 }

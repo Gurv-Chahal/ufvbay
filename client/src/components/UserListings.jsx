@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { getUserListings } from "../services/ListingService.js";
 import ProductCards from "../components/ProductCards.jsx";
 import { Link } from "react-router-dom";
-/* @jsxRuntime classic */
-
+import "../styles/Account.css";
 
 const UserListings = () => {
 
@@ -25,7 +24,7 @@ const UserListings = () => {
                 const response = await getUserListings();
 
                 //the response from the rest api holding the listings data is then given to setListings state variable
-                setListings(response.data);
+                setListings(Array.isArray(response.data) ? response.data : []);
             } catch (error) {
                 console.error("Error fetching user listings:", error);
             }
@@ -38,37 +37,45 @@ const UserListings = () => {
 
     // if there are no listings then simply give the message
     if (listings.length === 0) {
-        return <div>You have no listings.</div>;
+        return (
+            <div className="acct-empty">
+                <i className="bi bi-inbox" />
+                <h3>No listings yet</h3>
+                <p>You haven't created any listings. Start selling by creating your first listing!</p>
+            </div>
+        );
     }
 
 
     return (
         <div>
-            <h2>Your Listings</h2>
-            <br></br>
-            <br></br>
-            <div className="d-flex flex-wrap">
+            <div className="acct-listings-header">
+                <h2>
+                    Your Listings
+                    <span className="acct-count">
+                        {listings.length} {listings.length === 1 ? "listing" : "listings"}
+                    </span>
+                </h2>
+            </div>
 
-                {/*iterate over eac listing (state variable) using map*/}
+            <div className="acct-listings-grid">
                 {listings.map((product) => (
-
-                    // uses product.id as a unique key for each item
-                    <div key={product.id} className="m-4">
-
-                        {/*Link sets the url to naviagate to the item detail page*/}
-                        <Link to={`/item/${product.id}`}>
-
-                            {/*call product cards component and pass props*/}
-                            <ProductCards
-                                price={`CA ${product.amount || product.price}`}
-                                image={ (product.imageUrls && product.imageUrls[0]) ||
-                                    (product.images && product.images[0]) ||
-                                    product.image}
-                                name={product.title || product.name}
-                                author={product.author}
-                            />
-                        </Link>
-                    </div>
+                    <Link
+                        key={product.id}
+                        to={`/item/${product.id}`}
+                        style={{ textDecoration: "none" }}
+                    >
+                        <ProductCards
+                            price={`CA ${product.amount || product.price}`}
+                            image={
+                                (product.imageUrls && product.imageUrls[0]) ||
+                                (product.images && product.images[0]) ||
+                                product.image
+                            }
+                            name={product.title || product.name}
+                            author={product.author}
+                        />
+                    </Link>
                 ))}
             </div>
         </div>

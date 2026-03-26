@@ -1,7 +1,6 @@
 
 /* @jsxRuntime classic */
-import React, {useLayoutEffect} from 'react';
-import { useEffect, useState } from "react";
+import React from 'react';
 import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
 import Browse from "./pages/Browse.jsx";
 import Account from "./pages/Account.jsx";
@@ -14,16 +13,7 @@ import "./index.css";
 import Home from "./pages/Home.jsx";
 import SheetModal from "./pages/SheetModal";
 import InfoSheet from "./pages/InfoSheet";
-
-
-function getInitialTheme() {
-    const saved = localStorage.getItem("theme");
-    if (saved === "dark" || saved === "light") return saved;
-    return window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
-}
+import { ThemeProvider } from "./context/ThemeContext";
 
 function AppRoutes() {
     const location = useLocation();
@@ -69,40 +59,11 @@ function AppRoutes() {
 }
 
 export default function App() {
-    const [theme, setTheme] = useState(getInitialTheme);
-
-    useLayoutEffect(() => {
-        const root = document.documentElement;
-        root.classList.toggle("dark", theme === "dark");
-        localStorage.setItem("theme", theme);
-    }, [theme]);
-
     return (
-        <BrowserRouter>
-            <AppRoutes />
-
-            {/* Floating theme toggle */}
-            <button
-                type="button"
-                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-                onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
-                style={{
-                    position: "fixed",
-                    right: 16,
-                    bottom: 16,
-                    zIndex: 1000,
-                    borderRadius: 999,
-                    padding: "8px 12px",
-                    border: "1px solid rgba(255,255,255,.2)",
-                    background: theme === "dark" ? "#111827" : "#ffffff",
-                    color: theme === "dark" ? "#e5e7eb" : "#0f172a",
-                    boxShadow: "0 6px 18px rgba(0,0,0,.2)",
-                    cursor: "pointer",
-                }}
-                className="btn btn-sm"
-            >
-                {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
-            </button>
-        </BrowserRouter>
+        <ThemeProvider>
+            <BrowserRouter>
+                <AppRoutes />
+            </BrowserRouter>
+        </ThemeProvider>
     );
 }

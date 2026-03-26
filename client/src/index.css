@@ -1,115 +1,279 @@
+/* ============================================
+   UFVBay Design System
+   ============================================ */
+
 :root {
-  /* light theme tokens */
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --text: #0f172a;
-  --muted: #475569;
-  --border: #e5e7eb;
-  --accent: #16a34a;
-  --nav-h: 90px;
+  /* --- Core palette --- */
+  --bg:            #f8fafb;
+  --bg-wash:       linear-gradient(168deg, #f0f4f8 0%, #faf8f5 50%, #f0f4f8 100%);
+  --surface:       #ffffff;
+  --surface-alt:   #f5f7fa;
+  --text:          #0f172a;
+  --text-secondary:#334155;
+  --muted:         #64748b;
+  --border:        #e2e8f0;
+  --border-subtle: #f1f5f9;
+
+  /* --- Primary: emerald with gradient depth --- */
+  --accent:          #16a34a;
+  --accent-light:    #22c55e;
+  --accent-dark:     #15803d;
+  --accent-gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #0f766e 100%);
+  --accent-subtle:   rgba(22, 163, 74, 0.08);
+
+  /* --- Secondary: warm amber for prices/badges --- */
+  --warm:         #f59e0b;
+  --warm-light:   #fbbf24;
+  --warm-subtle:  rgba(245, 158, 11, 0.10);
+  --warm-text:    #92400e;
+
+  /* --- Info: cool blue for metadata chips --- */
+  --info:         #3b82f6;
+  --info-subtle:  rgba(59, 130, 246, 0.08);
+  --info-text:    #1e40af;
+
+  /* --- Danger --- */
+  --danger:        #ef4444;
+  --danger-subtle:  rgba(239, 68, 68, 0.08);
+  --danger-text:   #991b1b;
+
+  /* --- Shadows (layered for depth) --- */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.06);
+  --shadow-md:  0 4px 6px rgba(0,0,0,.04), 0 10px 20px rgba(0,0,0,.06);
+  --shadow-lg:  0 10px 25px rgba(0,0,0,.06), 0 20px 48px rgba(0,0,0,.08);
+  --shadow-xl:  0 20px 40px rgba(0,0,0,.08), 0 32px 64px rgba(0,0,0,.10);
+
+  /* --- Spacing --- */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+
+  /* --- Radii --- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+
+  /* --- Layout --- */
+  --nav-h: 64px;
+  --sidebar-w: clamp(220px, 22vw, 280px);
+
   color-scheme: light;
 }
 
-
-
-/* dark theme, activated by <html class="dark"> */
+/* ---- Dark theme ---- */
 :root.dark {
-  --bg: #0b1020;
-  --surface: #0b1020;
-  --text: #e5e7eb;
-  --muted: #94a3b8;
-  --border: #1f2937;
-  --accent: #16a34a;
+  --bg:            #0c1220;
+  --bg-wash:       linear-gradient(168deg, #0c1220 0%, #111827 50%, #0f172a 100%);
+  --surface:       #1a2332;
+  --surface-alt:   #151d2e;
+  --text:          #e8edf4;
+  --text-secondary:#94a3b8;
+  --muted:         #64748b;
+  --border:        #1e293b;
+  --border-subtle: #1e293b;
+
+  --accent:          #34d399;
+  --accent-light:    #6ee7b7;
+  --accent-dark:     #059669;
+  --accent-gradient: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
+  --accent-subtle:   rgba(52, 211, 153, 0.10);
+
+  --warm:         #fbbf24;
+  --warm-light:   #fcd34d;
+  --warm-subtle:  rgba(251, 191, 36, 0.12);
+  --warm-text:    #fbbf24;
+
+  --info:         #60a5fa;
+  --info-subtle:  rgba(96, 165, 250, 0.10);
+  --info-text:    #93bbfd;
+
+  --danger:        #f87171;
+  --danger-subtle:  rgba(248, 113, 113, 0.10);
+  --danger-text:   #fca5a5;
+
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.3);
+  --shadow-md:  0 4px 12px rgba(0,0,0,.35);
+  --shadow-lg:  0 10px 30px rgba(0,0,0,.4);
+  --shadow-xl:  0 20px 50px rgba(0,0,0,.45);
+
   color-scheme: dark;
 }
 
-/* apply page colors */
+/* ============================================
+   Base Elements
+   ============================================ */
+
 html, body, #root {
   background: var(--bg);
   color: var(--text);
   min-height: 100%;
 }
 
-/* optional: panels/nav/sidebar using the surface color */
-header, .navbar, .sidebar {
-  background: var(--surface);
-  color: var(--text);
-  border-bottom: 1px solid var(--border);
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Gradient wash background */
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  overflow-x: clip;           /* prevents tiny horizontal slivers from shadows */
+  overflow-x: clip;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  background: var(--bg-wash);
 }
 
+/* Gradient wash also on key containers */
+html, body, #root, .home-shell, .home-body {
+  background: var(--bg-wash) !important;
+}
+
+/* Fixed background layer for smooth theme flips */
+html::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--bg-wash);
+  pointer-events: none;
+  z-index: -1;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+@supports not (scrollbar-gutter: stable) {
+  html { overflow-y: scroll; }
+}
+html, body {
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+}
+
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+/* ---- Typography ---- */
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+}
+h2 {
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+h3 {
+  font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+p {
+  color: var(--muted);
+  line-height: 1.65;
 }
 
+/* ---- Links ---- */
+a {
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: inherit;
+}
+a:hover {
+  color: var(--accent-dark);
+}
+
+/* ---- Base button reset ---- */
 button {
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
+  transition: all 0.2s ease;
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* body is a flex container in your globals; ensure #root spans the viewport */
-#root {
-  width: 100%;
-  min-height: 100%;
+/* Remove default navbar/sidebar styling */
+header, .navbar, .sidebar {
+  background: transparent;
+  color: var(--text);
+  border-bottom: none;
 }
 
-html {
-  scrollbar-gutter: stable;  /* modern, no layout jiggle */
+/* ============================================
+   Global Button Classes
+   ============================================ */
+
+/* Primary: solid green gradient */
+.btn-ufv {
+  background: var(--accent-gradient);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 14px rgba(22,163,74,.25);
+  transition: transform .2s, box-shadow .2s, filter .2s;
+  cursor: pointer;
+}
+.btn-ufv:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(22,163,74,.30);
+  filter: brightness(1.05);
+  color: #fff;
 }
 
-/* fallback for older browsers—optional but safe */
-@supports not (scrollbar-gutter: stable) {
-  html { overflow-y: scroll; }          /* always reserve the gutter */
+/* Secondary: outlined */
+.btn-ufv-outline {
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background .2s, color .2s, border-color .2s;
+  cursor: pointer;
+}
+.btn-ufv-outline:hover {
+  background: var(--accent-subtle);
 }
 
-
-/* Always paint the entire viewport with the active bg colour */
-html, body, #root, .home-shell, .home-body {
-  background: var(--bg) !important;
+/* Ghost: transparent with text color */
+.btn-ufv-ghost {
+  background: transparent;
+  color: var(--text);
+  border: none;
+  padding: 10px 20px;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  transition: background .2s;
+  cursor: pointer;
+}
+.btn-ufv-ghost:hover {
+  background: rgba(0,0,0,.04);
+}
+:root.dark .btn-ufv-ghost:hover {
+  background: rgba(255,255,255,.06);
 }
 
-/* Fixed background layer eliminates transient seams on theme flips */
-html::before{
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* No horizontal rubber-banding slivers */
-html, body {
-  overflow-x: clip;
-  overscroll-behavior-x: none;
+/* ---- Gradient rule divider ---- */
+.gradient-rule {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-light), var(--warm), transparent);
+  margin: var(--space-xl) 0;
 }

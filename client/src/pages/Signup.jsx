@@ -49,163 +49,92 @@ const Signup = () => {
   };
 
   return (
-    <div className="w-full h-screen d-flex align-items-center justify-content-center">
-      <div className="row w-100 vh-100">
-        {/* Create account portion of the page */}
-        <div className="col-6 border d-flex flex-column justify-content-center">
-          <h1 className="text-center" style={{ fontSize: "4rem" }}>
-            Create an Account
-          </h1>
-          <div className="my-5">
-            <div className="d-flex justify-content-center">
-              <div className="d-flex" style={{ width: "600px" }}>
-                <input
-                  type="text"
-                  className="form-control my-3 py-3 custom-placeholder"
-                  id="name"
-                  placeholder="Enter your Name"
-                  style={{
-                    width: "50%",
-                    marginRight: "10px",
-                    borderTop: "none",
-                    borderLeft: "none",
-                    borderRight: "none",
-                    borderBottom: "2px solid #000",
-                    backgroundColor: "#f0f0f0",
-                  }}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                <input
-                  type="text"
-                  className="form-control my-3 py-3 custom-placeholder"
-                  id="username"
-                  placeholder="Enter a Username"
-                  style={{
-                    width: "50%",
-                    borderTop: "none",
-                    borderLeft: "none",
-                    borderRight: "none",
-                    borderBottom: "2px solid #000",
-                    backgroundColor: "#f0f0f0",
-                  }}
-                  value={username}
-                  onChange={(e) => setUserName(e.target.value)}
-                />
-              </div>
-            </div>
+    <div className="auth-page">
+      <div className="auth-row">
+        {/* Form panel */}
+        <div className="auth-form-panel">
+          <h1 className="auth-title">Create an Account</h1>
+          <p className="auth-subtitle">Join UFVBay and start shopping</p>
 
-            <div className="d-flex justify-content-center">
+          <div className="auth-input-row">
+            <div className="auth-input-group">
+              <i className="bi bi-person auth-input-icon" />
               <input
-                type="email"
-                className="form-control my-3 py-3 custom-placeholder"
-                id="email"
-                placeholder="Enter your email"
-                style={{
-                  width: "600px",
-                  borderTop: "none",
-                  borderLeft: "none",
-                  borderRight: "none",
-                  borderBottom: "2px solid #000",
-                  backgroundColor: "#f0f0f0",
-                }}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                className="auth-input"
+                id="name"
+                placeholder="Your Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
-
-            <div className="mb-3 d-flex justify-content-center">
+            <div className="auth-input-group">
+              <i className="bi bi-at auth-input-icon" />
               <input
-                type="password"
-                className="form-control py-3"
-                id="password"
-                placeholder="Enter your password"
-                style={{
-                  width: "600px",
-                  borderTop: "none",
-                  borderLeft: "none",
-                  borderRight: "none",
-                  borderBottom: "2px solid #000",
-                  backgroundColor: "#f0f0f0",
-                }}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div className="mb-3 d-flex justify-content-center">
-              <input
-                type="password"
-                className="form-control py-3"
-                id="password2"
-                placeholder="Re-enter your password"
-                style={{
-                  width: "600px",
-                  borderTop: "none",
-                  borderLeft: "none",
-                  borderRight: "none",
-                  borderBottom: "2px solid #000",
-                  backgroundColor: "#f0f0f0",
-                }}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                type="text"
+                className="auth-input"
+                id="username"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
               />
             </div>
           </div>
-          {/* Right half of the webpage for logging in if you have an account */}
-          <div className="d-flex justify-content-center">
-            <button
-              className="btn btn-light-green p-3 rounded-pill"
-              style={{
-                width: "200px",
-                backgroundColor: "#34c759",
-                borderColor: "#34c759",
-                border: "3px solid #34c759",
-                color: "#fff",
-              }}
-              onClick={handleSignUp}
-            >
-              Sign Up
-            </button>
-          </div>
-          <div className="d-flex justify-content-center my-2">
-            <span style={{ marginRight: "8px" }}>
-              <p>Already have an account?</p>
-            </span>
 
-            <Link to="/login" style={{ textDecoration: "none" }}>
-              <span style={{ color: "blue" }}>Log In</span>
-            </Link>
-          </div>
-        </div>
-        <div className="col-6  d-flex flex-column justify-content-center bg-signup">
-          <div className="d-flex align-items-center justify-content-center">
-            <img
-              src={ufvbaylogo}
-              alt="logo for UFVBay"
-              style={{ width: "120px", height: "auto", marginRight: "10px" }}
+          <div className="auth-input-group">
+            <i className="bi bi-envelope auth-input-icon" />
+            <input
+              type="email"
+              className="auth-input"
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
-            <h1
-              className="text-center"
-              style={{ color: "#fff", fontSize: "5rem", margin: 0 }}
-            >
-              UFVBay
-            </h1>
           </div>
-          <div className="my-5">
-            <div className="d-flex justify-content-center">
-              <h3
-                className="text-center "
-                style={{
-                  color: "#fff",
-                  fontSize: "2rem",
-                  width: "800px",
-                }}
-              >
-                Make an account and start shopping for textbooks for cheap!
-              </h3>
-            </div>
+
+          <div className="auth-input-group">
+            <i className="bi bi-lock auth-input-icon" />
+            <input
+              type="password"
+              className="auth-input"
+              id="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
-          <img src={signupimg} />
+
+          <div className="auth-input-group">
+            <i className="bi bi-shield-lock auth-input-icon" />
+            <input
+              type="password"
+              className="auth-input"
+              id="password2"
+              placeholder="Re-enter your password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+
+          <button className="auth-btn" onClick={handleSignUp}>
+            Sign Up
+          </button>
+
+          <p className="auth-link-row">
+            Already have an account?{" "}
+            <Link to="/login">Log In</Link>
+          </p>
+        </div>
+
+        {/* Brand panel */}
+        <div className="auth-brand-panel">
+          <img src={ufvbaylogo} alt="UFVBay logo" className="auth-brand-logo" />
+          <h1 className="auth-brand-title">UFVBay</h1>
+          <p className="auth-brand-tagline">
+            Make an account and start shopping for textbooks for cheap!
+          </p>
+          <img src={signupimg} alt="UFVBay preview" className="auth-brand-preview" />
         </div>
       </div>
     </div>

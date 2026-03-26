@@ -57,108 +57,55 @@ const Auth = () => {
   }
 
   return (
-    <div className="w-full h-screen d-flex align-items-center justify-content-center bglittledog">
-      <div className="row w-100 vh-100 g-0 bgtopdog">
-        {/*logIn half of auth page */}
-        <div className="col-6 p-0 border d-flex flex-column justify-content-center">
-          <h1 className="text-center" style={{ fontSize: "4rem" }}>
-            Sign In
-          </h1>
-          <div className="my-5">
-            <div className="d-flex justify-content-center">
-              <input
-                type="email"
-                className="form-control my-4 py-3 custom-placeholder"
-                id="email"
-                placeholder="Enter your email"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                style={{
-                  width: "600px",
-                  borderTop: "none",
-                  borderLeft: "none",
-                  borderRight: "none",
-                  borderBottom: "2px solid #000",
-                  backgroundColor: "#f0f0f0",
-                }}
-              />
-            </div>
-            <div className="mb-3 d-flex justify-content-center">
-              <input
-                type="password"
-                className="form-control py-3"
-                id="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={{
-                  width: "600px",
-                  borderTop: "none",
-                  borderLeft: "none",
-                  borderRight: "none",
-                  borderBottom: "2px solid #000",
-                  backgroundColor: "#f0f0f0",
-                }}
-              />
-            </div>
-          </div>
-          {/*Sign Up portion */}
-          <div className="d-flex justify-content-center">
-            <button
-              className="btn btn-light-green p-3 rounded-pill"
-              onClick={handlelogin}
-              style={{
-                width: "200px",
-                backgroundColor: "#34c759",
-                borderColor: "#34c759",
-                border: "3px solid #34c759",
-                color: "#fff",
-              }}
-            >
-              Log In
-            </button>
-          </div>
+    <div className="auth-page">
+      <div className="auth-row">
+        {/* Form panel */}
+        <div className="auth-form-panel">
+          <h1 className="auth-title">Sign In</h1>
+          <p className="auth-subtitle">Welcome back to UFVBay</p>
 
-          <div className="d-flex justify-content-center my-2">
-            <span style={{ marginRight: "8px" }}>
-              <p>Don't have an account?</p>
-            </span>
-
-            <Link to="/signup" style={{ textDecoration: "none" }}>
-              <span style={{ color: "blue" }}>Create Account</span>
-            </Link>
-          </div>
-        </div>
-        <div className="col-6 p-0 d-flex flex-column justify-content-center bg-signup">
-          <div className="d-flex align-items-center justify-content-center">
-            <img
-              src={ufvbaylogo}
-              alt="logo for UFVBay"
-              style={{ width: "120px", height: "auto", marginRight: "10px" }}
+          <div className="auth-input-group">
+            <i className="bi bi-envelope auth-input-icon" />
+            <input
+              type="email"
+              className="auth-input"
+              id="email"
+              placeholder="Enter your email"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
-            <h1
-              className="text-center"
-              style={{ color: "#fff", fontSize: "5rem", margin: 0 }}
-            >
-              UFVBay
-            </h1>
           </div>
-          <div className="my-5">
-            <div className="d-flex justify-content-center">
-              <h3
-                className="text-center "
-                style={{
-                  color: "#fff",
-                  fontSize: "2rem",
-                  width: "800px",
-                }}
-              >
-                Welcome back! Checkout the newest listings while you were gone!
-              </h3>
-            </div>
+
+          <div className="auth-input-group">
+            <i className="bi bi-lock auth-input-icon" />
+            <input
+              type="password"
+              className="auth-input"
+              id="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
-          <img className="imgsignin" src={signupimg}  alt="UFBAY PREVIEW"/>
-          {/*Button redirects to signup page*/}
+
+          <button className="auth-btn" onClick={handlelogin}>
+            Log In
+          </button>
+
+          <p className="auth-link-row">
+            Don't have an account?{" "}
+            <Link to="/signup">Create Account</Link>
+          </p>
+        </div>
+
+        {/* Brand panel */}
+        <div className="auth-brand-panel">
+          <img src={ufvbaylogo} alt="UFVBay logo" className="auth-brand-logo" />
+          <h1 className="auth-brand-title">UFVBay</h1>
+          <p className="auth-brand-tagline">
+            Welcome back! Check out the newest listings while you were gone!
+          </p>
+          <img src={signupimg} alt="UFVBay preview" className="auth-brand-preview" />
         </div>
       </div>
     </div>
